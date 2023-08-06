@@ -1,7 +1,18 @@
 <app-side-bar>
     <div class="side-nav">
-        <button class="nav-button" mat-button>Overview</button>
-        <button class="nav-button" mat-button >Members</button>
-        <button class="nav-button" mat-button >Schedule</button>
+        <div class="nav-links">
+            <button class="nav-button" mat-button>Overview</button>
+            <button class="nav-button" mat-button >Members</button>
+            <button class="nav-button" mat-button >Schedule</button>
+        </div>
+        <div class="menu">
+            <button class="nav-button" mat-button [matMenuTriggerFor]="sideNavMenu">
+                <h2 class="mat-menu-title">Wyatt Hardin</h2>
+                <mat-icon>expand_more</mat-icon>
+            </button>
+            <mat-menu class="menu-items" #sideNavMenu="matMenu" xPosition="after">
+                <button mat-menu-item>Log out</button>
+            </mat-menu>
+        </div>
     </div>
 </app-side-bar>
