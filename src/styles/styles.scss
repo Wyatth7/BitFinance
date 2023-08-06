@@ -1,0 +1,14 @@
+@import './material-color-palette.scss';
+@import './custom-color-variables.scss';
+
+*::before,
+*,
+*::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}

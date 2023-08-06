@@ -1,0 +1,9 @@
+.side-bar {
+    display: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    max-width: 25%;
+    width: 15%;
+    border-right: 2px solid var(--grey);
+}
