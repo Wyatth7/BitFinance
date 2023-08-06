@@ -1,4 +1,12 @@
 .dashboard {
     height: 100vh;
     width: 100%;
+
+    &-content {
+        position: fixed;
+        left: 15%;
+        top: 10%;
+        right: 0;
+        bottom: 0;
+    }
 }

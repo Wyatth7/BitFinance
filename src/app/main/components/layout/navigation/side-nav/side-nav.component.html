@@ -1,14 +1,15 @@
 <app-side-bar>
     <div class="side-nav">
         <div class="nav-links">
-            <button class="nav-button" mat-button>Overview</button>
-            <button class="nav-button" mat-button >Members</button>
-            <button class="nav-button" mat-button >Schedule</button>
+            <app-nav-link route="/overview/view" icon="timer" text="Overview"></app-nav-link>
+            <app-nav-link route="/members/view" icon="group" text="Members"></app-nav-link>
+            <app-nav-link icon="event" text="Schedule"></app-nav-link>
+            <app-nav-link icon="fitness_center" text="Equipment"></app-nav-link>
         </div>
         <div class="menu">
             <button class="nav-button" mat-button [matMenuTriggerFor]="sideNavMenu">
                 <h2 class="mat-menu-title">Wyatt Hardin</h2>
-                <mat-icon>expand_more</mat-icon>
+                <mat-icon class="nav-button-icon">expand_more</mat-icon>
             </button>
             <mat-menu class="menu-items" #sideNavMenu="matMenu" xPosition="after">
                 <button mat-menu-item>Log out</button>

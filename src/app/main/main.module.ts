@@ -10,6 +10,8 @@ import {MatButtonModule} from '@angular/material/button'
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu'
 import {MatIconModule} from '@angular/material/icon'
+import {RouterModule} from '@angular/router';
+import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link.component'
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import {MatIconModule} from '@angular/material/icon'
     LayoutComponent,
     SideNavComponent,
     SideBarComponent,
-    TopNavComponent
+    TopNavComponent,
+    NavLinkComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,8 @@ import {MatIconModule} from '@angular/material/icon'
     MatButtonModule,
     MatGridListModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   exports: [
     LayoutComponent

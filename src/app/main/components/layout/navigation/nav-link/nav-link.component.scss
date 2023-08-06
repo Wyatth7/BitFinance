@@ -1,0 +1,16 @@
+.nav-link {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 1.5rem  !important;
+    display: flex;
+    align-items: center;
+
+    &-icon {
+        height: 100%;
+    }
+
+    &-text {
+        vertical-align: middle;
+        text-align: center;
+    }
+}
