@@ -1,0 +1,29 @@
+<app-secondary-top-nav>
+    <div class="members-nav">
+        <div class="members-nav--info">
+            <app-nav-member-total
+            [focusColor]="color.blue"
+            focusText="5000"
+            plainText="memberships"></app-nav-member-total>
+            <mat-divider class="vertical-divider" vertical></mat-divider>
+            <app-nav-member-total plainText="Today's Memberships"></app-nav-member-total>
+            <app-nav-member-total
+            [focusColor]="color.green"
+            focusText="55"
+            plainText="new"></app-nav-member-total>
+            <app-nav-member-total
+            [focusColor]="color.red"
+            focusText="75"
+            plainText="closing"></app-nav-member-total>
+        </div>
+        <div class="members-nav--actions">
+            <app-nav-member-total
+            plainText="Sort By:"></app-nav-member-total>
+            <mat-select [(value)]="selectedValue">
+                <mat-option value="newest">Newest</mat-option>
+                <mat-option value="oldest">Oldest</mat-option>
+                <mat-option value="lastName">Last Name</mat-option>
+            </mat-select>
+        </div>
+    </div>
+</app-secondary-top-nav>

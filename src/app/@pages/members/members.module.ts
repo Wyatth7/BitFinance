@@ -5,18 +5,21 @@ import { MembersRoutingModule } from './members-routing.module';
 import {SharedModule} from './../../shared/shared.module';
 import { NavMemberTotalComponent } from './components/nav-member-total/nav-member-total.component'
 import {MatDividerModule} from '@angular/material/divider'
-
+import {MatSelectModule} from '@angular/material/select';
+import { SecondaryNavComponent } from './components/secondary-nav/secondary-nav.component'
 
 @NgModule({
   declarations: [
     MembersComponent,
-    NavMemberTotalComponent
+    NavMemberTotalComponent,
+    SecondaryNavComponent
   ],
   imports: [
     CommonModule,
     MembersRoutingModule,
     SharedModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSelectModule
   ]
 })
 export class MembersModule { }

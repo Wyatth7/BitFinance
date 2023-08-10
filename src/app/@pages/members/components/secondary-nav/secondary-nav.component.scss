@@ -1,0 +1,22 @@
+.members-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &--info {
+        display: inherit;
+        align-items: center;
+        gap: 1rem;
+        
+        .vertical-divider {
+            margin: 0 .5rem;
+            height: 2rem;
+        }
+    }
+
+    &--actions {
+        display: flex;
+        align-items: center;
+        gap: .5rem
+    }
+}
