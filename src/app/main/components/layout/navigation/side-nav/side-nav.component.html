@@ -1,18 +1,31 @@
 <app-side-bar>
     <div class="side-nav">
-        <div class="nav-links">
-            <app-nav-link route="/overview/view" icon="timer" text="Overview"></app-nav-link>
-            <app-nav-link route="/members/view" icon="group" text="Members"></app-nav-link>
-            <app-nav-link icon="event" text="Schedule"></app-nav-link>
-            <app-nav-link icon="fitness_center" text="Equipment"></app-nav-link>
+        <div class="top-content">
+
+            <div class="logo">
+                <div class="logo-content">
+                    <mat-icon>fitness_center</mat-icon>
+                    <mat-divider class="divider" [vertical]="true"></mat-divider>
+                    <h2 class="logo-text">The Key Fitness</h2>
+                </div>
+            </div>
+            <div class="nav-links">
+                <app-nav-link route="/overview/view" icon="timer" text="Overview"></app-nav-link>
+                <app-nav-link route="/members/view" icon="group" text="Members"></app-nav-link>
+                <app-nav-link route="schedule/view" icon="event" text="Schedule"></app-nav-link>
+                <app-nav-link route="equipment/view" icon="fitness_center" text="Equipment"></app-nav-link>
+                <app-nav-link route="payments/view" icon="payments" text="Payments"></app-nav-link>
+            </div>
         </div>
-        <div class="menu">
-            <button class="nav-button" mat-button [matMenuTriggerFor]="sideNavMenu">
-                <h2 class="mat-menu-title">Wyatt Hardin</h2>
-                <mat-icon class="nav-button-icon">expand_more</mat-icon>
-            </button>
-            <mat-menu class="menu-items" #sideNavMenu="matMenu" xPosition="after">
+            <div class="menu">
+                <mat-divider></mat-divider>
+                <button class="nav-button" mat-button [matMenuTriggerFor]="sideNavMenu">
+                    <h2 class="mat-menu-title">Wyatt Hardin</h2>
+                    <mat-icon class="nav-button--icon">expand_more</mat-icon>
+                </button>
+            <mat-menu #sideNavMenu="matMenu" xPosition="after">
                 <button mat-menu-item>Log out</button>
+                <button mat-menu-item>Settings</button>
             </mat-menu>
         </div>
     </div>

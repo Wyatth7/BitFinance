@@ -14,3 +14,8 @@
         text-align: center;
     }
 }
+
+.nav-link-active {
+    background-color: var(--blue);
+    color: var(--white) !important;
+}

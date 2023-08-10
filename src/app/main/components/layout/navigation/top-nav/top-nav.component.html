@@ -1,3 +1,14 @@
 <div class="top-nav">
-   <h2 class="page-header">{{ routeHeader | titlecase }}</h2>
+   <div class="page-header">
+      <mat-icon class="page-header--icon">{{ headerIcon }}</mat-icon>
+      <h2 class="page-header--text">{{ routeHeader | titlecase }}</h2>
+   </div>
+   <div class="top-nav-actions">
+      <button mat-mini-fab color="primary" >
+         <mat-icon>add</mat-icon>
+      </button> 
+      <button mat-mini-fab color="secondary" class="top-nav-button">
+         <mat-icon>notifications</mat-icon>
+      </button>
+   </div>
 </div>

@@ -10,8 +10,11 @@ import {MatButtonModule} from '@angular/material/button'
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu'
 import {MatIconModule} from '@angular/material/icon'
+import {MatDividerModule} from '@angular/material/divider';
 import {RouterModule} from '@angular/router';
-import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link.component'
+
+import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link.component';
+import { SecondaryTopNavComponent } from './components/layout/navigation/secondary-top-nav/secondary-top-nav.component'
 
 
 @NgModule({
@@ -20,7 +23,8 @@ import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link
     SideNavComponent,
     SideBarComponent,
     TopNavComponent,
-    NavLinkComponent
+    NavLinkComponent,
+    SecondaryTopNavComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +33,7 @@ import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link
     MatGridListModule,
     MatMenuModule,
     MatIconModule,
+    MatDividerModule,
     RouterModule
   ],
   exports: [

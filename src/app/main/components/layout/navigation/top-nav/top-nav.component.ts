@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Colors } from 'src/app/shared/enums/colors';
+import { PageIcon } from 'src/app/shared/enums/page-icon';
 
 @Component({
   selector: 'app-top-nav',
@@ -9,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class TopNavComponent implements OnInit, OnDestroy {
   routeHeader = ''
+  headerIcon = '';
 
   private _routerSubscription!: Subscription;
 
@@ -17,7 +20,14 @@ export class TopNavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.router.events.subscribe(route => {
         const routeSnapshot = route as NavigationEnd;
-        this.routeHeader = routeSnapshot.url.split('/')[1]
+        if (!routeSnapshot.url) return;
+
+        this.routeHeader = routeSnapshot.url.split('/')[1];
+        console.log(this.routeHeader);
+        
+        const iconEnum = PageIcon[this.routeHeader as keyof typeof PageIcon];
+        this.headerIcon = iconEnum.toString();
+        console.log(this.headerIcon)
       });
   }
 

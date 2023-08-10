@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Colors } from 'src/app/shared/enums/colors';
 
 @Component({
   selector: 'app-members',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class MembersComponent {
 
+  get color(): typeof Colors {
+    return Colors;
+  }
 }

@@ -4,6 +4,18 @@
     justify-content: space-between;
     height: inherit;
 
+    .logo-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: .5rem 0;
+        padding: .5rem .5rem;
+
+        .divider {
+            height: 3rem;
+        }
+    }
+
     .nav-links {
         display: inherit;
         flex-direction: inherit;
@@ -13,12 +25,19 @@
         width: 100%;
         text-align: center;
 
-        button {
-            width: inherit;
+        .nav-button {
+            gap: .5rem;
+
+            &--icon {
+                transform: scale(1.5);
+            }
         }
 
-        .menu-items {
-            width: 100% !important;
+        button {
+            width: inherit;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: row-reverse;
         }
     }
 

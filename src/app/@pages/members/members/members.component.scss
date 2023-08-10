@@ -1,0 +1,15 @@
+.members-nav {
+    display: flex;
+    justify-content: space-between;
+
+    .general-member-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        
+        .vertical-divider {
+            margin: 0 .5rem;
+            height: 2rem;
+        }
+    }
+}
