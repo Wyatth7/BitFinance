@@ -7,6 +7,7 @@ import { NavMemberTotalComponent } from './components/nav-member-total/nav-membe
 import {MatDividerModule} from '@angular/material/divider'
 import {MatSelectModule} from '@angular/material/select';
 import { SecondaryNavComponent } from './components/secondary-nav/secondary-nav.component'
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SecondaryNavComponent } from './components/secondary-nav/secondary-nav.
     MembersRoutingModule,
     SharedModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule
   ]
 })
 export class MembersModule { }
