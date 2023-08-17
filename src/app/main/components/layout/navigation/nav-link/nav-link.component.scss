@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    color: var(--white) !important;
 
     &-icon {
         height: 100%;
@@ -14,9 +15,12 @@
         vertical-align: middle;
         text-align: center;
     }
+
+    &:hover {
+        background-color: var(--nav-button-hover);
+    }
 }
 
 .nav-link-active {
-    background-color: var(--blue);
-    color: var(--white) !important;
+    background-color: var(--nav-button-hover);
 }

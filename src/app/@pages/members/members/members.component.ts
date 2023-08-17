@@ -8,7 +8,7 @@ import { MemberModel } from 'src/app/shared/models/members/member-model';
   styleUrls: ['./members.component.scss']
 })
 export class MembersComponent {
-  displayedColumns = ['name']
+  displayedColumns = ['name', 'joinedOn', 'endingOn', 'nextPayment', 'negativeBalance']
   memberData: MemberModel[] = [
     {
     name: "John Doe",
