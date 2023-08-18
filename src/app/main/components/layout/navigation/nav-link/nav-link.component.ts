@@ -9,4 +9,5 @@ export class NavLinkComponent {
   @Input() icon?: string;
   @Input() text: string = '';
   @Input() route: string = '';
+  @Input() tooltip: string = '';
 }

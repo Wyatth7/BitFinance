@@ -4,13 +4,15 @@
       <h2 class="page-header--text">{{ routeHeader | titlecase }}</h2>
    </div>
    <div class="top-nav-actions">
-      <button mat-mini-fab >
+      <!-- This tooltip needs to be dynamically updated based on the page -->
+      <button mat-mini-fab matTooltip="Add Members" >
          <mat-icon>add</mat-icon>
       </button> 
       <button 
          mat-mini-fab 
          class="top-nav-button"
-         [matMenuTriggerFor]="notificationsMenu">
+         [matMenuTriggerFor]="notificationsMenu"
+         matTooltip="My Notifications">
          <mat-icon>notifications</mat-icon>
       </button>
       <mat-menu #notificationsMenu="matMenu">
