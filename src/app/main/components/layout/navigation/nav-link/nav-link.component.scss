@@ -27,21 +27,6 @@
     background-color: var(--nav-button-hover);
 }
 
-// @media only screen and (min-width: 1160px) {
-//     .nav-link {
-//         justify-content: flex-start;
-
-//         &-icon {
-//             transform: scale(1);
-//         }
-        
-//         &-text {
-//             display: block;
-//             text-align: center;
-//         }
-//     }
-// }
-
 @media only screen and (min-width: 1420px) {
     .nav-link {
         justify-content: flex-start;

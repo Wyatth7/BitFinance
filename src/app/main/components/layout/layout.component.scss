@@ -14,7 +14,7 @@
 }
 
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1420px) {
     .dashboard {
 
         &-content {
@@ -23,7 +23,7 @@
     }
 }
 
-@media only screen and (min-width: 1160px) {
+@media only screen and (min-width: 1580px) {
     .dashboard {
 
         &-content {
@@ -31,3 +31,12 @@
         }
     }
 }
+
+// @media only screen and (min-width: 1160px) {
+//     .dashboard {
+
+//         &-content {
+//             left: 12%;
+//         }
+//     }
+// }

@@ -10,7 +10,7 @@
 }
 
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1420px) {
     .side-bar {
         max-width: 25%;
         width: 15%;
@@ -18,9 +18,15 @@
     }
 }
 
-@media only screen and (min-width: 1160px) {
+@media only screen and (min-width: 1580px) {
     .side-bar {
         width: 12%;
-        max-width: 12%;
     }
 }
+
+// @media only screen and (min-width: 1160px) {
+//     .side-bar {
+//         width: 12%;
+//         max-width: 12%;
+//     }
+// }
