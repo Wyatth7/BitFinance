@@ -1,5 +1,4 @@
 .top-nav {
-    background-color: var(--bk-grey);
     position: fixed;
     top: 0;
     right: 0;
@@ -10,6 +9,7 @@
     width: 85%;
     border-bottom: 1px solid var(--div-grey);
     padding: 1rem;
+    background-color: var(--dark-blue);
 
     &-actions {
         display: inherit;
@@ -27,10 +27,12 @@
 
     &--icon {
         transform: scale(1.2);
-        color: var(--blue);
+        color: var(--white);
+
     }
 
     &--text {
         font-size: 1.5rem;
+        color: var(--white);
     }
 }
