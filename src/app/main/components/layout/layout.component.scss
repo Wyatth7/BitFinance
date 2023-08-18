@@ -4,11 +4,30 @@
 
     &-content {
         position: fixed;
-        left: 15%;
         top: 10%;
+        left: 8%;
         right: 0;
         bottom: 0;
         background-color: var(--bk-grey);
         border-top: 2px solid var(--div-grey);
+    }
+}
+
+
+@media only screen and (min-width: 1400px) {
+    .dashboard {
+
+        &-content {
+            left: 15%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1160px) {
+    .dashboard {
+
+        &-content {
+            left: 12%;
+        }
     }
 }

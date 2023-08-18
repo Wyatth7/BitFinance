@@ -1,5 +1,5 @@
 export enum PageIcon {
-    overview = 'timer',
+    overview = 'bar_chart_4_bars',
     members = 'group',
     schedule = 'event',
     equipment = 'fitness_center',

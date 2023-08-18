@@ -4,7 +4,23 @@
     left: 0;
     bottom: 0;
     height: 100vh;
-    max-width: 25%;
-    width: 15%;
+    width: 8%;
+    max-width: 12%;
     background-color: var(--dark-blue);
+}
+
+
+@media only screen and (min-width: 1400px) {
+    .side-bar {
+        max-width: 25%;
+        width: 15%;
+
+    }
+}
+
+@media only screen and (min-width: 1160px) {
+    .side-bar {
+        width: 12%;
+        max-width: 12%;
+    }
 }
