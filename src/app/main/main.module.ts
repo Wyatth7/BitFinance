@@ -17,7 +17,7 @@ import { TopNavComponent } from './components/layout/navigation/top-nav/top-nav.
 import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link.component';
 import { SecondaryTopNavComponent } from './components/layout/navigation/secondary-top-nav/secondary-top-nav.component';
 import { AuthenticationComponent } from './components/authentication/authentication/authentication.component'
-
+import {SharedModule} from './../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { AuthenticationComponent } from './components/authentication/authenticat
     MatIconModule,
     MatDividerModule,
     RouterModule,
-    MatTooltipModule
+    MatTooltipModule,
+    SharedModule
   ],
   exports: [
     LayoutComponent,

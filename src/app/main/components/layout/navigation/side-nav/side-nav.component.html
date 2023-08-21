@@ -22,11 +22,14 @@
                     [matMenuTriggerFor]="sideNavMenu"
                     matTooltip="My Account"
                     matTooltipPosition="right">
-                    <div class="menu-button--user">
-                        <h2 class="name">Frank Hawkins</h2>
-                        <p class="role">administrator</p>
+                    <app-user-circle-image *appRenderOnResize="{showStart: 100, showEnd: 1420}" userInitials="FH"></app-user-circle-image>
+                    <div *appRenderOnResize="{showStart: 1420, showEnd: 4000}" class="menu-button--expanded-user">
+                        <div class="user">
+                            <h2 class="name">Frank Hawkins</h2>
+                            <p class="role">administrator</p>
+                        </div>
+                        <mat-icon class="icon">expand_more</mat-icon>
                     </div>
-                    <mat-icon class="menu-button--icon">expand_more</mat-icon>
                 </button>
             <mat-menu #sideNavMenu="matMenu" xPosition="after">
                 <button mat-menu-item (click)="logoutClicked()">Log out</button>

@@ -1,0 +1,13 @@
+.user-circle-image {
+    background-color: var(--green);
+    border: 2px solid var(--white);
+    border-radius: 1000%;
+    padding: .4rem;
+    
+    &--initials {
+        color: var(--white);
+        letter-spacing: .1rem;
+        font-size: 1.4rem;
+        font-weight: 400;
+    }
+}
