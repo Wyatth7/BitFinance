@@ -3,11 +3,9 @@
         <div class="top-content">
 
             <div class="logo">
-                <div class="logo-content">
-                    <mat-icon>fitness_center</mat-icon>
-                    <mat-divider class="divider" [vertical]="true"></mat-divider>
-                    <h2 class="logo-text">The Key Fitness</h2>
-                </div>
+                <img 
+                    src="./../../../../../../assets/gym-1048852_640.png"
+                    class="logo--img" />
             </div>
             <div class="nav-links">
                 <app-nav-link tooltip="Gym Overview" route="/overview/view" icon="bar_chart_4_bars" text="Overview"></app-nav-link>
@@ -19,16 +17,19 @@
         </div>
             <div class="menu">
                 <button 
-                    class="nav-button" 
+                    class="menu-button" 
                     mat-button 
                     [matMenuTriggerFor]="sideNavMenu"
                     matTooltip="My Account"
                     matTooltipPosition="right">
-                    <h2 class="mat-menu-title">Wyatt Hardin</h2>
-                    <mat-icon class="nav-button--icon">expand_more</mat-icon>
+                    <div class="menu-button--user">
+                        <h2 class="name">Frank Hawkins</h2>
+                        <p class="role">administrator</p>
+                    </div>
+                    <mat-icon class="menu-button--icon">expand_more</mat-icon>
                 </button>
             <mat-menu #sideNavMenu="matMenu" xPosition="after">
-                <button mat-menu-item>Log out</button>
+                <button mat-menu-item (click)="logoutClicked()">Log out</button>
                 <button mat-menu-item>Settings</button>
             </mat-menu>
         </div>

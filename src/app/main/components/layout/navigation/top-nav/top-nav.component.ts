@@ -22,8 +22,10 @@ export class TopNavComponent implements OnInit, OnDestroy {
         const routeSnapshot = route as NavigationEnd;
         if (!routeSnapshot.url) return;
 
+
         this.routeHeader = routeSnapshot.url.split('/')[1];
         console.log(this.routeHeader);
+        if (this.routeHeader === 'users') return;
         
         const iconEnum = PageIcon[this.routeHeader as keyof typeof PageIcon];
         this.headerIcon = iconEnum.toString();
@@ -32,6 +34,8 @@ export class TopNavComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this._routerSubscription.unsubscribe();
+      if (this._routerSubscription) {
+        this._routerSubscription.unsubscribe();
+      }
   }
 }

@@ -4,6 +4,20 @@
     justify-content: space-between;
     height: inherit;
 
+    .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        border-right: 1px solid var(--nav-button-hover);
+        border-bottom: 1px solid var(--nav-button-hover);
+
+        &--img {
+            height: auto;
+            width: 70%;
+        }
+    }
+
     .logo-content {
         display: flex;
         align-items: center;
@@ -29,9 +43,30 @@
         width: 100%;
         text-align: center;
         
-        .nav-button {
-            gap: .5rem;
+        .menu-button {
+            gap: 1rem;
             background-color: var(--nav-button-hover) !important;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            white-space: nowrap !important;
+            min-width: max-content !important;
+            
+           
+            &--user {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .name {
+                    font-size: 1.2rem;
+                    line-height: 1.4rem;
+                }
+
+                .role {
+                    font-size: .8rem;
+                }
+            }
             
             &--icon {
                 transform: scale(1.5);

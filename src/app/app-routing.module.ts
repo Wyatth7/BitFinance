@@ -5,7 +5,7 @@ const routes: Routes = [
   {
     path: 'overview', 
     loadChildren: () => import('./@pages/overview/overview.module')
-      .then(m => m.OverviewModule)
+      .then(o => o.OverviewModule)
   },
   {
     path: 'members', 
@@ -13,8 +13,23 @@ const routes: Routes = [
       .then(m => m.MembersModule)
   },
   {
+    path: 'users',
+    loadChildren: () => import('./@pages/authentication/authentication.module')
+      .then(a => a.AuthenticationModule)
+  },
+  {
+    path: 'login',
+    redirectTo: 'users/login',
+    pathMatch: 'full'
+  },
+  {
     path: '', 
     redirectTo: '/overview/view', 
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: '/overview/view',
     pathMatch: 'full'
   }
 ];

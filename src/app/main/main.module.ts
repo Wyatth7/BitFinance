@@ -15,7 +15,8 @@ import { SideNavComponent } from './components/layout/navigation/side-nav/side-n
 import { SideBarComponent } from './components/layout/side-bar/side-bar.component'
 import { TopNavComponent } from './components/layout/navigation/top-nav/top-nav.component';
 import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link.component';
-import { SecondaryTopNavComponent } from './components/layout/navigation/secondary-top-nav/secondary-top-nav.component'
+import { SecondaryTopNavComponent } from './components/layout/navigation/secondary-top-nav/secondary-top-nav.component';
+import { AuthenticationComponent } from './components/authentication/authentication/authentication.component'
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { SecondaryTopNavComponent } from './components/layout/navigation/seconda
     SideBarComponent,
     TopNavComponent,
     NavLinkComponent,
-    SecondaryTopNavComponent
+    SecondaryTopNavComponent,
+    AuthenticationComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { SecondaryTopNavComponent } from './components/layout/navigation/seconda
     MatTooltipModule
   ],
   exports: [
-    LayoutComponent
+    LayoutComponent,
+    AuthenticationComponent
   ]
 })
 export class MainModule { }

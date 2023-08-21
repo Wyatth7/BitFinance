@@ -3,14 +3,13 @@
     flex-direction: column;
 
     .members-content {
-        position: relative;
 
         .members-table {
             position: absolute;
             margin: 1rem;
             overflow-y: auto;
             bottom: 0;
-            top: 0;
+            top: 12%;
             right: 0;
             left: 0;
         }

@@ -1,1 +1,5 @@
-<app-layout></app-layout>
+<app-layout *ngIf="isAuthenticated; else authenticate"></app-layout>
+
+<ng-template #authenticate>
+    <app-authentication></app-authentication>
+</ng-template>
