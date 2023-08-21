@@ -4,7 +4,7 @@ import { Directive, HostListener, Input, OnInit, TemplateRef, ViewContainerRef }
   selector: '[appRenderOnResize]'
 })
 export class RenderOnResizeDirective implements OnInit {
-  private _hasView: boolean = false;
+  private _isRendered: boolean = false;
 
   @Input() appRenderOnResize!: {showStart: number, showEnd: number}; 
 
@@ -24,18 +24,13 @@ export class RenderOnResizeDirective implements OnInit {
   renderComponent(event: any) {
     const targetWidth = event.target.innerWidth;
 
-    console.log(this.appRenderOnResize)
-
-    if (targetWidth >= this.appRenderOnResize.showStart && targetWidth < this.appRenderOnResize.showEnd && !this._hasView) {
+    if (targetWidth >= this.appRenderOnResize.showStart && targetWidth < this.appRenderOnResize.showEnd && !this._isRendered) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
-      this._hasView = true;
-      console.log('show');
+      this._isRendered = true;
       
-    } else if (targetWidth < this.appRenderOnResize.showStart || targetWidth >= this.appRenderOnResize.showEnd && this._hasView) {
+    } else if (targetWidth < this.appRenderOnResize.showStart || targetWidth >= this.appRenderOnResize.showEnd && this._isRendered) {
       this.viewContainerRef.clear();
-      this._hasView = false;
-      console.log('no show');
-      
+      this._isRendered = false;
     }
   }
 }
