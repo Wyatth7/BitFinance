@@ -8,13 +8,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 1rem;
         width: 100%;
         border-right: 1px solid var(--nav-button-hover);
         border-bottom: 1px solid var(--nav-button-hover);
 
         &--img {
             height: auto;
-            width: 70%;
+            width: 50%;
         }
     }
 
