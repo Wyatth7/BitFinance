@@ -6,6 +6,7 @@ import {BehaviorSubject} from 'rxjs'
 })
 export class AuthenticationService {
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  userToken$ = new BehaviorSubject<string>('');
 
   constructor() { }
 
