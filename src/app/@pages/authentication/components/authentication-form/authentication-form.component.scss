@@ -1,0 +1,38 @@
+.authentication-form-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .header-text {
+        font-size: 3.5rem;
+        color: var(--blue);
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .authentication-form {
+        border: 2px solid var(--blue);
+        border-radius: 5px;
+        padding: 2rem;
+        
+        button {
+            width: 100%;
+        }
+
+        .extra-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: .4rem;
+            
+            a {
+                color: var(--blue);
+                transition: all .2s;
+            }
+
+            a:hover {
+                color: lighten($color: #4050b5, $amount: 15)
+            }
+        }
+    }
+}

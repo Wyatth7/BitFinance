@@ -1,1 +1,12 @@
-<p>login works!</p>
+<app-authentication-form [formData]="formData">
+    <div class="login-inputs">
+        <mat-form-field focus>
+            <mat-label>Email</mat-label>
+            <input matInput type="email">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password">
+        </mat-form-field>
+    </div>
+</app-authentication-form>

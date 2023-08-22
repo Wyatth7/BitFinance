@@ -1,0 +1,23 @@
+<div class="authentication-form-wrapper">
+    <h1 class="header-text">{{ formData.pageHeader }}</h1>
+    <form class="authentication-form mat-elevation-z1">
+        <div class="form-controls">
+            <ng-content></ng-content>
+        </div>
+        <button 
+        mat-raised-button 
+        (click)="executeFormAction($event)"
+        color="primary"
+        >
+            {{ formData.actionButtonText }}
+        </button>
+        <div class="extra-actions">
+            <a 
+                [routerLink]="[formData.helperActionLeft?.actionLink]"
+            >{{ formData.helperActionLeft?.actionText }}</a>
+            <a 
+                [routerLink]="[formData.helperActionRight?.actionLink]"
+            >{{ formData.helperActionRight?.actionText }}</a>
+        </div>
+    </form>
+</div>
