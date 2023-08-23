@@ -9,15 +9,11 @@ import { AuthenticationFormModel } from 'src/app/shared/models/members/form/auth
 export class SignUpComponent {
 
   formData: AuthenticationFormModel = {
-    pageHeader: 'Sign Up',
-    actionButtonText: 'Sign Up',
+    pageHeader: 'Create Account',
+    actionButtonText: 'Create Account',
     actionAsync: async () => this.signInAction(),
     helperActionLeft: {
-      actionText: 'Forgot Password',
-      actionLink: '/users/forgotPassword'
-    },
-    helperActionRight: {
-      actionText: 'Log In',
+      actionText: 'Have an Account? Login',
       actionLink: '/users/login'
     }
   }

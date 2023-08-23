@@ -7,7 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component'
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component'
 
 
 
@@ -16,7 +17,8 @@ import { SignUpComponent } from './components/sign-up/sign-up.component'
     LoginComponent,
     AuthenticationFormComponent,
     ForgotPasswordComponent,
-    SignUpComponent
+    SignUpComponent,
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

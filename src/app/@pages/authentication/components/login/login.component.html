@@ -1,12 +1,14 @@
 <app-authentication-form [formData]="formData">
     <div class="login-inputs">
-        <mat-form-field focus>
+        <mat-form-field focus appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput type="email">
+            <input matInput type="email" required>
+            <mat-error>You must enter a valid email address</mat-error>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput type="password">
+            <input matInput type="password" required>
+            <mat-error>You must enter a password</mat-error>
         </mat-form-field>
     </div>
 </app-authentication-form>
