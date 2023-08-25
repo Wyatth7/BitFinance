@@ -1,21 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuardChild } from './shared/activation-guards/auth-guard';
+import { accessLoginPageGuard } from './shared/activation-guards/auth-pages-guard';
 
 const routes: Routes = [
   {
     path: 'overview', 
     loadChildren: () => import('./@pages/overview/overview.module')
-      .then(o => o.OverviewModule)
+      .then(o => o.OverviewModule),
+    canActivateChild: [authGuardChild]
   },
   {
     path: 'members', 
     loadChildren: () => import('./@pages/members/members.module')
-      .then(m => m.MembersModule)
+      .then(m => m.MembersModule),
+    canActivateChild: [authGuardChild]
   },
   {
     path: 'users',
     loadChildren: () => import('./@pages/authentication/authentication.module')
-      .then(a => a.AuthenticationModule)
+      .then(a => a.AuthenticationModule),
+    canActivateChild: [accessLoginPageGuard]
   },
   {
     path: 'login',
@@ -23,13 +28,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: '', 
-    redirectTo: '/overview/view', 
-    pathMatch: 'full'
-  },
-  {
     path: '**',
-    redirectTo: '/overview/view',
+    redirectTo: '/users/login',
     pathMatch: 'full'
   }
 ];

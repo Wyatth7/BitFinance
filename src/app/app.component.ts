@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService } from './shared/services/authentication.service';
+import { AuthenticationService } from './shared/services/authentication/authentication.service';
 import {Subscription} from 'rxjs'
 
 @Component({
@@ -16,9 +16,13 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private readonly _authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
+    // subscribe to user auth status
       this.isAuthenticatedSubscription = this._authenticationService
         .isAuthenticated$
         .subscribe(authenticated => this.isAuthenticated = authenticated);
+
+    // check if user's auth token is valid/exists 
+      this._authenticationService.checkTokenStatus();
   }
 
   ngOnDestroy(): void {

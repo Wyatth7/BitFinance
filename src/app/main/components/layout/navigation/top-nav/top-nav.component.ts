@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationCancel, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PageIcon } from 'src/app/shared/enums/page-icon';
 
@@ -18,14 +18,7 @@ export class TopNavComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
       this.router.events.subscribe(route => {
-        const routeSnapshot = route as NavigationEnd;
-        if (!routeSnapshot.url) return;
-
-        this.routeHeader = routeSnapshot.url.split('/')[1];
-        if (this.routeHeader === 'users') return;
-        
-        const iconEnum = PageIcon[this.routeHeader as keyof typeof PageIcon];
-        this.headerIcon = iconEnum.toString();
+        this.updateRouteHeader(route);
       });
   }
 
@@ -33,5 +26,16 @@ export class TopNavComponent implements OnInit, OnDestroy {
       if (this._routerSubscription) {
         this._routerSubscription.unsubscribe();
       }
+  }
+
+  updateRouteHeader(routeSnapshot: any) {
+    if (!routeSnapshot.url || routeSnapshot.constructor.name !== NavigationEnd.name) return;
+
+    this.routeHeader = routeSnapshot.url.split('/')[1];
+    
+    if (this.routeHeader === 'users') return;
+    
+    const iconEnum = PageIcon[this.routeHeader as keyof typeof PageIcon];
+    this.headerIcon = iconEnum.toString();
   }
 }
