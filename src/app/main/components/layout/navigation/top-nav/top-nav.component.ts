@@ -17,8 +17,16 @@ export class TopNavComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-      this.router.events.subscribe(route => {
-        this.updateRouteHeader(route);
+      this.router.events.subscribe((route: any) => {
+
+        let routeSnapshot = route;
+        if (route.constructor.name === 'Scroll' && route.routerEvent.constructor.name === 'NavigationEnd') {
+          routeSnapshot = {
+            url: route.routerEvent.url
+          }
+        }
+    
+        this.updateRouteHeader(routeSnapshot);
       });
   }
 
@@ -29,7 +37,7 @@ export class TopNavComponent implements OnInit, OnDestroy {
   }
 
   updateRouteHeader(routeSnapshot: any) {
-    if (!routeSnapshot.url || routeSnapshot.constructor.name !== NavigationEnd.name) return;
+    if (!routeSnapshot.url) return;
 
     this.routeHeader = routeSnapshot.url.split('/')[1];
     

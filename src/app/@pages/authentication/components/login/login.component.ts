@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationFormModel } from 'src/app/shared/models/members/form/authentication-form-model';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -22,11 +23,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  constructor(private authService: AuthenticationService) {}
+
   ngOnInit(): void {
     
   }
 
   async signInAction(): Promise<void> {
-    console.log('User Signed In');
+    this.authService.login();
   }
 }

@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'view', 
     component: MembersComponent, 
     canActivate: [requiredRoleGuard],
-    data: {roles: [Roles.manager]}
+    data: {roles: [Roles.manager, Roles.administrator]}
   }
 ];
 

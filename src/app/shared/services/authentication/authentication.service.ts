@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs'
 import { Roles } from '../../enums/authentication/roles';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthenticationService {
 
   // token and roles come from login and should be saved to local storage.
   private _userToken: string = '';
-  private _userRole: Roles = 4;
+  private _userRole: Roles = 1;
 
   public get isAuthenticated() {
     return this._isAuthenticated;
@@ -25,15 +26,17 @@ export class AuthenticationService {
     return this._userRole;
   }
 
-  constructor() {
-    this.toggleAuthenticated(false);
+  constructor(private router: Router) {
+    
    }
 
   // This will call a login API
   // If login, set role and auth status
   login() {
+    this._userRole = Roles.administrator;
+    this._userToken = 'token here'
     this.toggleAuthenticated(true);
-    this._userRole = 1;
+    this.router.navigateByUrl('/overview/view')
   }
 
   /**
@@ -63,9 +66,14 @@ export class AuthenticationService {
     // update isAuthenticated observable as needed
 
     // if valid token, return true
-    this.toggleAuthenticated(false);
-    return false;
-    
     // if invalid token, return false; clear token
+    if (this.userToken) {
+      this.toggleAuthenticated(true);
+      return true;
+    } else {
+      this.toggleAuthenticated(false)
+      return false;
+    }
+    
   }
 }
