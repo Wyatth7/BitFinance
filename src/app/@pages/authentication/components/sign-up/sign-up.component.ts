@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { passwordValidator } from 'src/app/shared/form/validators/password-validator';
 import { AuthenticationFormModel } from 'src/app/shared/models/members/form/authentication-form-model';
 
 @Component({
@@ -8,6 +10,30 @@ import { AuthenticationFormModel } from 'src/app/shared/models/members/form/auth
 })
 export class SignUpComponent {
 
+  constructor(private formBulider: FormBuilder) {}
+
+  formControls = this.formBulider.group({
+    name: this.formBulider.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]]
+    }),
+    email: ['', [Validators.required, Validators.email]],
+    passwords: this.formBulider.group({
+      password: [
+        '',
+       [ Validators.required,
+        Validators.minLength(8),
+        passwordValidator()]
+      ],
+      confirmPassword: [
+        '',
+        [Validators.required,
+        Validators.minLength(8),
+        passwordValidator()]
+      ],
+    })
+  })
+
   formData: AuthenticationFormModel = {
     pageHeader: 'Create Account',
     actionButtonText: 'Create Account',
@@ -15,10 +41,11 @@ export class SignUpComponent {
     helperActionLeft: {
       actionText: 'Have an Account? Login',
       actionLink: '/users/login'
-    }
+    },
+    form: this.formControls
   }
 
   async signInAction(): Promise<void> {
-    console.log('User Signed Up');
+    console.log(this.formControls);
   }
 }

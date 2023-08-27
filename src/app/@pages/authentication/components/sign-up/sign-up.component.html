@@ -1,31 +1,50 @@
 <app-authentication-form [formData]="formData">
-    <div class="form-group-2x">
+    <div [formGroup]="formControls">
+        <div class="form-group-2x" formGroupName="name">
+            <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input 
+                    matInput 
+                    required 
+                    formControlName="firstName">
+                <mat-error>You must enter a first name</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input 
+                    matInput 
+                    required 
+                    formControlName="lastName">
+                <mat-error>You must enter a last name</mat-error>
+            </mat-form-field>
+        </div>
         <mat-form-field appearance="outline">
-            <mat-label>First Name</mat-label>
-            <input matInput required>
-            <mat-error>You must enter a first name</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Last Name</mat-label>
-            <input matInput required>
-            <mat-error>You must enter a last name</mat-error>
-        </mat-form-field>
-    </div>
-    <mat-form-field appearance="outline">
         <mat-label type="email">Email</mat-label>
-        <input matInput required>
+        <input 
+            matInput 
+            required
+            formControlName="email">
         <mat-error>You must enter a valid email address</mat-error>
-    </mat-form-field>
-    <div class="form-group-2x">
-        <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" required>
-            <mat-error>You must enter a password</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Confirm Password</mat-label>
-            <input matInput type="password" required>
-            <mat-error>You must confirm your password</mat-error>
-        </mat-form-field>
+        <div class="form-group-2x" formGroupName="passwords">
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input 
+                    matInput 
+                    type="password" 
+                    required 
+                    formControlName="password">
+                <mat-error>You must enter a password</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Confirm Password</mat-label>
+                <input 
+                    matInput 
+                    type="password" 
+                    required 
+                    formControlName="confirmPassword">
+                <mat-error>A confirmation password must match the password</mat-error>
+            </mat-form-field>
+        </div>
     </div>
 </app-authentication-form>

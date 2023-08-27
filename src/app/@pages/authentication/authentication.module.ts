@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -25,7 +26,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     AuthenticationRoutingModule,
     MatButtonModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthenticationModule { }

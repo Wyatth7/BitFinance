@@ -6,4 +6,5 @@ export interface AuthenticationFormModel {
     actionAsync: () => Promise<void>,
     helperActionLeft?: HelperActionModel;
     helperActionRight?: HelperActionModel;
+    form: any;
 }

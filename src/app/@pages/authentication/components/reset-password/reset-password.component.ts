@@ -15,7 +15,8 @@ export class ResetPasswordComponent {
     helperActionLeft: {
       actionText: 'Have an Account? Login',
       actionLink: '/users/login'
-    }
+    },
+    form: {}
   }
 
   async resetPasswordAction(): Promise<void> {

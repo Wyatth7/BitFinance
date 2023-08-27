@@ -19,7 +19,8 @@ export class ForgotPasswordComponent {
     helperActionRight: {
       actionText: 'New? Create Account',
       actionLink: '/users/signup'
-    }
+    },
+    form: {}
   }
 
   async signInAction(): Promise<void> {
