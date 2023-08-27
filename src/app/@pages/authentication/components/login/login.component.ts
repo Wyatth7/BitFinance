@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { passwordValidator } from 'src/app/shared/form/validators/password-validator';
 import { AuthenticationFormModel } from 'src/app/shared/models/members/form/authentication-form-model';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 
@@ -17,7 +18,11 @@ export class LoginComponent implements OnInit {
     
     formControls = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8), 
+        passwordValidator()
+      ]]
     })
   
     formData: AuthenticationFormModel = {
@@ -41,6 +46,6 @@ export class LoginComponent implements OnInit {
 
   async signInAction(): Promise<void> {
     console.log(this.formData.form)
-    // this.authService.login();
+    this.authService.login();
   }
 }

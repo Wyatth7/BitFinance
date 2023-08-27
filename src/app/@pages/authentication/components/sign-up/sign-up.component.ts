@@ -37,7 +37,7 @@ export class SignUpComponent {
   formData: AuthenticationFormModel = {
     pageHeader: 'Create Account',
     actionButtonText: 'Create Account',
-    actionAsync: async () => this.signInAction(),
+    actionAsync: async () => this.signUpAction(),
     helperActionLeft: {
       actionText: 'Have an Account? Login',
       actionLink: '/users/login'
@@ -45,7 +45,7 @@ export class SignUpComponent {
     form: this.formControls
   }
 
-  async signInAction(): Promise<void> {
+  async signUpAction(): Promise<void> {
     console.log(this.formControls);
   }
 }

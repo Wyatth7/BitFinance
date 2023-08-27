@@ -14,6 +14,8 @@ export class AuthenticationFormComponent {
   async executeFormAction(event: any): Promise<void> {
     event.preventDefault();
 
+    if (!this.formData.form.valid) return;
+
     await this.formData.actionAsync();
   }
 }

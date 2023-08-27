@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthenticationFormModel } from 'src/app/shared/models/members/form/authentication-form-model';
 
 @Component({
@@ -8,10 +9,16 @@ import { AuthenticationFormModel } from 'src/app/shared/models/members/form/auth
 })
 export class ForgotPasswordComponent {
 
+  constructor(private formBuilder: FormBuilder) {}
+
+  formControls = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email]]
+  })
+
   formData: AuthenticationFormModel = {
     pageHeader: 'Forgot Password',
     actionButtonText: 'Send Password Reset Email',
-    actionAsync: async () => this.signInAction(),
+    actionAsync: async () => this.forgotPasswordAction(),
     helperActionLeft: {
       actionText: 'Have an Account? Login',
       actionLink: '/users/login'
@@ -20,10 +27,10 @@ export class ForgotPasswordComponent {
       actionText: 'New? Create Account',
       actionLink: '/users/signup'
     },
-    form: {}
+    form: this.formControls
   }
 
-  async signInAction(): Promise<void> {
+  async forgotPasswordAction(): Promise<void> {
     console.log('Password Link Sent');
   }
 }
