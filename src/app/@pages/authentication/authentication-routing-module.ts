@@ -6,10 +6,26 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignUpComponent},
-  {path: 'forgotPassword', component: ForgotPasswordComponent},
-  {path: 'resetPassword', component: ResetPasswordComponent},
+  {
+    path: 'login', 
+    component: LoginComponent, 
+    title: 'Login | City Gym'
+  },
+  {
+    path: 'signup',
+    component: SignUpComponent, 
+    title: 'Sign Up | City Gym'
+  },
+  {
+    path: 'forgotPassword', 
+    component: ForgotPasswordComponent, 
+    title: 'Forgot Password | City Gym'
+  },
+  {
+    path: 'resetPassword',
+    component: ResetPasswordComponent,
+    title: 'Reset Password | City Gym'
+  },
   {path: '**', component: LoginComponent},
 ];
 

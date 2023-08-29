@@ -9,6 +9,7 @@ const routes: Routes = [
     path: 'view', 
     component: MembersComponent, 
     canActivate: [requiredRoleGuard],
+    title: 'Members | City Gym',
     data: {roles: [Roles.manager, Roles.administrator]}
   }
 ];

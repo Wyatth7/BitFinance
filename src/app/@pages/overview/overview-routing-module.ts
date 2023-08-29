@@ -3,7 +3,11 @@ import { RouterModule, Routes } from "@angular/router";
 import { OverviewComponent } from "./overview/overview.component";
 
 const routes: Routes = [
-    {path: 'view', component: OverviewComponent}
+  {
+      path: 'view', 
+      component: OverviewComponent,
+      title: 'Overview | City Gym'
+  }
 ]
 
 @NgModule({
