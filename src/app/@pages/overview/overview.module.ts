@@ -6,6 +6,8 @@ import {MatCardModule} from '@angular/material/card';
 import { CardComponent } from './components/cards/card/card.component';
 import { MultiCardComponent } from './components/cards/multi-card/multi-card.component'
 import { OverviewRoutingModule } from './overview-routing-module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -18,7 +20,9 @@ import { OverviewRoutingModule } from './overview-routing-module';
   imports: [
     CommonModule,
     MatCardModule,
-    OverviewRoutingModule
+    OverviewRoutingModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 export class OverviewModule { }

@@ -11,7 +11,7 @@ export class AuthenticationService {
   private _isAuthenticated = false;
 
   // token and roles come from login and should be saved to local storage.
-  private _userToken: string = '';
+  private _userToken: string = 'valid token';
   private _userRole: Roles = 1;
 
   public get isAuthenticated() {
@@ -26,9 +26,7 @@ export class AuthenticationService {
     return this._userRole;
   }
 
-  constructor(private router: Router) {
-    
-   }
+  constructor(private router: Router) {}
 
   // This will call a login API
   // If login, set role and auth status

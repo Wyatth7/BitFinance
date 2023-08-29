@@ -1,8 +1,19 @@
-<mat-card>
+<mat-card class="card">
     <mat-card-header>
-        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-title>
+            <div class="title-content">
+                <mat-icon class="title-content--icon" >{{ icon }}</mat-icon>
+                <p>{{ title }}</p>
+            </div>
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ subTitle }}
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <ng-content></ng-content>
     </mat-card-content>
+    <mat-card-actions [align]="'end'">
+        <button class="card-button" mat-flat-button color="primary">{{ buttonTitle }}</button>
+    </mat-card-actions>
 </mat-card>

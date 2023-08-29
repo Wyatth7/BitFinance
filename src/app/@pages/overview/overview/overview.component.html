@@ -1,4 +1,18 @@
 <div class="overview">
-    <div class="test-card-size"></div>
-    <p>overview works!</p>
+    <app-card 
+        icon="group" 
+        title="Members" 
+        subTitle="This Months Members" 
+        buttonTitle="View Members">
+        <div class="member-card">
+            <div class="members-group">
+                <h1 [style.color]="color.green" class="members-group--number">55</h1>
+                <p class="members-group--text">Sign Ups</p>
+            </div>
+            <div class="members-group">
+                <h1 [style.color]="color.red" class="members-group--number">75</h1>
+                <p class="members-group--text">Not Renewing</p>
+            </div>
+        </div>
+    </app-card>
 </div>

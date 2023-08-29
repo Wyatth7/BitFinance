@@ -1,0 +1,22 @@
+.card {
+    width: fit-content;
+
+    .title-content {
+        display: flex;
+        align-items: center;
+        gap: .7rem;
+        color: var(--blue);
+        
+        &--icon {
+            scale: 1.4;
+        }
+        
+        p {
+            font-size: 1.8rem;
+        }
+    }
+
+    .card-button {
+        margin-top: .5rem;
+    }
+}
