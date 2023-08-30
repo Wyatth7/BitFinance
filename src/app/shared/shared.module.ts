@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SecondaryTopNavComponent } from './components/secondary-top-nav/secondary-top-nav.component';
 import { UserCircleImageComponent } from './components/user/user-circle-image/user-circle-image.component';
 import { RenderOnResizeDirective } from './directives/render-on-resize.directive';
+import { RequiredRoleViewComponent } from './components/required-role-view/required-role-view.component';
 
 
 
@@ -10,7 +11,8 @@ import { RenderOnResizeDirective } from './directives/render-on-resize.directive
   declarations: [
     SecondaryTopNavComponent,
     UserCircleImageComponent,
-    RenderOnResizeDirective
+    RenderOnResizeDirective,
+    RequiredRoleViewComponent
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { RenderOnResizeDirective } from './directives/render-on-resize.directive
   exports: [
     SecondaryTopNavComponent,
     UserCircleImageComponent,
-    RenderOnResizeDirective
+    RenderOnResizeDirective,
+    RequiredRoleViewComponent
   ]
 })
 export class SharedModule { }

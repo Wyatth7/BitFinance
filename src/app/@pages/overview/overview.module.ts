@@ -8,6 +8,8 @@ import { MultiCardComponent } from './components/cards/multi-card/multi-card.com
 import { OverviewRoutingModule } from './overview-routing-module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -22,7 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     OverviewRoutingModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTooltipModule,
+    SharedModule
   ]
 })
 export class OverviewModule { }

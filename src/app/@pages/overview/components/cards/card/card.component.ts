@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Roles } from 'src/app/shared/enums/authentication/roles';
 
 @Component({
   selector: 'app-card',
@@ -12,6 +13,7 @@ export class CardComponent {
   @Input() icon: string = '';
   @Input() buttonTitle: string = '';
   @Input() route: string = '';
+  @Input() requiredButtonRoles?: Roles[];
 
   constructor(private router: Router) {}
 

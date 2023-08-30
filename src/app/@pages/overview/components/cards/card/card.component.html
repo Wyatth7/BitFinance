@@ -13,7 +13,14 @@
     <mat-card-content>
         <ng-content></ng-content>
     </mat-card-content>
+    <app-required-role-view [roles]="requiredButtonRoles || []">
     <mat-card-actions [align]="'end'">
-        <button (click)="navigateToRoute()" class="card-button" mat-flat-button color="primary">{{ buttonTitle }}</button>
-    </mat-card-actions>
+            <button (click)="navigateToRoute()"
+            class="card-button"
+            mat-flat-button 
+            color="primary"
+            [matTooltip]="buttonTitle"
+            >{{ buttonTitle }}</button>
+        </mat-card-actions>
+    </app-required-role-view>
 </mat-card>
