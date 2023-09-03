@@ -1,0 +1,42 @@
+.dashboard {
+    height: 100vh;
+    width: 100%;
+
+    &-content {
+        position: fixed;
+        top: 8%;
+        left: 8%;
+        right: 0;
+        bottom: 0;
+        background-color: var(--bk-grey);
+        border-top: 2px solid var(--div-grey);
+    }
+}
+
+
+@media only screen and (min-width: 1420px) {
+    .dashboard {
+
+        &-content {
+            left: 15%;
+        }
+    }
+}
+
+@media only screen and (min-width: 1580px) {
+    .dashboard {
+
+        &-content {
+            left: 12%;
+        }
+    }
+}
+
+// @media only screen and (min-width: 1160px) {
+//     .dashboard {
+
+//         &-content {
+//             left: 12%;
+//         }
+//     }
+// }

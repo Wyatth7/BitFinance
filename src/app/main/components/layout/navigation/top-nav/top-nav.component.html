@@ -1,0 +1,33 @@
+<div class="top-nav">
+   <div class="page-header">
+      <mat-icon class="page-header--icon">{{ headerIcon }}</mat-icon>
+      <h2 class="page-header--text">{{ routeHeader | titlecase }}</h2>
+   </div>
+   <div class="top-nav-actions">
+      <!-- This tooltip needs to be dynamically updated based on the page -->
+      <button mat-mini-fab matTooltip="Add Members" >
+         <mat-icon>add</mat-icon>
+      </button> 
+      <button 
+         mat-mini-fab 
+         class="top-nav-button"
+         [matMenuTriggerFor]="notificationsMenu"
+         matTooltip="My Notifications">
+         <mat-icon>notifications</mat-icon>
+      </button>
+      <mat-menu #notificationsMenu="matMenu">
+         <div class="notifications-menu">
+            <div class="notifications-empty">
+               <p class="notifications-empty--text">You have no new notifications.</p>
+               <button 
+                  mat-raised-button 
+                  color="primary" 
+                  class="notifications-empty--button"
+               >
+                  Close
+               </button>
+            </div>
+         </div>
+      </mat-menu>
+   </div>
+</div>

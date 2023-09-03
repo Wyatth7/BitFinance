@@ -1,0 +1,43 @@
+.authentication-wrapper {
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    background-color: var(--div-grey);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &--top-header {
+        width: 100%;
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            width: 100%;
+            align-items: center;
+            padding: 1rem;
+            
+            .title {
+                color: var(--blue);
+                margin: auto 0;
+                font-weight: 500;
+                font-size: 1.5rem;
+            }
+            
+            .logo-img {
+                height: auto;
+                width: 12%;
+                margin: auto;
+            }
+        }
+    }
+
+    &--content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+}

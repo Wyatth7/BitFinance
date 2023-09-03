@@ -1,0 +1,8 @@
+<div class="nav-member-total">
+    <span 
+        *ngIf="focusText"
+        [style.color]="focusColor ? focusColor.toString() : ''"
+        class="nav-member-total--focus-text">{{ focusText | number }}</span>
+    <p class="nav-member-total--plain-text">{{ plainText }}</p>
+</div>
+

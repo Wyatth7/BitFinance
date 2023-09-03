@@ -1,0 +1,30 @@
+.overview {
+    padding: 1rem;
+
+    .member-card {
+        margin-top: 1rem;
+        display: flex;
+        gap: 1rem;
+        width: 15rem;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+
+        .members-group {
+            display: flex;
+            flex-direction: column;
+            
+            &--number {
+                font-size: 2.5rem;
+                color: var(--green);
+                font-weight: 500;
+            }
+            
+            &--text {
+                font-size: 1rem;
+                color: var(--letter-grey);
+            }
+        }
+    }
+}

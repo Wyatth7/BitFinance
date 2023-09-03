@@ -1,0 +1,42 @@
+<app-side-bar>
+    <div class="side-nav">
+        <div class="top-content">
+
+            <div class="logo">
+                <img 
+                    src="./../../../../../../assets/city_gym_logo.png"
+                    class="logo--img" />
+            </div>
+            <div class="nav-links">
+                <app-nav-link tooltip="Gym Overview" route="/overview/view" icon="bar_chart_4_bars" text="Overview"></app-nav-link>
+                <app-required-role-view [roles]="[1]">
+                    <app-nav-link tooltip="Memberships" route="/members/view" icon="group" text="Members"></app-nav-link>
+                </app-required-role-view>
+                <app-nav-link tooltip="Schedules" route="schedule/view" icon="event" text="Schedule"></app-nav-link>
+                <app-nav-link tooltip="Equipment" route="equipment/view" icon="fitness_center" text="Equipment"></app-nav-link>
+                <app-nav-link tooltip="Payments" route="payments/view" icon="payments" text="Payments"></app-nav-link>
+            </div>
+        </div>
+            <div class="menu">
+                <button 
+                    class="menu-button" 
+                    mat-button 
+                    [matMenuTriggerFor]="sideNavMenu"
+                    matTooltip="My Account"
+                    matTooltipPosition="right">
+                    <app-user-circle-image *appRenderOnResize="{showStart: 100, showEnd: 1420}" userInitials="FH"></app-user-circle-image>
+                    <div *appRenderOnResize="{showStart: 1420, showEnd: 4000}" class="menu-button--expanded-user">
+                        <div class="user">
+                            <h2 class="name">Frank Hawkins</h2>
+                            <p class="role">administrator</p>
+                        </div>
+                        <mat-icon class="icon">expand_more</mat-icon>
+                    </div>
+                </button>
+            <mat-menu #sideNavMenu="matMenu" xPosition="after">
+                <button mat-menu-item (click)="logoutClicked()">Log out</button>
+                <button mat-menu-item>Settings</button>
+            </mat-menu>
+        </div>
+    </div>
+</app-side-bar>

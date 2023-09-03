@@ -1,0 +1,42 @@
+.nav-link {
+    width: 100%;
+    font-size: 1.1rem;
+    padding: 1.5rem  !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white) !important;
+
+    &-icon {
+        transform: scale(1.6);
+    }
+
+    &-text {
+        vertical-align: middle;
+        text-align: center;
+        display: none;
+    }
+
+    &:hover {
+        background-color: var(--nav-button-hover);
+    }
+}
+
+.nav-link-active {
+    background-color: var(--nav-button-hover);
+}
+
+@media only screen and (min-width: 1420px) {
+    .nav-link {
+        justify-content: flex-start;
+
+        &-icon {
+            transform: scale(1);
+        }
+        
+        &-text {
+            display: block;
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>
+            <div class="title-content">
+                <mat-icon class="title-content--icon" >{{ icon }}</mat-icon>
+                <p>{{ title }}</p>
+            </div>
+        </mat-card-title>
+        <mat-card-subtitle>
+            {{ subTitle }}
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ng-content></ng-content>
+    </mat-card-content>
+    <app-required-role-view [roles]="requiredButtonRoles || []">
+    <mat-card-actions [align]="'end'">
+            <button (click)="navigateToRoute()"
+            class="card-button"
+            mat-flat-button 
+            color="primary"
+            [matTooltip]="buttonTitle"
+            >{{ buttonTitle }}</button>
+        </mat-card-actions>
+    </app-required-role-view>
+</mat-card>
