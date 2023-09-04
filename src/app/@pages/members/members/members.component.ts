@@ -10,7 +10,7 @@ import { MemberModel } from 'src/app/shared/models/members/member-model';
   styleUrls: ['./members.component.scss']
 })
 export class MembersComponent {
-  renderUserType!: MatChipListboxChange;
+  renderUserType: string = 'users';
 
   selection = new SelectionModel<MemberModel>(true, []);
   displayedColumns = ['select', 'name', 'username', 'email', 'role', 'status']
@@ -169,7 +169,12 @@ export class MembersComponent {
     this.selection.select(...this.memberData);
   }
 
-  selectedChip($event: MatChipListboxChange): void {
-      this.selectedChip = $event.value;
+  change($event: MatChipListboxChange): void {
+    if (!$event.value) {
+      this.renderUserType = 'users';
+      return;
+    }
+
+      this.renderUserType = $event.value;
   }
 }

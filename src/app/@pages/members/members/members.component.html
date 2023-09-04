@@ -5,9 +5,9 @@
             <h1>Current Members</h1>
             <mat-divider class="vertical-divider" vertical></mat-divider>
             <div class="chips">
-               <mat-chip-listbox (change)="selectedChip($event)">
-                <mat-chip-option selected>Users</mat-chip-option>
-                <mat-chip-option>Requested Users</mat-chip-option>
+               <mat-chip-listbox (change)="change($event)">
+                    <mat-chip-option selected>Users</mat-chip-option>
+                    <mat-chip-option>Requested Users</mat-chip-option>
                </mat-chip-listbox>
             </div>
         </div>
