@@ -6,8 +6,8 @@
             <mat-divider class="vertical-divider" vertical></mat-divider>
             <div class="chips">
                <mat-chip-listbox (change)="change($event)">
-                    <mat-chip-option selected>Users</mat-chip-option>
-                    <mat-chip-option>Requested Users</mat-chip-option>
+                    <mat-chip-option matTooltip="View Created Users" selected>Users</mat-chip-option>
+                    <mat-chip-option matTooltip="View Requested Users">Requested Users</mat-chip-option>
                </mat-chip-listbox>
             </div>
         </div>
