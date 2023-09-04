@@ -3,18 +3,14 @@
         <div class="members-nav--info">
             <app-nav-member-total
             [focusColor]="color.blue"
-            focusText="5000"
-            plainText="memberships"></app-nav-member-total>
+            focusText="15"
+            plainText="members"></app-nav-member-total>
             <mat-divider class="vertical-divider" vertical></mat-divider>
-            <app-nav-member-total plainText="Today's Memberships"></app-nav-member-total>
-            <app-nav-member-total
-            [focusColor]="color.green"
-            focusText="55"
-            plainText="new"></app-nav-member-total>
-            <app-nav-member-total
-            [focusColor]="color.red"
-            focusText="75"
-            plainText="ended"></app-nav-member-total>
+            <button mat-flat-button color="primary"
+            class="create-button">
+                <mat-icon class="icon">person_add</mat-icon>
+                <p>New User</p>
+            </button>
         </div>
         <div class="members-nav--actions">
             <app-nav-member-total

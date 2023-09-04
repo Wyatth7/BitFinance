@@ -8,6 +8,12 @@ import {MatDividerModule} from '@angular/material/divider'
 import {MatSelectModule} from '@angular/material/select';
 import { SecondaryNavComponent } from './components/secondary-nav/secondary-nav.component'
 import { MatTableModule } from '@angular/material/table'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatChipsModule} from '@angular/material/chips';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +27,12 @@ import { MatTableModule } from '@angular/material/table'
     SharedModule,
     MatDividerModule,
     MatSelectModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatChipsModule
   ]
 })
 export class MembersModule { }
