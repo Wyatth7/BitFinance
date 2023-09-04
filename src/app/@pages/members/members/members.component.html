@@ -13,10 +13,8 @@
                 </div>
             </div>
             <div class="right-content">
-                <app-nav-member-total
-                    plainText="Sort By:">
-                </app-nav-member-total>
-                <mat-select [(value)]="listSortValue">
+                <label for="listSort">Sort By</label>
+                <mat-select name="listSort" [(value)]="listSortValue">
                     <mat-option value="newest">Newest</mat-option>
                     <mat-option value="oldest">Oldest</mat-option>
                     <mat-option value="lastName">Last Name</mat-option>
