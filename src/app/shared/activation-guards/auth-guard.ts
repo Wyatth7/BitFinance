@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = (
             return isAuthenticated;
         }
 
-        return router.parseUrl('/users/login')
+        return router.parseUrl('/auth/login')
 };
 
 export const authGuardChild: CanActivateChildFn = (

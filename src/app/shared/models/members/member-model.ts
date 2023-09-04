@@ -1,8 +1,11 @@
+import { Roles } from "../../enums/authentication/roles";
+
 export interface MemberModel {
-    name: string;
-    membershipCreated: string;
-    nextPayment: string;
-    membershipEnding: string;
-    hasNegativeBalance: boolean;
-    email: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  profilePicture: string;
+  role: Roles;
+  isActive: boolean;
   }

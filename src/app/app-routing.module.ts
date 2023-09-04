@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuardChild } from './shared/activation-guards/auth-guard';
 import { accessLoginPageGuard } from './shared/activation-guards/auth-pages-guard';
+import { requiredRoleGuard } from './shared/activation-guards/required-role-guard';
+import { Roles } from './shared/enums/authentication/roles';
 
 const routes: Routes = [
   {
@@ -11,25 +13,25 @@ const routes: Routes = [
     canActivateChild: [authGuardChild]
   },
   {
-    path: 'members', 
+    path: 'users', 
     loadChildren: () => import('./@pages/members/members.module')
       .then(m => m.MembersModule),
-    canActivateChild: [authGuardChild]
+    canActivateChild: [authGuardChild],
   },
   {
-    path: 'users',
+    path: 'auth',
     loadChildren: () => import('./@pages/authentication/authentication.module')
       .then(a => a.AuthenticationModule),
     canActivateChild: [accessLoginPageGuard]
   },
   {
     path: 'login',
-    redirectTo: 'users/login',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: '/users/login',
+    redirectTo: '/auth/login',
     pathMatch: 'full'
   }
 ];

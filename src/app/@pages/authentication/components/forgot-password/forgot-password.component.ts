@@ -21,11 +21,11 @@ export class ForgotPasswordComponent {
     actionAsync: async () => this.forgotPasswordAction(),
     helperActionLeft: {
       actionText: 'Have an Account? Login',
-      actionLink: '/users/login'
+      actionLink: '/auth/login'
     },
     helperActionRight: {
       actionText: 'New? Create Account',
-      actionLink: '/users/signup'
+      actionLink: '/auth/signup'
     },
     form: this.formControls
   }

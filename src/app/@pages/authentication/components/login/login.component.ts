@@ -31,11 +31,11 @@ export class LoginComponent implements OnInit {
       actionAsync: async () => this.signInAction(),
       helperActionLeft: {
         actionText: 'Forgot Password',
-        actionLink: '/users/forgotPassword'
+        actionLink: '/auth/forgotPassword'
       },
       helperActionRight: {
         actionText: 'New? Create Account',
-        actionLink: '/users/signup'
+        actionLink: '/auth/signup'
       },
       form: this.formControls
     }
