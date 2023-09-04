@@ -1,19 +1,19 @@
 <div class="overview">
     <app-card 
-        route="/members/view"
+        route="/users/view"
         icon="group" 
-        title="Members" 
-        subTitle="This Months Members" 
-        buttonTitle="Members"
+        title="Users" 
+        subTitle="This Months Users" 
+        buttonTitle="View Users"
         [requiredButtonRoles]="[1]">
         <div class="member-card">
             <div class="members-group">
-                <h1 [style.color]="color.green" class="members-group--number">{{205 | number}}</h1>
+                <h1 [style.color]="color.green" class="members-group--number">{{4 | number}}</h1>
                 <p class="members-group--text">Sign Ups</p>
             </div>
             <div class="members-group">
-                <h1 [style.color]="color.red" class="members-group--number">{{106 | number}}</h1>
-                <p class="members-group--text">Not Renewing</p>
+                <h1 [style.color]="color.red" class="members-group--number">{{2 | number}}</h1>
+                <p class="members-group--text">On Leave</p>
             </div>
         </div>
     </app-card>

@@ -13,6 +13,19 @@
             margin: 0 .5rem;
             height: 2rem;
         }
+
+        .create-button {
+
+
+            .icon {
+                vertical-align: bottom;
+            }
+
+            p {
+                height: 100%;
+                vertical-align: middle;
+            }
+        }
     }
 
     &--actions {
