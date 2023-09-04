@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersComponent } from './members/members.component';
 import { requiredRoleGuard } from 'src/app/shared/activation-guards/required-role-guard';
 import { Roles } from 'src/app/shared/enums/authentication/roles';
+import { CreateEditUserComponent } from './components/create-edit-user/create-edit-user.component';
 
 const routes: Routes = [
   {
@@ -10,7 +11,14 @@ const routes: Routes = [
     component: UsersComponent, 
     canActivate: [requiredRoleGuard],
     title: 'Users | City Gym',
-    data: {roles: [Roles.manager, Roles.administrator]}
+    data: {roles: [Roles.administrator]}
+  },
+  {
+    path: 'create',
+    component: CreateEditUserComponent,
+    canActivate: [requiredRoleGuard],
+    title: 'Create User | ',
+    data: {roles: [Roles.administrator]}
   }
 ];
 

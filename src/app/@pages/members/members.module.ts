@@ -16,6 +16,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MemberTableComponent } from './components/tables/member-table/member-table.component';
 import { RequestedMemberTableComponent } from './components/tables/requested-member-table/requested-member-table.component';
+import { CreateEditUserComponent } from './components/create-edit-user/create-edit-user.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { RequestedMemberTableComponent } from './components/tables/requested-mem
     NavMemberTotalComponent,
     SecondaryNavComponent,
     MemberTableComponent,
-    RequestedMemberTableComponent
+    RequestedMemberTableComponent,
+    CreateEditUserComponent
   ],
   imports: [
     CommonModule,

@@ -9,6 +9,7 @@ export const requiredRoleGuard: CanActivateFn = (
     state: RouterStateSnapshot
 ) => {
     const authService = inject(AuthenticationService);
+    const router = inject(Router);
 
     const roles = route.data['roles'] as Roles[];
 
@@ -16,5 +17,5 @@ export const requiredRoleGuard: CanActivateFn = (
         return true;
     }
 
-    return false;
+    return router.parseUrl('/overview/view')
 }

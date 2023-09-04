@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavigationCancel, NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PageIcon } from 'src/app/shared/enums/page-icon';
 import { TopNavActionModel } from 'src/app/shared/models/top-nav/action/top-nav-action';
