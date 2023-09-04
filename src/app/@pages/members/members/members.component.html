@@ -1,14 +1,26 @@
 <div class="members">
-   <app-members-secondary-nav></app-members-secondary-nav>
    <div class="members-content">
         <div class="members-content--header">
-            <h1>Current Users</h1>
-            <mat-divider class="vertical-divider" vertical></mat-divider>
-            <div class="chips">
-               <mat-chip-listbox (change)="change($event)">
-                    <mat-chip-option matTooltip="View Created Users" selected>Users</mat-chip-option>
-                    <mat-chip-option matTooltip="View Requested Users">Requested Users</mat-chip-option>
-               </mat-chip-listbox>
+            <div class="left-content">
+
+                <h1>Current Users</h1>
+                <mat-divider class="vertical-divider" vertical></mat-divider>
+                <div class="chips">
+                    <mat-chip-listbox (change)="change($event)">
+                        <mat-chip-option matTooltip="View Created Users" selected>Users</mat-chip-option>
+                        <mat-chip-option matTooltip="View Requested Users">Requested Users</mat-chip-option>
+                    </mat-chip-listbox>
+                </div>
+            </div>
+            <div class="right-content">
+                <app-nav-member-total
+                    plainText="Sort By:">
+                </app-nav-member-total>
+                <mat-select [(value)]="listSortValue">
+                    <mat-option value="newest">Newest</mat-option>
+                    <mat-option value="oldest">Oldest</mat-option>
+                    <mat-option value="lastName">Last Name</mat-option>
+                </mat-select>
             </div>
         </div>
        <div class="members-table">

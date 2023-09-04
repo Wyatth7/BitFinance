@@ -11,6 +11,7 @@ import { MemberModel } from 'src/app/shared/models/members/member-model';
 })
 export class UsersComponent {
   renderUserType: string = 'users';
+  listSortValue = 'newest'
 
   selection = new SelectionModel<MemberModel>(true, []);
   displayedColumns = ['select', 'name', 'username', 'email', 'role', 'status']

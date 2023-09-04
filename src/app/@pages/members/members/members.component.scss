@@ -5,7 +5,7 @@
     .members-content {
         display: flex;
         flex-direction: column;
-        top: 12%;
+        top: 0;
         position: absolute;
         margin: 1rem;
         overflow-y: hidden;
@@ -18,17 +18,28 @@
             display: flex;
             gap: 1rem;
             align-items: center;
+            justify-content: space-between;
 
-            .vertical-divider {
-                margin: 0 .5rem;
-                height: 2rem;
+            .left-content {
+                display: flex;
+                align-items: center;
+           
+                .vertical-divider {
+                    margin: 0 .5rem;
+                    height: 2rem;
+                }
+                
+                h1 {
+                    padding: 0 !important;
+                    margin: 0;
+                }
             }
-    
 
-            h1 {
-                padding: 0 !important;
-                margin: 0;
+            .right-content {
+                display: inherit;
+                align-items: inherit;
             }
+
         }
 
         .members-table {
