@@ -4,6 +4,9 @@ import { SecondaryTopNavComponent } from './components/secondary-top-nav/seconda
 import { UserCircleImageComponent } from './components/user/user-circle-image/user-circle-image.component';
 import { RenderOnResizeDirective } from './directives/render-on-resize.directive';
 import { RequiredRoleViewComponent } from './components/required-role-view/required-role-view.component';
+import { TableComponent } from './components/tables/table/table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
@@ -12,16 +15,20 @@ import { RequiredRoleViewComponent } from './components/required-role-view/requi
     SecondaryTopNavComponent,
     UserCircleImageComponent,
     RenderOnResizeDirective,
-    RequiredRoleViewComponent
+    RequiredRoleViewComponent,
+    TableComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   exports: [
     SecondaryTopNavComponent,
     UserCircleImageComponent,
     RenderOnResizeDirective,
-    RequiredRoleViewComponent
+    RequiredRoleViewComponent,
+    TableComponent
   ]
 })
 export class SharedModule { }

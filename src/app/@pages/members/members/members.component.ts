@@ -1,8 +1,5 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { MatChipListboxChange } from '@angular/material/chips';
-import { Roles } from 'src/app/shared/enums/authentication/roles';
-import { Colors } from 'src/app/shared/enums/colors';
 import { MemberModel } from 'src/app/shared/models/members/member-model';
 
 @Component({
@@ -11,11 +8,27 @@ import { MemberModel } from 'src/app/shared/models/members/member-model';
   styleUrls: ['./members.component.scss']
 })
 export class UsersComponent {
-  renderUserType: string = 'users';
+  renderUsers: boolean = true;
   listSortValue = 'newest'
+  tableTitle = 'Users'
 
-  selection = new SelectionModel<MemberModel>(true, []);
-  displayedColumns = ['select', 'name', 'username', 'email', 'role', 'status']
+  change($event: MatChipListboxChange): void {
+    if ($event.value === undefined) {
+      this.renderUsers = true;
+      this.tableTitle = 'Users';
+      return;
+    }
+
+      this.renderUsers = $event.value;
+
+      if (this.renderUsers) {
+        this.tableTitle = 'Users'
+        return;
+      }
+
+      this.tableTitle = 'Requested Users'
+  }
+  
   userData: MemberModel[] = [
     {
       email: "john@example.com",
@@ -154,33 +167,60 @@ export class UsersComponent {
     },
   ];
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.userData.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  toggleAllRows() {
-    if (this.isAllSelected()) {
-      this.selection.clear();
-      return;
+  requestedUserData: MemberModel[] = [
+    {
+      email: "bob@example.com",
+      firstName: "Bob",
+      lastName: "Brown",
+      userName: "bobbrown",
+      profilePicture: "profile4.jpg",
+      role: 4,
+      isActive: true,
+    },
+    {
+      email: "susan@example.com",
+      firstName: "Susan",
+      lastName: "Davis",
+      userName: "susand",
+      profilePicture: "profile5.jpg",
+      role: 4,
+      isActive: true,
+    },
+    {
+      email: "michael@example.com",
+      firstName: "Michael",
+      lastName: "Wilson",
+      userName: "michaelw",
+      profilePicture: "profile6.jpg",
+      role: 4,
+      isActive: true,
+    },
+    {
+      email: "emily@example.com",
+      firstName: "Emily",
+      lastName: "Anderson",
+      userName: "emilya",
+      profilePicture: "profile7.jpg",
+      role: 4,
+      isActive: true,
+    },
+    {
+      email: "david@example.com",
+      firstName: "David",
+      lastName: "Martinez",
+      userName: "davidm",
+      profilePicture: "profile8.jpg",
+      role: 4,
+      isActive: true,
+    },
+    {
+      email: "laura@example.com",
+      firstName: "Laura",
+      lastName: "Garcia",
+      userName: "laurag",
+      profilePicture: "profile9.jpg",
+      role: 4,
+      isActive: true,
     }
-
-    this.selection.select(...this.userData);
-  }
-
-  change($event: MatChipListboxChange): void {
-    if (!$event.value) {
-      this.renderUserType = 'users';
-      return;
-    }
-
-      this.renderUserType = $event.value;
-  }
-
-  getRole(roleId: number): string {
-    return Roles[roleId]
-  }
+  ];
 }

@@ -14,13 +14,17 @@ import { MatIconModule } from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatChipsModule} from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MemberTableComponent } from './components/tables/member-table/member-table.component';
+import { RequestedMemberTableComponent } from './components/tables/requested-member-table/requested-member-table.component';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
     NavMemberTotalComponent,
-    SecondaryNavComponent
+    SecondaryNavComponent,
+    MemberTableComponent,
+    RequestedMemberTableComponent
   ],
   imports: [
     CommonModule,
