@@ -40,7 +40,7 @@ export class SignUpComponent {
     actionAsync: async () => this.signUpAction(),
     helperActionLeft: {
       actionText: 'Have an Account? Login',
-      actionLink: '/users/login'
+      actionLink: '/auth/login'
     },
     form: this.formControls
   }

@@ -11,25 +11,25 @@ const routes: Routes = [
     canActivateChild: [authGuardChild]
   },
   {
-    path: 'members', 
+    path: 'users', 
     loadChildren: () => import('./@pages/members/members.module')
       .then(m => m.MembersModule),
     canActivateChild: [authGuardChild]
   },
   {
-    path: 'users',
+    path: 'auth',
     loadChildren: () => import('./@pages/authentication/authentication.module')
       .then(a => a.AuthenticationModule),
     canActivateChild: [accessLoginPageGuard]
   },
   {
     path: 'login',
-    redirectTo: 'users/login',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: '/users/login',
+    redirectTo: '/auth/login',
     pathMatch: 'full'
   }
 ];

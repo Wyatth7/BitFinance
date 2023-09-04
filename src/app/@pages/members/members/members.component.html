@@ -2,7 +2,7 @@
    <app-members-secondary-nav></app-members-secondary-nav>
    <div class="members-content">
         <div class="members-content--header">
-            <h1>Current Members</h1>
+            <h1>Current Users</h1>
             <mat-divider class="vertical-divider" vertical></mat-divider>
             <div class="chips">
                <mat-chip-listbox (change)="change($event)">
@@ -12,7 +12,7 @@
             </div>
         </div>
        <div class="members-table">
-                <table mat-table [dataSource]="memberData">
+                <table mat-table [dataSource]="userData">
                     
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef>

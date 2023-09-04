@@ -41,7 +41,7 @@ export class TopNavComponent implements OnInit, OnDestroy {
 
     this.routeHeader = routeSnapshot.url.split('/')[1];
     
-    if (this.routeHeader === 'users') return;
+    if (this.routeHeader === 'auth') return;
     
     const iconEnum = PageIcon[this.routeHeader as keyof typeof PageIcon];
     this.headerIcon = iconEnum.toString();

@@ -14,6 +14,6 @@ export class SideNavComponent {
 
   logoutClicked(): void {
     this._authenticationService.toggleAuthenticated();
-    this._router.navigateByUrl('/users/login')
+    this._router.navigateByUrl('/auth/login')
   }
 }

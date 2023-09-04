@@ -9,12 +9,12 @@ import { MemberModel } from 'src/app/shared/models/members/member-model';
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.scss']
 })
-export class MembersComponent {
+export class UsersComponent {
   renderUserType: string = 'users';
 
   selection = new SelectionModel<MemberModel>(true, []);
   displayedColumns = ['select', 'name', 'username', 'email', 'role', 'status']
-  memberData: MemberModel[] = [
+  userData: MemberModel[] = [
     {
       email: "john@example.com",
       firstName: "John",
@@ -155,7 +155,7 @@ export class MembersComponent {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.memberData.length;
+    const numRows = this.userData.length;
     return numSelected === numRows;
   }
 
@@ -166,7 +166,7 @@ export class MembersComponent {
       return;
     }
 
-    this.selection.select(...this.memberData);
+    this.selection.select(...this.userData);
   }
 
   change($event: MatChipListboxChange): void {

@@ -14,7 +14,7 @@ export class ResetPasswordComponent {
     actionAsync: async () => this.resetPasswordAction(),
     helperActionLeft: {
       actionText: 'Have an Account? Login',
-      actionLink: '/users/login'
+      actionLink: '/auth/login'
     },
     form: {}
   }
