@@ -7,6 +7,7 @@ import { RequiredRoleViewComponent } from './components/required-role-view/requi
 import { TableComponent } from './components/tables/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { TopNavService } from './services/top-nav.service';
 
 
 
@@ -28,7 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     UserCircleImageComponent,
     RenderOnResizeDirective,
     RequiredRoleViewComponent,
-    TableComponent
+    TableComponent,
   ]
 })
 export class SharedModule { }

@@ -1,16 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { MemberModel } from 'src/app/shared/models/members/member-model';
+import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
 @Component({
   selector: 'app-members',
   templateUrl: './members.component.html',
   styleUrls: ['./members.component.scss']
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   renderUsers: boolean = true;
   listSortValue = 'newest'
   tableTitle = 'Users'
+
+  constructor(private topNavService: TopNavService) {}
+
+  ngOnInit(): void {
+      this.topNavService.setTopNavAction({
+        show: true,
+        icon: 'person_add',
+        tooltip: 'Create A User',
+        action: () => {}
+      })
+  }
 
   change($event: MatChipListboxChange): void {
     if ($event.value === undefined) {

@@ -5,8 +5,11 @@
    </div>
    <div class="top-nav-actions">
       <!-- This tooltip needs to be dynamically updated based on the page -->
-      <button mat-mini-fab matTooltip="Add Members" >
-         <mat-icon>add</mat-icon>
+      <button *ngIf="actionButtonData.show"
+         mat-mini-fab 
+         [matTooltip]="actionButtonData.tooltip"
+         (click)="actionButtonData.action()" >
+         <mat-icon>{{ actionButtonData.icon }}</mat-icon>
       </button> 
       <button 
          mat-mini-fab 
