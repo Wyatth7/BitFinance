@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { MatChipListboxChange } from '@angular/material/chips';
+import { Roles } from 'src/app/shared/enums/authentication/roles';
 import { Colors } from 'src/app/shared/enums/colors';
 import { MemberModel } from 'src/app/shared/models/members/member-model';
 
@@ -40,7 +41,7 @@ export class UsersComponent {
       lastName: "Johnson",
       userName: "alicej",
       profilePicture: "profile3.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
     {
@@ -49,7 +50,7 @@ export class UsersComponent {
       lastName: "Brown",
       userName: "bobbrown",
       profilePicture: "profile4.jpg",
-      role: 2,
+      role: 4,
       isActive: true,
     },
     {
@@ -58,7 +59,7 @@ export class UsersComponent {
       lastName: "Davis",
       userName: "susand",
       profilePicture: "profile5.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
     {
@@ -67,7 +68,7 @@ export class UsersComponent {
       lastName: "Wilson",
       userName: "michaelw",
       profilePicture: "profile6.jpg",
-      role: 2,
+      role: 4,
       isActive: true,
     },
     {
@@ -76,7 +77,7 @@ export class UsersComponent {
       lastName: "Anderson",
       userName: "emilya",
       profilePicture: "profile7.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
     {
@@ -85,7 +86,7 @@ export class UsersComponent {
       lastName: "Martinez",
       userName: "davidm",
       profilePicture: "profile8.jpg",
-      role: 2,
+      role: 4,
       isActive: true,
     },
     {
@@ -94,7 +95,7 @@ export class UsersComponent {
       lastName: "Garcia",
       userName: "laurag",
       profilePicture: "profile9.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
     {
@@ -103,7 +104,7 @@ export class UsersComponent {
       lastName: "Moore",
       userName: "williamm",
       profilePicture: "profile10.jpg",
-      role: 2,
+      role: 4,
       isActive: true,
     },
     {
@@ -112,7 +113,7 @@ export class UsersComponent {
       lastName: "Taylor",
       userName: "oliviat",
       profilePicture: "profile11.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
     {
@@ -121,7 +122,7 @@ export class UsersComponent {
       lastName: "Thomas",
       userName: "jamest",
       profilePicture: "profile12.jpg",
-      role: 2,
+      role: 4,
       isActive: true,
     },
     {
@@ -130,7 +131,7 @@ export class UsersComponent {
       lastName: "Walker",
       userName: "avaw",
       profilePicture: "profile13.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
     {
@@ -139,7 +140,7 @@ export class UsersComponent {
       lastName: "Perez",
       userName: "noahp",
       profilePicture: "profile14.jpg",
-      role: 2,
+      role: 4,
       isActive: true,
     },
     {
@@ -148,7 +149,7 @@ export class UsersComponent {
       lastName: "Harris",
       userName: "miah",
       profilePicture: "profile15.jpg",
-      role: 1,
+      role: 4,
       isActive: true,
     },
   ];
@@ -177,5 +178,9 @@ export class UsersComponent {
     }
 
       this.renderUserType = $event.value;
+  }
+
+  getRole(roleId: number): string {
+    return Roles[roleId]
   }
 }

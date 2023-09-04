@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="right-content">
-                <label for="listSort">Sort By</label>
+                <label for="listSort">Order By:</label>
                 <mat-select name="listSort" [(value)]="listSortValue">
                     <mat-option value="newest">Newest</mat-option>
                     <mat-option value="oldest">Oldest</mat-option>
@@ -58,7 +58,7 @@
                     
                     <ng-container matColumnDef="role">
                         <th mat-header-cell *matHeaderCellDef> Role </th>
-                        <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+                        <td mat-cell *matCellDef="let element"> {{getRole(element.role) | titlecase}} </td>
                     </ng-container>
                     
                     <ng-container matColumnDef="status">
