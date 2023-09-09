@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   // token and roles come from login and should be saved to local storage.
   private _userToken: string = 'valid token';
-  private _userRole: Roles = 2;
+  private _userRole: Roles = 1;
 
   public get isAuthenticated() {
     return this._isAuthenticated;

@@ -6,4 +6,5 @@ export interface CreateUserModel {
     email: string;
     password: string;
     role: Roles;
+    requested?: boolean;
 }

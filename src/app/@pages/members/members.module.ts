@@ -17,6 +17,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MemberTableComponent } from './components/tables/member-table/member-table.component';
 import { RequestedMemberTableComponent } from './components/tables/requested-member-table/requested-member-table.component';
 import { CreateEditUserComponent } from './components/create-edit-user/create-edit-user.component';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -40,7 +47,13 @@ import { CreateEditUserComponent } from './components/create-edit-user/create-ed
     MatIconModule,
     MatExpansionModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule
   ]
 })
 export class MembersModule { }

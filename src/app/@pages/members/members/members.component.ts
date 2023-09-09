@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatChipListboxChange } from '@angular/material/chips';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberModel } from 'src/app/shared/models/members/member-model';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
@@ -14,20 +15,27 @@ export class UsersComponent implements OnInit {
   listSortValue = 'newest'
   tableTitle = 'Users'
 
-  constructor(private topNavService: TopNavService, private functions: Functions) {}
+  constructor(private topNavService: TopNavService,
+     private functions: Functions,
+     private router: Router,
+     private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<void> {
       this.topNavService.setTopNavAction({
         show: true,
         icon: 'person_add',
         tooltip: 'Create A User',
-        action: () => {}
+        action: () => this.navigateToCreate()
       })
 
       const call = httpsCallable(this.functions, 'testFunc')
       const res = await call();
       console.log(res);
       
+  }
+
+  navigateToCreate() {
+    this.router.navigate(['../create'], {relativeTo: this.route})
   }
 
   change($event: MatChipListboxChange): void {
