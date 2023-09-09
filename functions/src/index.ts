@@ -12,7 +12,6 @@
 
 import {initializeApp} from "firebase-admin/app";
 
-
 initializeApp();
 
 export {testFunc} from './http/test';

@@ -25,7 +25,9 @@ export const createUser = onRequest(
                 ...user
             });
 
-            res.status(201);
+            res.status(201).json({
+                result: { uid }
+            })
 
         } catch (error: any) {
             logger.error(error.message);
