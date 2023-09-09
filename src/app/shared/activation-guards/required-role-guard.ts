@@ -1,5 +1,4 @@
 import { inject } from "@angular/core";
-import {Location} from '@angular/common';
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
 import { AuthenticationService } from "../services/authentication/authentication.service";
 import { Roles } from "../enums/authentication/roles";
