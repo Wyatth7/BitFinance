@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "accounting-app-test"
+  },
+  "targets": {
+    "accounting-app-test": {
+      "hosting": {
+        "gym-manager": [
+          "accounting-app-test"
+        ]
+      }
+    }
   }
 }
