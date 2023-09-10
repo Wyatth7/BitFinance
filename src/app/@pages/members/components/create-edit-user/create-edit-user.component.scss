@@ -10,9 +10,14 @@
         }
     }
 
+    &--title {
+        color: var(--blue);
+    }
+
     .form-group-2x {
         display: flex;
         gap: 1rem;
         justify-content: space-between;
     }
 }
+

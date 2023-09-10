@@ -20,6 +20,8 @@ export class UserService {
     const createUserFunction = httpsCallable(this.functions, UserFunctions.createUser)
 
     try {
+      console.log('in service');
+      
       await createUserFunction(createUserModel)
       return true;
     } catch (error) {

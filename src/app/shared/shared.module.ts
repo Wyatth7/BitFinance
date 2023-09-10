@@ -8,6 +8,7 @@ import { TableComponent } from './components/tables/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TopNavService } from './services/top-nav.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -22,7 +23,8 @@ import { TopNavService } from './services/top-nav.service';
   imports: [
     CommonModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   exports: [
     SecondaryTopNavComponent,
