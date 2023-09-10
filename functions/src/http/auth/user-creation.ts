@@ -8,7 +8,7 @@ import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 export const createUser = onRequest(
     {cors: true},
     async (req, res) => {
-        const user = req.body.data as CreateUserModel;
+        const user = configureCreatedUser(req.body.data as CreateUserModel);
         
         if (!user) {
             res.status(400)
@@ -49,10 +49,32 @@ const createFirebaseUser = async (createUserModel: CreateUserModel): Promise<str
     const createdUser: UserRecord = await admin.auth().createUser({
         email: createUserModel.email,
         password: createUserModel.password,
-        displayName: 'test',
+        displayName: createUserModel.userName,
         emailVerified: true
         // photoURL: '', we may need this, not sure about the requirements doc.
     });
 
     return createdUser.uid;
+}
+
+/**
+ * This method takes in a user and configures properties for
+ * admin created users.
+ * @param user The user that will be created
+ * @returns An configured user
+ */
+const configureCreatedUser = (user: CreateUserModel) => {
+    let updatedUser = user;
+
+    // configure username
+    const date = new Date();
+    user.userName = `${user.firstName[0].toLowerCase()}${user.lastName.toLowerCase()}${date.getUTCMonth() + 1}${date.getUTCFullYear()}`
+
+    // configure suspended time
+    user.suspended = null;
+
+    // configure requested status
+    user.requested = false;
+
+    return updatedUser;
 }
