@@ -8,8 +8,4 @@ export interface CreateUserModel {
     password: string;
     role: UserRole;
     requested: boolean;
-    suspended: {
-        start: Date;
-        end: Date;
-    } | null;
 }
