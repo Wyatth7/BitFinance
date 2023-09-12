@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from './shared/services/authentication/authentication.service';
-import {Subscription} from 'rxjs'
-import { Functions, httpsCallable } from '@angular/fire/functions';
+import {Observable, Subscription} from 'rxjs'
+import { Functions } from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
 import { CreateUserModel } from './shared/models/users/create-user-model';
-import { Roles } from './shared/enums/authentication/roles';
-import { signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-root',
@@ -32,21 +31,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
       // set function domain based on environment
       this.functions.customDomain = environment.firebaseEmulators.customDomain;
-
-      // example cloud function call
-      // const createUser = httpsCallable(this.functions, 'auth-createUser');
-
-      // const user: CreateUserModel = {
-      //   firstName: "Wyatt",
-      //   lastName: "Hardin",
-      //   email: "whardin1010@gmail.com",
-      //   password: "s!123456",
-      //   role: Roles.administrator,
-      //   requested: false
-      // }
-
-      // createUser(user)
-      //   .then(res => console.log(res));
   }
 
   ngOnDestroy(): void {
