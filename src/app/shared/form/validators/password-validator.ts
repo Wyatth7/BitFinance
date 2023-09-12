@@ -19,3 +19,14 @@ export function passwordValidator(): ValidatorFn {
     }
 
 }
+
+export function passwordsMatchValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+
+        const pass = group.get('password')?.value;
+
+        const confirmPass = group.get('confirmPassword')?.value
+
+        return pass === confirmPass && !confirmPass.dirty ? null : { passwordMatchError: true }
+    }
+}

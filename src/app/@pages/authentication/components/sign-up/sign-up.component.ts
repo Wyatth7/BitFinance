@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { passwordValidator } from 'src/app/shared/form/validators/password-validator';
+import { AfterViewChecked, AfterViewInit, Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { passwordValidator, passwordsMatchValidator } from 'src/app/shared/form/validators/password-validator';
 import { AuthenticationFormModel } from 'src/app/shared/models/members/form/authentication-form-model';
 
 @Component({
@@ -9,8 +9,9 @@ import { AuthenticationFormModel } from 'src/app/shared/models/members/form/auth
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
-
-  constructor(private formBulider: FormBuilder) {}
+  constructor(private formBulider: FormBuilder) {
+    this.formControls.get('passwords')?.setValidators(passwordsMatchValidator())
+  }
 
   formControls = this.formBulider.group({
     name: this.formBulider.group({
@@ -31,7 +32,7 @@ export class SignUpComponent {
         Validators.minLength(8),
         passwordValidator()]
       ],
-    })
+    }, {validators: passwordsMatchValidator})
   })
 
   formData: AuthenticationFormModel = {
@@ -47,5 +48,10 @@ export class SignUpComponent {
 
   async signUpAction(): Promise<void> {
     console.log(this.formControls);
+  }
+
+  get passwordControls():boolean {
+    const passwordsGroup = this.formControls.get('passwords');
+    return (passwordsGroup?.errors?.['passwordMatchError'] && passwordsGroup.get('confirmPassword')?.dirty);
   }
 }

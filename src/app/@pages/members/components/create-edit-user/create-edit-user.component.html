@@ -53,6 +53,8 @@
                 formControlName="confirmPassword">
                 <mat-error>Passwords must match</mat-error>
             </mat-form-field>
+            <mat-error *ngIf="passwordControls" style="margin-bottom: 1rem;">Confirm password must match password</mat-error>
+            
             </div>
             <div class="half-width">
                 <mat-form-field appearance="outline">

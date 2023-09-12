@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CreateEditUserForm } from "src/app/shared/form/partials/create-edit-form";
-import { passwordValidator } from "src/app/shared/form/validators/password-validator";
+import { passwordValidator, passwordsMatchValidator } from "src/app/shared/form/validators/password-validator";
 import { SnackBarService } from "src/app/shared/services/component-services/snack-bar.service";
 import { UserService } from "src/app/shared/services/user/user.service";
 
@@ -43,7 +43,7 @@ export class CreateEditUserComponent {
             Validators.minLength(8),
             passwordValidator()]
           ],
-        }),
+        }, {validators: passwordsMatchValidator}),
         role: [4, Validators.required]
       })
 
@@ -65,5 +65,9 @@ export class CreateEditUserComponent {
         this.router.navigate(['../view'], {relativeTo: this.route})
     }
 
+    get passwordControls():boolean {
+      const passwordsGroup = this.formControls.get('passwords');
+      return (passwordsGroup?.errors?.['passwordMatchError'] && passwordsGroup.get('confirmPassword')?.dirty);
+    }
     
 }
