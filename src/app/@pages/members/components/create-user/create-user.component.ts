@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { ErrorComponent } from 'src/app/shared/components/dialogs/error/error.component';
 import { CreateEditUserForm } from 'src/app/shared/form/partials/create-edit-form';
 import { CreateUserModel } from 'src/app/shared/models/users/create-user-model';
 import { SnackBarService } from 'src/app/shared/services/component-services/snack-bar.service';
+import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
@@ -13,7 +15,8 @@ export class CreateUserComponent {
   formData!: Partial<CreateEditUserForm>;
   
   constructor(private userService: UserService,
-    private _snackBar: SnackBarService) { }
+    private _snackBar: SnackBarService,
+    private dialog: DialogService) { }
     
     async createUser() {
       console.log('creating user');
@@ -28,13 +31,19 @@ export class CreateUserComponent {
           requested: false
         }
         
-        await this.userService.createUser(createUserModel)
+        const userCreated = await this.userService.createUser(createUserModel)
         
+        if (!userCreated) throw new Error();
+
         this._snackBar.openSnackBar();
         
       } catch (error) {
         console.log(error);
         
+        this.dialog.open(ErrorComponent, {
+          title: 'User Creation Failed',
+          data: 'There was an error when attempting to create a user. This may have occurred due to attempting to create a user that already exists.'
+        })
       }
     }
     createUserFn = this.createUser.bind(this);

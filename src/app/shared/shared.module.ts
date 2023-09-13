@@ -9,6 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TopNavService } from './services/top-nav.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ErrorComponent } from './components/dialogs/error/error.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -18,13 +21,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     UserCircleImageComponent,
     RenderOnResizeDirective,
     RequiredRoleViewComponent,
-    TableComponent
+    TableComponent,
+    ErrorComponent
   ],
   imports: [
     CommonModule,
     MatTableModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -32,6 +38,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     RenderOnResizeDirective,
     RequiredRoleViewComponent,
     TableComponent,
+    ErrorComponent
   ]
 })
 export class SharedModule { }
