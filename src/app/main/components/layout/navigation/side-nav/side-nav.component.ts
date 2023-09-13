@@ -13,7 +13,7 @@ export class SideNavComponent {
     private _authenticationService: AuthenticationService) {}
 
   logoutClicked(): void {
-    this._authenticationService.toggleAuthenticated();
+    this._authenticationService.logout()
     this._router.navigateByUrl('/auth/login')
   }
 }

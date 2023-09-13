@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder) {}
     
     formControls = this.formBuilder.group({
-      email: ['', [Validators.email, Validators.required]],
+      email: ['', [ Validators.required, Validators.email,]],
       password: ['', [
         Validators.required,
         Validators.minLength(8), 
@@ -45,7 +45,13 @@ export class LoginComponent implements OnInit {
   }
 
   async signInAction(): Promise<void> {
-    console.log(this.formData.form)
-    this.authService.login();
+    console.log('form data' + this.formData.form)
+
+    const controls = this.formControls.controls;
+    
+    const email = controls.email.value || "";
+    const password = controls.password.value || "";
+
+    this.authService.login(email, password);
   }
 }

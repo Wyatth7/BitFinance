@@ -2,6 +2,11 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs'
 import { Roles } from '../../enums/authentication/roles';
 import { Router } from '@angular/router';
+import { Auth, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Functions } from '@angular/fire/functions';
+import { httpsCallable } from 'firebase/functions';
+import { UserFunctions } from '../../enums/firebase-functions/user-functions';
+import { UserModel } from '../../models/users/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,30 +16,55 @@ export class AuthenticationService {
   private _isAuthenticated = false;
 
   // token and roles come from login and should be saved to local storage.
-  private _userToken: string = 'valid token';
-  private _userRole: Roles = 1;
+  private _user?: UserModel;
+  private _userRole: Roles = Roles.loggedOut;
+  private _userToken: string | undefined = '';
 
   public get isAuthenticated() {
     return this._isAuthenticated;
   }
 
-  public get userToken() {
-    return this._userToken;
+  public get user() {
+    return this._user;
   }
 
-  public get userRole() {
+  public get userRole(): Roles {
     return this._userRole;
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private auth: Auth,
+    private functions: Functions) {}
 
   // This will call a login API
   // If login, set role and auth status
-  login() {
-    this._userRole = Roles.administrator;
-    this._userToken = 'token here'
-    this.toggleAuthenticated(true);
-    this.router.navigateByUrl('/overview/view')
+  async login(email: string, password: string) {
+
+    try {
+      await signInWithEmailAndPassword(this.auth, email, password)
+  
+      const userQuery = httpsCallable<string, UserModel>(this.functions, UserFunctions.getUser)
+      const userData = await userQuery(this.auth.currentUser?.uid)
+
+      this._user = userData.data;
+      this._userRole = userData.data.role;
+      this._userToken = await this.auth.currentUser?.getIdToken();
+
+      this.toggleAuthenticated(true);
+      this.router.navigateByUrl('/overview/view')
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  async logout() {
+    await signOut(this.auth)
+    this._user = undefined;
+    this._userToken = '';
+    this._userRole = Roles.loggedOut;
+
+    this.toggleAuthenticated();
+    this.router.navigateByUrl('/auth/login')
   }
 
   /**
@@ -65,7 +95,7 @@ export class AuthenticationService {
 
     // if valid token, return true
     // if invalid token, return false; clear token
-    if (this.userToken) {
+    if (this._userToken) {
       this.toggleAuthenticated(true);
       return true;
     } else {

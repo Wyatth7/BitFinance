@@ -5,6 +5,7 @@ import * as logger from 'firebase-functions/logger'
 import { UserRecord } from 'firebase-admin/auth';
 import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 import { UserModel } from '../../shared/models/auth/user-model';
+import { badRequestResponse, okResponse } from '../../shared/responses/responses';
 
 export const createUser = onRequest(
     {cors: true},
@@ -12,10 +13,7 @@ export const createUser = onRequest(
         const user = configureCreatedUser(req.body.data as CreateUserModel);
         
         if (!user) {
-            res.status(400)
-                .json({
-                    result: "There was a problem with the provided data, and a user could not be created."
-                })
+            return badRequestResponse("There was a problem with the provided data, and a user could not be created.", res)
         }
 
         try {
@@ -26,16 +24,12 @@ export const createUser = onRequest(
                 ...user
             });
 
-            res.status(201).json({
-                result: { uid }
-            })
+            return okResponse(uid, 201, res);
 
         } catch (error: any) {
             logger.error(error.message);
 
-            res.status(400).json({
-                result: 'There was a problem during the request, and the user could not be created.'
-            });
+            return badRequestResponse('There was a problem during the request, and the user could not be created.', res)
         }
 
     }
