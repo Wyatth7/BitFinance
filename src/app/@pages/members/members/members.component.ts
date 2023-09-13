@@ -33,28 +33,10 @@ export class UsersComponent implements OnInit {
         action: () => this.navigateToCreate()
       })
 
-      this.users = await this.userService.getUserList();
   }
 
   navigateToCreate() {
     this.router.navigate(['../create'], {relativeTo: this.route})
-  }
-
-  change($event: MatChipListboxChange): void {
-    if ($event.value === undefined) {
-      this.renderUsers = true;
-      this.tableTitle = 'Users';
-      return;
-    }
-
-      this.renderUsers = $event.value;
-
-      if (this.renderUsers) {
-        this.tableTitle = 'Users'
-        return;
-      }
-
-      this.tableTitle = 'Requested Users'
   }
   
   userData: MemberModel[] = [

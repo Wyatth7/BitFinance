@@ -23,7 +23,9 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { CreateUserComponent } from './components/create-user/create-user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { ViewComponent } from './view/view.component';
 
 
 
@@ -35,7 +37,9 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     MemberTableComponent,
     RequestedMemberTableComponent,
     CreateEditUserComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent,
+    ViewComponent
   ],
   imports: [
     CommonModule,
