@@ -6,8 +6,8 @@
                 <mat-divider class="vertical-divider" vertical></mat-divider>
                 <div class="chips">
                     <mat-chip-listbox (change)="change($event)">
-                        <mat-chip-option [value]="true" matTooltip="View Created Users" selected>Users ({{userData.length}})</mat-chip-option>
-                        <mat-chip-option [value]="false" matTooltip="View Requested Users">Requested Users ({{requestedUserData.length}})</mat-chip-option>
+                        <mat-chip-option [value]="true" matTooltip="View Created Users" selected>Users ({{users.acceptedUsers.length || 0}})</mat-chip-option>
+                        <mat-chip-option [value]="false" matTooltip="View Requested Users">Requested Users ({{users.requestedUsers.length || 0}})</mat-chip-option>
                     </mat-chip-listbox>
                 </div>
             </div>
@@ -21,11 +21,11 @@
             </div>
         </div>
        <div class="members-table">
-            <app-member-table *ngIf="renderUsers; else showRequestedMembers" [userData]="userData"></app-member-table>   
+            <app-member-table *ngIf="renderUsers; else showRequestedMembers" [userData]="users.acceptedUsers"></app-member-table>   
         </div>
     </div>
 </div>
 
 <ng-template #showRequestedMembers>
-    <app-requested-member-table [userData]="requestedUserData"></app-requested-member-table>      
+    <app-requested-member-table [userData]="users.requestedUsers"></app-requested-member-table>      
 </ng-template>

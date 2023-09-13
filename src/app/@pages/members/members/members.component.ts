@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserFunctions } from 'src/app/shared/enums/firebase-functions/user-functions';
 import { MemberModel } from 'src/app/shared/models/members/member-model';
+import { UserListModel } from 'src/app/shared/models/users/user-list-model';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-members',
@@ -14,11 +17,13 @@ export class UsersComponent implements OnInit {
   renderUsers: boolean = true;
   listSortValue = 'newest'
   tableTitle = 'Users'
+  users!: UserListModel;
 
   constructor(private topNavService: TopNavService,
      private functions: Functions,
      private router: Router,
-     private route: ActivatedRoute) {}
+     private route: ActivatedRoute,
+     private userService: UserService) {}
 
   async ngOnInit(): Promise<void> {
       this.topNavService.setTopNavAction({
@@ -28,10 +33,7 @@ export class UsersComponent implements OnInit {
         action: () => this.navigateToCreate()
       })
 
-      const call = httpsCallable(this.functions, 'testFunc')
-      const res = await call();
-      console.log(res);
-      
+      this.users = await this.userService.getUserList();
   }
 
   navigateToCreate() {
