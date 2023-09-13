@@ -21,11 +21,11 @@
                     [matMenuTriggerFor]="sideNavMenu"
                     matTooltip="My Account"
                     matTooltipPosition="right">
-                    <app-user-circle-image *appRenderOnResize="{showStart: 100, showEnd: 1420}" userInitials="FH"></app-user-circle-image>
+                    <app-user-circle-image *appRenderOnResize="{showStart: 100, showEnd: 1420}" [userInitials]="initials"></app-user-circle-image>
                     <div *appRenderOnResize="{showStart: 1420, showEnd: 4000}" class="menu-button--expanded-user">
                         <div class="user">
-                            <h2 class="name">Frank Hawkins</h2>
-                            <p class="role">administrator</p>
+                            <h2 class="name">{{ user?.firstName }}</h2>
+                            <p class="role">{{ user?.userName }}</p>
                         </div>
                         <mat-icon class="icon">expand_more</mat-icon>
                     </div>
