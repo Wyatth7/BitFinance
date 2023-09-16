@@ -1,0 +1,22 @@
+.create-edit-user {
+    width: fit-content;
+
+    .form {
+        margin: 1.2rem 0;
+
+        .half-width {
+            width: 50%;
+        }
+    }
+
+    &--title {
+        color: var(--blue);
+    }
+
+    .form-group-2x {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+    }
+}
+

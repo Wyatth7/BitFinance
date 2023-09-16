@@ -33,6 +33,10 @@ export class UsersComponent implements OnInit {
         action: () => this.navigateToCreate()
       })
 
+      // redirect to view if /users is called
+      if (this.router.url.split('/').length === 2) {
+        this.router.navigate(['view'], {relativeTo: this.route});
+      }
   }
 
   navigateToCreate() {
