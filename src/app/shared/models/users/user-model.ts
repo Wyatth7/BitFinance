@@ -11,4 +11,5 @@ export interface UserModel {
     role: Roles;
     requested: boolean;
     suspended: SuspendedAccountModel | null;
+    uid: string;
 }

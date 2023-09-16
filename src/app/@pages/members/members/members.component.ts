@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
   }
 
   navigateToCreate() {
-    this.router.navigate(['../create'], {relativeTo: this.route})
+    this.router.navigate(['create'], {relativeTo: this.route})
   }
   
   userData: MemberModel[] = [

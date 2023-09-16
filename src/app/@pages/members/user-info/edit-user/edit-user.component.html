@@ -1,0 +1,10 @@
+<ng-container *ngIf="!!formValues">
+    <app-create-edit-user
+        [allowPasswords]="false"
+        formTitle="Edit User" 
+        (formSubmitted)="formSubmitted($event)" 
+        [action]="editUserAction"
+        [formValues]="formValues"
+        >
+    </app-create-edit-user>
+</ng-container>

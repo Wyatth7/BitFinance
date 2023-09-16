@@ -4,6 +4,7 @@ import { CreateUserModel } from '../../models/users/create-user-model';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { BehaviorSubject } from 'rxjs';
 import { UserListModel } from '../../models/users/user-list-model';
+import { UserModel } from '../../models/users/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,6 @@ export class UserService {
     const createUserFunction = httpsCallable(this.functions, UserFunctions.createUser)
 
     try {
-      console.log('in service');
-      
       await createUserFunction(createUserModel)
       return true;
     } catch (error) {
@@ -41,5 +40,16 @@ export class UserService {
     }
 
     return this._users;
+  }
+
+  /**
+   * Returns a user from the user store
+   * @param userId ID of user to get
+   * @returns The user or undefined if not found
+   */
+  getUserFromStore(userId: string): UserModel | undefined {
+    if (!this._users) return;
+
+    return this._users?.acceptedUsers.find(user => user.uid === userId);
   }
 }
