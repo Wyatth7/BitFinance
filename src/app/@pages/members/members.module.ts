@@ -28,7 +28,8 @@ import { ViewComponent } from './view/view.component';
 import { EditUserComponent } from './user-info/edit-user/edit-user.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { AdvancedComponent } from './user-info/advanced/advanced.component';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -63,7 +64,12 @@ import { AdvancedComponent } from './user-info/advanced/advanced.component';
     MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    MatDatepickerModule
   ]
 })
 export class MembersModule { }

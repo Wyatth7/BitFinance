@@ -10,6 +10,28 @@
             
                 <!-- Has two states, 1 for set suspension, 2 for unsuspension -->
                 <!-- if user is not suspened, show 1; else, show 2 -->
+
+                <div class="suspensions">
+                    <div class="suspensions--form">
+                        <div class="form-items" *ngIf="!suspended; else unSuspendTemplate">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [formGroup]="suspendForm" [rangePicker]="picker">
+                                  <input matStartDate formControlName="start" placeholder="Start date">
+                                  <input matEndDate formControlName="end" placeholder="End date">
+                                </mat-date-range-input>
+                                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                              
+                                <mat-error *ngIf="suspendForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                                <mat-error *ngIf="suspendForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                              </mat-form-field>
+                              <button [disabled]="suspendForm.invalid" mat-flat-button color="warn">Suspend User</button>
+                        </div>
+                    </div>
+
+                </div>
             </mat-expansion-panel>
             <!-- Delete expansion -->
             <mat-expansion-panel>
@@ -20,3 +42,10 @@
         </mat-accordion>
     </mat-card-content>
 </mat-card>
+
+<ng-template #unSuspendTemplate>
+    <div class="suspensions--cancel">
+        <p>This user is suspened from September, 1 2023 until September, 20 2023</p>
+        <button mat-flat-button color="primary">Unsuspend</button>
+    </div>
+</ng-template>

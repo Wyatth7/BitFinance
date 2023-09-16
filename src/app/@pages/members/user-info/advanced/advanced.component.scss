@@ -7,5 +7,30 @@
 
     &--content {
         margin-top: 1rem;
+
+        .suspensions {
+
+            &--form {
+                
+                .form-items {
+
+                }
+
+                button {
+                    margin-top: 1rem;
+                }
+            }
+
+            &--cancel {
+
+                p {
+                    font-size: 1rem;
+                }
+
+                button {
+                    margin-top: 1rem;
+                }
+            }
+        }
     }
 }
