@@ -7,6 +7,8 @@ import { Functions } from '@angular/fire/functions';
 import { httpsCallable } from 'firebase/functions';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserModel } from '../../models/users/user-model';
+import { ResetPasswordModel } from 'functions/src/shared/models/auth/reset-password-model';
+//import { forgotPassword } from 'functions/src';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +68,30 @@ export class AuthenticationService {
     this.toggleAuthenticated();
     this.router.navigateByUrl('/auth/login')
   }
+
+  async resetPassword(email : string, userId: string){
+
+    try{
+        // [Figure Out]How to validate email and User Id before then call function
+        //const test = forgotPassword;
+        console.log(`It did it`);
+
+        const userQuery = httpsCallable(this.functions, 'forgotPassword');
+        const data = await userQuery();
+        console.log("right before")
+        
+        
+        
+
+      //this.router.navigateByUrl('')
+    } catch(e){
+      console.log(e);
+    }
+    
+
+  }
+
+
 
   /**
    * Toggles a user's authentication status
