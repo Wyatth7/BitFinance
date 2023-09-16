@@ -1,0 +1,22 @@
+<mat-card class="advanced">
+    <mat-card-header>
+        <mat-card-title class="advanced--title">Advanced</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="advanced--content">
+        <mat-accordion>
+            <!-- Suspend expansion -->
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>Suspensions</mat-expansion-panel-header>
+            
+                <!-- Has two states, 1 for set suspension, 2 for unsuspension -->
+                <!-- if user is not suspened, show 1; else, show 2 -->
+            </mat-expansion-panel>
+            <!-- Delete expansion -->
+            <mat-expansion-panel>
+                <!-- Render header based on the user's activation status -->
+                <mat-expansion-panel-header>Activate User</mat-expansion-panel-header>
+                <!-- Has two states, 1 for activate, 2 for deactivate -->
+            </mat-expansion-panel>
+        </mat-accordion>
+    </mat-card-content>
+</mat-card>

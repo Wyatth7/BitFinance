@@ -59,7 +59,7 @@ const createFirebaseUser = async (createUserModel: UserModel): Promise<string> =
  * @returns An configured user
  */
 const configureCreatedUser = (newUser: CreateUserModel): UserModel => {
-    let user: UserModel = {...newUser, passwords: [], suspended: null};
+    let user: UserModel = {...newUser, passwords: [], suspended: null, isActive: true};
 
     // configure username
     const date = new Date();

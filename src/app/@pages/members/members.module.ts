@@ -26,6 +26,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewComponent } from './view/view.component';
 import { EditUserComponent } from './user-info/edit-user/edit-user.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { AdvancedComponent } from './user-info/advanced/advanced.component';
 
 
 
@@ -39,7 +41,9 @@ import { EditUserComponent } from './user-info/edit-user/edit-user.component';
     CreateEditUserComponent,
     CreateUserComponent,
     EditUserComponent,
-    ViewComponent
+    ViewComponent,
+    UserInfoComponent,
+    AdvancedComponent
   ],
   imports: [
     CommonModule,

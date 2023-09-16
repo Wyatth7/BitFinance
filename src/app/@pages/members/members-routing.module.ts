@@ -6,6 +6,7 @@ import { Roles } from 'src/app/shared/enums/authentication/roles';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ViewComponent } from './view/view.component';
 import { EditUserComponent } from './user-info/edit-user/edit-user.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'edit/:userId',
-        component: EditUserComponent,
+        component: UserInfoComponent,
         canActivate: [requiredRoleGuard],
         title: 'Edit User | ',
         data: {roles: [Roles.administrator]}
