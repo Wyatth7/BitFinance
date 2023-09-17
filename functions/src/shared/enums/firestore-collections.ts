@@ -1,3 +1,3 @@
 export enum FirestoreCollections {
-    users = 0,
+    users,
 }

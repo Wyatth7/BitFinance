@@ -1,0 +1,46 @@
+.advanced {
+    width: 30rem;
+
+    &--title {
+        color: var(--blue);
+    }
+
+    &--content {
+        margin-top: 1rem;
+
+        .text-button {
+            p {
+                font-size: 1rem;
+            }
+
+            button {
+                margin-top: 1rem;
+            }
+        }
+
+        .suspensions {
+
+            &--form {
+                
+                .form-items {
+
+                }
+
+                button {
+                    margin-top: 1rem;
+                }
+            }
+
+            &--cancel {
+
+                p {
+                    font-size: 1rem;
+                }
+
+                button {
+                    margin-top: 1rem;
+                }
+            }
+        }
+    }
+}

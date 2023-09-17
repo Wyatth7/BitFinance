@@ -24,9 +24,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
 import { ViewComponent } from './view/view.component';
-
+import { EditUserComponent } from './user-info/edit-user/edit-user.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { AdvancedComponent } from './user-info/advanced/advanced.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -39,7 +42,9 @@ import { ViewComponent } from './view/view.component';
     CreateEditUserComponent,
     CreateUserComponent,
     EditUserComponent,
-    ViewComponent
+    ViewComponent,
+    UserInfoComponent,
+    AdvancedComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +64,12 @@ import { ViewComponent } from './view/view.component';
     MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    MatDatepickerModule
   ]
 })
 export class MembersModule { }

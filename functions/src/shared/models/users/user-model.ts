@@ -1,6 +1,6 @@
 import { UserRole } from "../../enums/user-role";
-import { PasswordModel } from "./passwords";
-import { SuspendedAccountModel } from "./suspended-model";
+import { PasswordModel } from "../auth/passwords";
+import { SuspendedAccountModel } from "../auth/suspended-model";
 
 export interface UserModel {
     firstName: string;
@@ -11,4 +11,5 @@ export interface UserModel {
     role: UserRole;
     requested: boolean;
     suspended: SuspendedAccountModel | null;
+    isActive: boolean;
 }

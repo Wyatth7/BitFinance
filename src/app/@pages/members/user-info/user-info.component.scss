@@ -1,0 +1,22 @@
+.edit-user {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    gap: 2rem;
+    height: 100%;
+    bottom: 0;
+
+    .card {
+        height: 100% !important;
+    }
+
+    &--edit {
+        width: fit-content;
+
+    }
+
+    &--advanced {
+    }
+
+}

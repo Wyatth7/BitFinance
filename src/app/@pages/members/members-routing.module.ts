@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersComponent } from './members/members.component';
 import { requiredRoleGuard } from 'src/app/shared/activation-guards/required-role-guard';
 import { Roles } from 'src/app/shared/enums/authentication/roles';
-import { CreateEditUserComponent } from './components/create-edit-user/create-edit-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
 import { ViewComponent } from './view/view.component';
+import { EditUserComponent } from './user-info/edit-user/edit-user.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 const routes: Routes = [
   {
@@ -32,13 +32,13 @@ const routes: Routes = [
       },
       {
         path: 'edit/:userId',
-        component: EditUserComponent,
+        component: UserInfoComponent,
         canActivate: [requiredRoleGuard],
         title: 'Edit User | ',
         data: {roles: [Roles.administrator]}
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
