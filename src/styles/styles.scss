@@ -28,3 +28,19 @@ mat-form-field {
 .mat-column-select {
   width: 10px;
 }
+
+.snack-styles {
+  .mdc-snackbar__surface{
+    background-color: var(--green) !important;
+    
+    div {
+      color: var(--white) !important;
+    }
+  }
+  
+  .mat-mdc-snack-bar-actions{
+    button{
+      color: var(--white) !important;
+    }
+  }
+}

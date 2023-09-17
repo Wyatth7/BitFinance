@@ -9,22 +9,22 @@ const routes: Routes = [
   {
     path: 'login', 
     component: LoginComponent, 
-    title: 'Login | City Gym'
+    title: 'Login | BitFinance'
   },
   {
     path: 'signup',
     component: SignUpComponent, 
-    title: 'Sign Up | City Gym'
+    title: 'Sign Up | BitFinance'
   },
   {
     path: 'forgotPassword', 
     component: ForgotPasswordComponent, 
-    title: 'Forgot Password | City Gym'
+    title: 'Forgot Password | BitFinance'
   },
   {
     path: 'resetPassword',
     component: ResetPasswordComponent,
-    title: 'Reset Password | City Gym'
+    title: 'Reset Password | BitFinance'
   },
   {path: '**', component: LoginComponent},
 ];

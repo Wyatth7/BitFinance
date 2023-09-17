@@ -17,6 +17,19 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MemberTableComponent } from './components/tables/member-table/member-table.component';
 import { RequestedMemberTableComponent } from './components/tables/requested-member-table/requested-member-table.component';
 import { CreateEditUserComponent } from './components/create-edit-user/create-edit-user.component';
+import { MatCardModule } from '@angular/material/card';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { ViewComponent } from './view/view.component';
+import { EditUserComponent } from './user-info/edit-user/edit-user.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { AdvancedComponent } from './user-info/advanced/advanced.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -26,7 +39,12 @@ import { CreateEditUserComponent } from './components/create-edit-user/create-ed
     SecondaryNavComponent,
     MemberTableComponent,
     RequestedMemberTableComponent,
-    CreateEditUserComponent
+    CreateEditUserComponent,
+    CreateUserComponent,
+    EditUserComponent,
+    ViewComponent,
+    UserInfoComponent,
+    AdvancedComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +58,18 @@ import { CreateEditUserComponent } from './components/create-edit-user/create-ed
     MatIconModule,
     MatExpansionModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    MatDatepickerModule
   ]
 })
 export class MembersModule { }
