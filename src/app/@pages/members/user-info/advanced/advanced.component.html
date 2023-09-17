@@ -39,8 +39,8 @@
                 <mat-expansion-panel-header>{{ user.isActive ? "Deactivate" : "Activate" }} User</mat-expansion-panel-header>
                 <!-- Has two states, 1 for activate, 2 for deactivate -->
                 <div class="text-button">
-                    <p>{{ user.firstName }} is currently {{ user.isActive ? "Deactivate" : "Activate" }}. Click "Deactivate" to deactivate them.</p>
-                    <button mat-flat-button color="primary" (click)="toggleActivation()" >{{user.isActive ? "Deactivate" : "Activate"}}</button>
+                    <p>{{ user.firstName }} is currently {{ user.isActive ? "active" : "deactivated" }}. Click "Deactivate" to deactivate them.</p>
+                    <button mat-flat-button [color]="user.isActive ? 'warn' : 'primary'" (click)="toggleActivation()" >{{user.isActive ? "Deactivate" : "Activate"}}</button>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
