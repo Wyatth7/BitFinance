@@ -1,4 +1,4 @@
-import {  Component, OnInit } from '@angular/core';
+import {  Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateEditUserForm } from 'src/app/shared/form/partials/create-edit-form';
@@ -12,27 +12,15 @@ import { UserService } from 'src/app/shared/services/user/user.service';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit{
-  user!: UserModel;
+  @Input() user!: UserModel;
   submitInProgress = false;
   formControls!: FormGroup<any>;
 
 
   constructor(private userService: UserService,
-    private router: Router,
-    private route: ActivatedRoute,
     private formBulider: FormBuilder) {}
 
   ngOnInit(): void {
-    const uid = this.route.snapshot.url[1].path;
-      
-    const user = this.userService.getUserFromStore(uid)
-
-    if (!user) {
-      this.router.navigateByUrl('/users/view')
-      return;
-    }
-
-    this.user = user;
     this.createForm();
   }
 

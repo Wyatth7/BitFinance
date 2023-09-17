@@ -8,6 +8,16 @@
     &--content {
         margin-top: 1rem;
 
+        .text-button {
+            p {
+                font-size: 1rem;
+            }
+
+            button {
+                margin-top: 1rem;
+            }
+        }
+
         .suspensions {
 
             &--form {

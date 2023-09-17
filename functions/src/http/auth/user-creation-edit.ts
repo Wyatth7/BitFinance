@@ -4,7 +4,7 @@ import { CreateUserModel } from '../../shared/models/auth/create-user-model';
 import * as logger from 'firebase-functions/logger'
 import { UserRecord } from 'firebase-admin/auth';
 import { FirestoreCollections } from '../../shared/enums/firestore-collections';
-import { UserModel } from '../../shared/models/auth/user-model';
+import { UserModel } from '../../shared/models/users/user-model';
 import { badRequestResponse, okResponse } from '../../shared/responses/responses';
 
 export const createUser = onRequest(
@@ -19,10 +19,11 @@ export const createUser = onRequest(
         try {
             const uid = await createFirebaseUser(user);
 
-            await admin.firestore().collection(FirestoreCollections.users.toString()).add({
-                uid,
-                ...user
-            });
+            await admin.firestore().collection(FirestoreCollections.users.toString())
+                .doc(uid).create({
+                    uid,
+                    ...user
+                })
 
             return okResponse(uid, 201, res);
 
@@ -33,7 +34,7 @@ export const createUser = onRequest(
         }
 
     }
-)
+);
 
 /**
  * Creates a user in Firebase Authentication
