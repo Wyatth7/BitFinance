@@ -1,13 +1,11 @@
-import { onCall, onRequest } from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
 import * as admin from 'firebase-admin'
-import { FirestoreCollections } from "../../shared/enums/firestore-collections";
+//import { FirestoreCollections } from "../../shared/enums/firestore-collections";
 //import { ResetPasswordModel } from "../../shared/models/auth/reset-password-model";
-import { UserModel } from "../../shared/models/auth/user-model";
+//import { UserModel } from "../../shared/models/auth/user-model";
 import { badRequestResponse, okResponse } from "../../shared/responses/responses";
-import { users } from "../..";
+//import { users } from "../..";
 
-
-admin.initializeApp();
 
 
 export const forgotPassword = onRequest(
@@ -15,7 +13,7 @@ export const forgotPassword = onRequest(
     async (req, res) => {
         const userSnapshot = await admin.firestore()
                                         .collection('0')
-                                        .where('firstname', '==', 'albert.lobos13@gmail.com')
+                                        .where('email', '==',req.body.data.email)
                                         .get();
 
         if (userSnapshot.empty) {
@@ -23,11 +21,9 @@ export const forgotPassword = onRequest(
         }
                                         
         const allData = userSnapshot.docs;
+        const data = allData[0].data();
 
-        const data = allData[0];
-        const random = `{dog}`
-
-        return okResponse(random, 201, res);    
+        return okResponse(data, 201, res);    
 
     }
 )

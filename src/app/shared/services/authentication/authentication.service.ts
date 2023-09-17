@@ -77,10 +77,13 @@ export class AuthenticationService {
         console.log(`It did it`);
 
         const userQuery = httpsCallable(this.functions, 'forgotPassword');
-        const data = await userQuery();
-        console.log("right before")
-        
-        
+        const data = await userQuery({email});
+
+        //console.log(data)
+
+        console.log(data);
+        const user1 = data.data as UserModel;
+        console.log(user1.email);
         
 
       //this.router.navigateByUrl('')
