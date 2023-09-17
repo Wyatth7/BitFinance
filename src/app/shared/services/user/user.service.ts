@@ -4,6 +4,7 @@ import { CreateUserModel } from '../../models/users/create-user-model';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserListModel } from '../../models/users/user-list-model';
 import { UserModel } from '../../models/users/user-model';
+import { UserStatus } from '../../enums/user/user-status';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,29 @@ export class UserService {
 
   }
 
+  /**
+   * Returns the current system status of the user
+   * @param userId ID of user to check suspension
+   * @returns User status string
+   */
+  getUserSuspensionStatus(userId: string){ 
+    const user = this.getUserFromStore(userId);
+
+    if (!user) return '';
+
+    const suspensionStatus = this.suspensionStatus(user);
+
+    if (user.isActive && suspensionStatus) {
+      return UserStatus.suspended;
+    }
+
+    return user.isActive ? UserStatus.active : UserStatus.inactive;
+  }
+
+  /**
+   * Gets a list of users in the system
+   * @returns List of users in the system
+   */
   async getUserList() {
     if (!this._users) {
       const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
@@ -139,6 +163,11 @@ export class UserService {
     
   }
 
+  /**
+   * Toggles a user's activation status
+   * @param userId Id of user to toggle
+   * @returns true if success, false if fail
+   */
   async toggleActivation(userId: string) {
     try {
       const updateQuery = httpsCallable(this.functions, UserFunctions.toggleActivation);
@@ -152,6 +181,22 @@ export class UserService {
       console.log(error);
       return false;
     }
+  }
+
+  /**
+   * Checks if user is currently suspended
+   * @param user User to find suspension status of
+   * @returns True if currently suspended
+   */
+  suspensionStatus(user: UserModel): boolean {
+    if (!user.suspended) return false;
+
+    const today = new Date();
+    const start = new Date(user.suspended.start)
+    const end = new Date(user.suspended.end);
+    
+    return start <= today 
+      && end > today;
   }
 
 }

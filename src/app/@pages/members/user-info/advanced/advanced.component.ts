@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 })
 export class AdvancedComponent implements OnInit{
   @Input() user!: UserModel
+  futureSuspension: boolean = false;
 
   suspendForm!: FormGroup;
 
@@ -22,7 +23,8 @@ export class AdvancedComponent implements OnInit{
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null)
     });
-      
+
+    this.futureSuspension = this.userService.suspensionStatus(this.user);
   }
 
   async suspendUser() {
@@ -40,6 +42,7 @@ export class AdvancedComponent implements OnInit{
         end
       };
       this.suspendForm.reset();
+      this.futureSuspension = this.userService.suspensionStatus(this.user);
     }
   }
 

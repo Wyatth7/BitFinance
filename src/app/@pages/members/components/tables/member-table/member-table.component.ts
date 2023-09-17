@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Roles } from 'src/app/shared/enums/authentication/roles';
-import { UserStatus } from 'src/app/shared/enums/user/user-status';
 import { UserModel } from 'src/app/shared/models/users/user-model';
+import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
   selector: 'app-member-table',
@@ -13,17 +13,11 @@ export class MemberTableComponent {
   @Input() userData!: UserModel[];
   displayedColumns = ['actions', 'name', 'username', 'email', 'role', 'status']
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private userService: UserService) {}
 
   status(user: UserModel): string {
-    
-    const suspensionStatus = this.suspensionStatus(user);
-
-    if (user.isActive && suspensionStatus) {
-      return UserStatus.suspended;
-    }
-
-    return user.isActive ? UserStatus.active : UserStatus.inactive;
+    return this.userService.getUserSuspensionStatus(user.uid);
   }
 
   getRole(roleId: number): string {

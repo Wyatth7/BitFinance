@@ -49,7 +49,7 @@
 
 <ng-template #unSuspendTemplate>
     <div class="text-button">
-        <p>This user is suspened from {{ user.suspended!.start | date }} until {{ user.suspended!.end | date }}</p>
-        <button mat-flat-button color="primary" (click)="unsuspendUser()">Unsuspend</button>
+        <p>{{ user.firstName }} {{ futureSuspension ? 'is currently' : 'will be' }} suspened from {{ user.suspended!.start | date }} until {{ user.suspended!.end | date }}.</p>
+        <button mat-flat-button color="primary" (click)="unsuspendUser()">{{ futureSuspension ? 'Unsuspend' : 'Cancel' }}</button>
     </div>
 </ng-template>
