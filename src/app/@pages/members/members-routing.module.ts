@@ -13,28 +13,28 @@ const routes: Routes = [
     path: '',
     component: UsersComponent,
     canActivate: [requiredRoleGuard],
-    title: 'Users | City Gym',
+    title: 'Users | BitFinance',
     data: {roles: [Roles.administrator]},
     children: [
       {
         path: 'view', 
         component: ViewComponent, 
         canActivate: [requiredRoleGuard],
-        title: 'Users | City Gym',
+        title: 'Users | BitFinance',
         data: {roles: [Roles.administrator]}
       },
       {
         path: 'create',
         component: CreateUserComponent,
         canActivate: [requiredRoleGuard],
-        title: 'Create User | ',
+        title: 'Create User | BitFinance',
         data: {roles: [Roles.administrator]}
       },
       {
         path: 'edit/:userId',
         component: UserInfoComponent,
         canActivate: [requiredRoleGuard],
-        title: 'Edit User | ',
+        title: 'Edit User | BitFinance',
         data: {roles: [Roles.administrator]}
       }
     ]
