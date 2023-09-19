@@ -7,6 +7,7 @@ import { FirestoreCollections } from "../../shared/enums/firestore-collections";
 import { UserListModel } from "../../shared/models/users/user-list-model";
 import { SuspendUserModel } from "../../shared/models/users/suspend-user-model";
 import * as logger from "firebase-functions/logger";
+import { EditUserModel } from "../../shared/models/auth/edit-user-model";
 
 export const getUser = onRequest(
     {cors: true},
@@ -150,3 +151,41 @@ export const toggleActivation = onRequest(
         }
     }
 )
+
+export const editUser = onRequest(
+    {cors: true},
+    async (req, res) => {
+        const user = req.body.data as EditUserModel;
+
+        if (!user) return badRequestResponse("The user data provided is invalid.", res);
+
+        console.log(user)
+        try {
+            
+            // udpate user in auth
+            const displayName = `${user.firstName} ${user.lastName}`
+            
+            await admin.auth().updateUser(user.uid, {
+                email: user.email,
+                displayName: displayName
+            });
+    
+            const userName = `${user.firstName[0]}${user.lastName}${new Date().toLocaleDateString('en', {month: '2-digit', year: '2-digit'})}`
+            // update user in firestore
+            await admin.firestore().collection(FirestoreCollections.users.toString())
+                .doc(user.uid).update({
+                    email: user.email,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    role: user.role,
+                    userName
+                });
+    
+            return okResponse({}, 200, res);
+
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse("An error occurred during the request and the user could not be updated.", res);
+        }
+    }
+);

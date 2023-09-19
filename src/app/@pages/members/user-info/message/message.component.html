@@ -1,0 +1,21 @@
+<mat-card class="message">
+    <mat-card-header>
+        <mat-card-title class="message--title">Email User</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="message--content">
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>Subject</mat-label>
+                <input matInput name="subject"/>
+            </mat-form-field>
+            <mat-form-field class="message-area" appearance="outline">
+                <mat-label>Message</mat-label>
+                <textarea cdkTextareaAutosize matInput></textarea>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-flat-button color="primary">Send</button>
+        <button mat-button color="warn">Cancel</button>
+    </mat-card-actions>
+</mat-card>
