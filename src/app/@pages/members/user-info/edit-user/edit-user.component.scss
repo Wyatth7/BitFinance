@@ -17,9 +17,9 @@
     }
 
     .form-group-2x {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
         gap: 1rem;
-        justify-content: space-between;
     }
 }
 
