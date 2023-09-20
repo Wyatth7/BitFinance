@@ -4,8 +4,30 @@
     </mat-card-header>
     <mat-card-content class="advanced--content">
         <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>Security Questions</mat-expansion-panel-header>
+
+                <mat-list class="questions">
+                    <mat-list-item *ngFor="let question of securityQuestions">
+                        <p class="question">{{ question.question }}</p>
+                        <p class="answer">{{ question.answer | date }}</p>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel >
+                <mat-expansion-panel-header>Passwords</mat-expansion-panel-header>
+                <mat-list class="passwords" >
+                    <mat-list-item *ngFor="let password of user.passwords">
+                        <div class="passwords--item">
+                            <mat-icon [color]="password.isActive ? 'primary' : 'warn'">{{ password.isActive ? 'done' : 'close' }}</mat-icon>
+                            <p><span>{{ password.password }}</span> ({{ password.isActive ? 'Current' : 'Expired' }})</p>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
             <!-- Suspend expansion -->
-            <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel >
                 <mat-expansion-panel-header>Suspensions</mat-expansion-panel-header>
             
                 <!-- Has two states, 1 for set suspension, 2 for unsuspension -->
@@ -17,8 +39,8 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Enter a date range</mat-label>
                                 <mat-date-range-input [formGroup]="suspendForm" [rangePicker]="picker">
-                                  <input matStartDate formControlName="start" placeholder="Start date">
-                                  <input matEndDate formControlName="end" placeholder="End date">
+                                  <input required matStartDate formControlName="start" placeholder="Start date">
+                                  <input required matEndDate formControlName="end" placeholder="End date">
                                 </mat-date-range-input>
                                 <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
                                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -43,6 +65,9 @@
                     <button mat-flat-button [color]="user.isActive ? 'warn' : 'primary'" (click)="toggleActivation()" >{{user.isActive ? "Deactivate" : "Activate"}}</button>
                 </div>
             </mat-expansion-panel>
+
+
+
         </mat-accordion>
     </mat-card-content>
 </mat-card>

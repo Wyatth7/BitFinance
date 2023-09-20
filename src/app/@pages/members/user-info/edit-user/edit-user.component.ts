@@ -28,6 +28,8 @@ export class EditUserComponent implements OnInit{
   async editUserAction() {
     // call update user FB function
     // If update success, update user in store.
+    this.submitInProgress = true;
+
     const nameControl = this.formControls.get('name');
     const email = this.formControls.get('email')?.value;
     const role = this.formControls.get('role')?.value;
@@ -41,7 +43,7 @@ export class EditUserComponent implements OnInit{
     }
 
     await this.userService.updateUser(updatedUser);
-    // Do not reset the form.
+    this.submitInProgress = false;
   }
 
   createForm() {

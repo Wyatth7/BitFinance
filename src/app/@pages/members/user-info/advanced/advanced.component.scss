@@ -8,7 +8,6 @@
     }
 
     &--content {
-        margin-top: 1rem;
 
         .text-button {
             p {
@@ -42,6 +41,34 @@
                 button {
                     margin-top: 1rem;
                 }
+            }
+        }
+
+        .questions {
+            text-wrap: wrap;
+            white-space: nowrap;
+            
+            .question {
+                font-weight: 500;
+            }
+            
+            .answer {
+                font-size: .9rem;
+            }
+        }
+        
+        .passwords {
+            max-height: 10rem !important;
+            overflow-y: auto;
+            
+            &--item {
+                display: flex;
+                gap: 1rem;
+                
+                p > span {
+                    font-weight: 500;
+                }
+                
             }
         }
     }

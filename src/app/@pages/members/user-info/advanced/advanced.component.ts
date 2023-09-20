@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PasswordModel } from 'src/app/shared/models/users/password-model';
 import { UserModel } from 'src/app/shared/models/users/user-model';
 import { UserService } from 'src/app/shared/services/user/user.service';
 
@@ -61,4 +62,35 @@ export class AdvancedComponent implements OnInit{
       this.user.isActive = !this.user.isActive;
     }
   }
+
+
+  securityQuestions = [
+    {
+      question: "What is your date of birth?",
+      answer: new Date()
+    }
+  ]
+
+  passwords: PasswordModel[] = [
+    {
+      password: 'test123',
+      isActive: true
+    },
+    {
+      password: 'asdf',
+      isActive: false
+    },
+    {
+      password: 'testfdasfdfa123',
+      isActive: false
+    },
+    {
+      password: 'asdfasdfafff',
+      isActive: false
+    },
+    {
+      password: 'jlkashdjfh',
+      isActive: false
+    },
+  ]
 }

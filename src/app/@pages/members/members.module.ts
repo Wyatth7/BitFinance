@@ -30,7 +30,6 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { AdvancedComponent } from './user-info/advanced/advanced.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { SecurityComponent } from './user-info/security/security.component';
 import {MatListModule} from '@angular/material/list';
 import { MessageComponent } from './user-info/message/message.component';
 
@@ -48,7 +47,6 @@ import { MessageComponent } from './user-info/message/message.component';
     ViewComponent,
     UserInfoComponent,
     AdvancedComponent,
-    SecurityComponent,
     MessageComponent
   ],
   imports: [
