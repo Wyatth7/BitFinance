@@ -8,23 +8,24 @@
     }
 
     &--content {
-
+        
+        
         .text-button {
             p {
                 font-size: 1rem;
-            }
-
-            button {
-                margin-top: 1rem;
+                margin-bottom: 1rem !important;
             }
         }
-
+        
         .suspensions {
-
+            
             &--form {
                 
                 .form-items {
-
+                    
+                    &:last-child {
+                        margin-top: 1rem !important;
+                    }
                 }
 
                 button {

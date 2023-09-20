@@ -12,6 +12,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 export class AdvancedComponent implements OnInit{
   @Input() user!: UserModel
   futureSuspension: boolean = false;
+  submitInProgress = false;
 
   suspendForm!: FormGroup;
 
@@ -48,19 +49,25 @@ export class AdvancedComponent implements OnInit{
   }
 
   async unsuspendUser() {
+    this.submitInProgress = true;
     const success = await this.userService.unsuspendUser(this.user.uid)
 
     if (success) {
       this.user.suspended = null;
     }
+
+    this.submitInProgress = false;
   }
 
   async toggleActivation() {
+    this.submitInProgress = true;
     const success = await this.userService.toggleActivation(this.user.uid);
 
     if (success) {
       this.user.isActive = !this.user.isActive;
     }
+
+    this.submitInProgress = false;
   }
 
 

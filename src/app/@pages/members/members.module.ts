@@ -70,7 +70,7 @@ import { MessageComponent } from './user-info/message/message.component';
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatListModule
+    MatListModule,
   ],
   providers: [
     MatDatepickerModule

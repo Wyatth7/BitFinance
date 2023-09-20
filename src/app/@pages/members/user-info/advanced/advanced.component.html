@@ -49,7 +49,12 @@
                                 <mat-error *ngIf="suspendForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
                                 <mat-error *ngIf="suspendForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
                               </mat-form-field>
-                              <button [disabled]="suspendForm.invalid" mat-flat-button color="warn" (click)="suspendUser()">Suspend User</button>
+                                <app-spinner-button
+                                    [spin]="submitInProgress"
+                                    [disabled]="suspendForm.invalid" 
+                                    color="warn" text="Suspend User" 
+                                    (click)="suspendUser()"
+                                 ></app-spinner-button>
                         </div>
                     </div>
 
@@ -62,7 +67,12 @@
                 <!-- Has two states, 1 for activate, 2 for deactivate -->
                 <div class="text-button">
                     <p>{{ user.firstName }} is currently {{ user.isActive ? "active" : "deactivated" }}. Click the button below to  {{ !user.isActive ? "activate" : "deactivate" }} them.</p>
-                    <button mat-flat-button [color]="user.isActive ? 'warn' : 'primary'" (click)="toggleActivation()" >{{user.isActive ? "Deactivate" : "Activate"}}</button>
+                    <app-spinner-button 
+                        [spin]="submitInProgress" 
+                        [color]="user.isActive ? 'warn' : 'primary'" 
+                        [text]="user.isActive ? 'Deactivate' : 'Activate'"
+                        (click)="toggleActivation()"
+                    ></app-spinner-button>
                 </div>
             </mat-expansion-panel>
 
@@ -75,6 +85,11 @@
 <ng-template #unSuspendTemplate>
     <div class="text-button">
         <p>{{ user.firstName }} {{ futureSuspension ? 'is currently' : 'will be' }} suspened from {{ user.suspended!.start | date }} until {{ user.suspended!.end | date }}.</p>
-        <button mat-flat-button color="primary" (click)="unsuspendUser()">{{ futureSuspension ? 'Unsuspend' : 'Cancel' }}</button>
+            <app-spinner-button 
+                [spin]="submitInProgress" 
+                color="primary" 
+                [text]="futureSuspension ? 'Unsuspend' : 'Cancel'"
+                (click)="unsuspendUser()"
+            ></app-spinner-button>
     </div>
 </ng-template>
