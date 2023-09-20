@@ -13,6 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { SpinnerButtonComponent } from './components/buttons/spinner-button/spinner-button.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
 
 
 
@@ -24,7 +25,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     RequiredRoleViewComponent,
     TableComponent,
     ErrorComponent,
-    SpinnerButtonComponent
+    SpinnerButtonComponent,
+    EllipsisPipe
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     RequiredRoleViewComponent,
     TableComponent,
     ErrorComponent,
-    SpinnerButtonComponent
+    SpinnerButtonComponent,
+    EllipsisPipe
   ]
 })
 export class SharedModule { }

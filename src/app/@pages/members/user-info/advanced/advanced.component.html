@@ -19,9 +19,9 @@
                 <mat-expansion-panel-header>Passwords</mat-expansion-panel-header>
                 <mat-list class="passwords" >
                     <mat-list-item *ngFor="let password of user.passwords">
-                        <div class="passwords--item">
+                        <div class="passwords--item" [matTooltip]="password.password" matTooltipPosition="before">
                             <mat-icon [color]="password.isActive ? 'primary' : 'warn'">{{ password.isActive ? 'done' : 'close' }}</mat-icon>
-                            <p><span>{{ password.password }}</span> ({{ password.isActive ? 'Current' : 'Expired' }})</p>
+                            <p >({{ password.isActive ? 'Current' : 'Expired' }})<span>{{ password.password | ellipsis:40 }}</span></p>
                         </div>
                     </mat-list-item>
                 </mat-list>
