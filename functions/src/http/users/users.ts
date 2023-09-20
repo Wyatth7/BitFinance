@@ -82,6 +82,16 @@ export const suspendUser = onRequest(
                         end: suspendModel.suspendDates.end
                     }
                 })
+            
+            const now = new Date();
+            console.log(new Date(suspendModel.suspendDates.start) <= now && new Date(suspendModel.suspendDates.end) > now);
+            
+            if (new Date(suspendModel.suspendDates.start) <= now && new Date(suspendModel.suspendDates.end) > now) {
+                await admin.auth().updateUser(suspendModel.uid, {
+                    disabled: true
+                })
+            }
+
 
             return okResponse({}, 200, res);
         }catch(error) {
@@ -106,6 +116,8 @@ export const removeSuspension = onRequest(
 
         try {
             
+            await admin.auth().updateUser(uid, {disabled: false})
+
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(uid).update({
                     suspended: null
@@ -137,6 +149,8 @@ export const toggleActivation = onRequest(
                 .doc(userId).get();
 
             const user = userDoc.data() as UserModel;
+
+            await admin.auth().updateUser(userId, {disabled: !user.isActive})
 
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(userId).update({
