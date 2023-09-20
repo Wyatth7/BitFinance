@@ -1,6 +1,15 @@
-# GymManager
+# BitFinance
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.7.
+
+##Developers
+
+Project Team: CtrlShiftSprint
+Team Members: Victoria Biyadglgne, Wyatt Hardin, Tom Porter, Nelso Villalobos
+
+##Project Description
+
+BitFinance is an accounting management app, designed to allow teams to manage a variety of financial accounts for clients.
 
 ## Development server
 
@@ -25,3 +34,5 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
