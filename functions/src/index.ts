@@ -16,4 +16,5 @@ initializeApp();
 
 export {testFunc} from './http/test';
 export * as auth from './http/auth/user-creation-edit';
-export * as users from './http/users/users'
+export * as users from './http/users/users';
+export * as email from './messaging/emailer';
