@@ -26,10 +26,4 @@ export class SpinnerButtonComponent {
    */
   @Input() spin = false;
 
-  /**
-   * click event emitter on button press
-   */
-  @Output() click = new EventEmitter();
-
-
 }

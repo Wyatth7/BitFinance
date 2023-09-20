@@ -6,8 +6,6 @@ import { UserListModel } from '../../models/users/user-list-model';
 import { UserModel } from '../../models/users/user-model';
 import { UserStatus } from '../../enums/user/user-status';
 import { EditUserModel } from '../../models/users/edit-user-model';
-import { editUser } from 'functions/src/http/users/users';
-import { Roles } from '../../enums/authentication/roles';
 
 @Injectable({
   providedIn: 'root'
@@ -144,9 +142,11 @@ export class UserService {
    * @param userId ID of the user to toggle activation
    */
   updateUserActivationStore(userId: string) {
-    const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
+    const userIndex = this.getUserIndex(userId);
 
-    if (!userIndex || !this._users) return;
+    if (userIndex < 0 || !this._users) {
+      return;
+    }
 
     this._users.acceptedUsers[userIndex].isActive = !this._users.acceptedUsers[userIndex].isActive;
   }

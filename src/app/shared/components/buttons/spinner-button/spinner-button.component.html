@@ -1,4 +1,4 @@
 <div class="spinner-button">
-    <button mat-flat-button [disabled]="disabled" [color]="color" (click)="click.emit()">{{ text }}</button>
+    <button mat-flat-button [disabled]="disabled" [color]="color">{{ text }}</button>
     <mat-spinner class="spinner" *ngIf="spin"></mat-spinner>
 </div>

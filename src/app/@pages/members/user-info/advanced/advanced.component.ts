@@ -49,6 +49,8 @@ export class AdvancedComponent implements OnInit{
   }
 
   async unsuspendUser() {
+    console.log('unsus');
+    
     this.submitInProgress = true;
     const success = await this.userService.unsuspendUser(this.user.uid)
 
@@ -60,6 +62,8 @@ export class AdvancedComponent implements OnInit{
   }
 
   async toggleActivation() {
+    console.log('in toggle');
+    
     this.submitInProgress = true;
     const success = await this.userService.toggleActivation(this.user.uid);
 
