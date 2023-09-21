@@ -6,6 +6,7 @@ import { UserRecord } from 'firebase-admin/auth';
 import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 import { UserModel } from '../../shared/models/users/user-model';
 import { badRequestResponse, okResponse } from '../../shared/responses/responses';
+import { Encryptor } from '../../shared/helpers/encryption/encryptor';
 
 export const createUser = onRequest(
     {cors: true},
@@ -19,11 +20,14 @@ export const createUser = onRequest(
         try {
             const uid = await createFirebaseUser(user);
 
+            user.passwords[0].password = Encryptor.base64Encryption(user.passwords[0].password)
+
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(uid).create({
                     uid,
                     ...user
                 })
+
 
             return okResponse(uid, 201, res);
 

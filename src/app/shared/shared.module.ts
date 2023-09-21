@@ -7,11 +7,13 @@ import { RequiredRoleViewComponent } from './components/required-role-view/requi
 import { TableComponent } from './components/tables/table/table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { TopNavService } from './services/top-nav.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorComponent } from './components/dialogs/error/error.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { SpinnerButtonComponent } from './components/buttons/spinner-button/spinner-button.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
 
 
 
@@ -22,7 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
     RenderOnResizeDirective,
     RequiredRoleViewComponent,
     TableComponent,
-    ErrorComponent
+    ErrorComponent,
+    SpinnerButtonComponent,
+    EllipsisPipe
   ],
   imports: [
     CommonModule,
@@ -30,7 +34,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatCheckboxModule,
     MatSnackBarModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -38,7 +43,9 @@ import { MatButtonModule } from '@angular/material/button';
     RenderOnResizeDirective,
     RequiredRoleViewComponent,
     TableComponent,
-    ErrorComponent
+    ErrorComponent,
+    SpinnerButtonComponent,
+    EllipsisPipe
   ]
 })
 export class SharedModule { }

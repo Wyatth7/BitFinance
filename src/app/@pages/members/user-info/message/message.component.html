@@ -1,0 +1,26 @@
+<mat-card class="message">
+    <mat-card-header>
+        <mat-card-title class="message--title">Email User</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="message--content">
+        <form [formGroup]="emailForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Subject</mat-label>
+                <input formControlName="subject" required matInput name="subject"/>
+            </mat-form-field>
+            <mat-form-field class="message-area" appearance="outline">
+                <mat-label>Message</mat-label>
+                <textarea formControlName="text" required cdkTextareaAutosize matInput></textarea>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button [disabled]="emailForm.invalid" mat-flat-button color="primary" (click)="executeAction()">Send</button>
+        <button mat-button color="warn" (click)="clearForm()">Cancel</button>
+    </mat-card-actions>
+
+    
+    <mat-card-footer>
+        <mat-progress-bar *ngIf="submitInProgress" mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>
