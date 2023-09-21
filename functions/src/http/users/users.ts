@@ -84,14 +84,11 @@ export const suspendUser = onRequest(
                 })
             
             const now = new Date();
-            console.log(new Date(suspendModel.suspendDates.start) <= now && new Date(suspendModel.suspendDates.end) > now);
-            
             if (new Date(suspendModel.suspendDates.start) <= now && new Date(suspendModel.suspendDates.end) > now) {
                 await admin.auth().updateUser(suspendModel.uid, {
                     disabled: true
                 })
             }
-
 
             return okResponse({}, 200, res);
         }catch(error) {
