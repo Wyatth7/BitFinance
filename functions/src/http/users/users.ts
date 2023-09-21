@@ -150,11 +150,15 @@ export const toggleActivation = onRequest(
 
             const user = userDoc.data() as UserModel;
 
-            await admin.auth().updateUser(userId, {disabled: !user.isActive})
+            const newActivationStatus = !user.isActive;
+            console.log(newActivationStatus);
+            
+
+            await admin.auth().updateUser(userId, {disabled: !newActivationStatus})
 
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(userId).update({
-                    isActive: !user.isActive
+                    isActive: newActivationStatus
                 });
 
             return okResponse("The user's status has been updated", 200, res);

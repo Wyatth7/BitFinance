@@ -31,6 +31,8 @@ export class AdvancedComponent implements OnInit{
 
   async suspendUser() {
 
+    this.submitInProgress = true;
+
     const start = this.suspendForm.get('start')?.value;
     const end = this.suspendForm.get('end')?.value;
 
@@ -46,11 +48,11 @@ export class AdvancedComponent implements OnInit{
       this.suspendForm.reset();
       this.futureSuspension = this.userService.suspensionStatus(this.user);
     }
+
+    this.submitInProgress = false;
   }
 
   async unsuspendUser() {
-    console.log('unsus');
-    
     this.submitInProgress = true;
     const success = await this.userService.unsuspendUser(this.user.uid)
 
@@ -62,14 +64,8 @@ export class AdvancedComponent implements OnInit{
   }
 
   async toggleActivation() {
-    console.log('in toggle');
-    
     this.submitInProgress = true;
     const success = await this.userService.toggleActivation(this.user.uid);
-
-    if (success) {
-      this.user.isActive = !this.user.isActive;
-    }
 
     this.submitInProgress = false;
   }
