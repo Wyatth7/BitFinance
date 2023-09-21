@@ -5,6 +5,7 @@ import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserListModel } from '../../models/users/user-list-model';
 import { UserModel } from '../../models/users/user-model';
 import { UserStatus } from '../../enums/user/user-status';
+import { EditUserModel } from '../../models/users/edit-user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,39 @@ export class UserService {
       return false;
     }
 
+  }
+
+  async updateUser(editUserModel: EditUserModel) {
+    try {
+      
+      const updateUserQuery = httpsCallable(this.functions, UserFunctions.editUser);
+  
+      await updateUserQuery(editUserModel);
+
+      this.updateUserStore(editUserModel);
+
+      return true;
+    } catch (error) {
+      return false;
+    }
+
+  }
+
+  async updateUserStore(editUserModel: EditUserModel) {
+    // get user
+    const user = this.getUserFromStore(editUserModel.uid);
+
+    if (!user) return;
+
+    // update user
+    user.email = editUserModel.email;
+    user.firstName = editUserModel.firstName;
+    user.lastName = editUserModel.lastName;
+    user.role = editUserModel.role;
+
+    // replace user
+    const userIndex = this.getUserIndex(editUserModel.uid);
+    this._users?.acceptedUsers.splice(userIndex, 1, user);
   }
 
   /**
@@ -108,9 +142,11 @@ export class UserService {
    * @param userId ID of the user to toggle activation
    */
   updateUserActivationStore(userId: string) {
-    const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
+    const userIndex = this.getUserIndex(userId);
 
-    if (!userIndex || !this._users) return;
+    if (userIndex < 0 || !this._users) {
+      return;
+    }
 
     this._users.acceptedUsers[userIndex].isActive = !this._users.acceptedUsers[userIndex].isActive;
   }
@@ -199,4 +235,16 @@ export class UserService {
       && end > today;
   }
 
+  /**
+   * Gets the index of a user from the user store
+   * @param userId ID of user to find index
+   * @returns Index of the user or -1 if it doesn't exist
+   */
+  private getUserIndex(userId: string) {
+    const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
+
+    if (!userIndex || !this._users) return -1;
+
+    return userIndex;
+  }
 }
