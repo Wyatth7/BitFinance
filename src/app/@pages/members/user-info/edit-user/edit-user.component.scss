@@ -1,11 +1,22 @@
 .create-edit-user {
-    width: fit-content;
-
-    .form {
-        margin: 1.2rem 0;
-
-        .half-width {
-            width: 50%;
+    // width: fit-content;
+    // min-height: 50%;
+    width: 100% !important;
+    height: 100%;
+    .content {
+        height: 100%;
+        
+        .form {
+            
+            .half-width {
+                width: 50%;
+            }
+        }
+        
+        .form-group-2x {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
     }
 
@@ -13,10 +24,5 @@
         color: var(--blue);
     }
 
-    .form-group-2x {
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-    }
 }
 

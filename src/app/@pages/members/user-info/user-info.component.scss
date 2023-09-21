@@ -1,9 +1,10 @@
 .edit-user {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    padding: 3rem;
     overflow-y: auto;
-    gap: 2rem;
+    gap: 1rem;
     height: 100%;
     bottom: 0;
 
@@ -11,12 +12,15 @@
         height: 100% !important;
     }
 
-    &--edit {
-        width: fit-content;
+    & > * {
 
+        max-height: 40rem;
     }
+}
 
-    &--advanced {
+
+@media only screen and (max-width: 890px) {
+    .edit-user {
+        grid-template-columns: 1fr;
     }
-
 }

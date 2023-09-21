@@ -1,0 +1,15 @@
+.message {
+    height: 100%;
+
+    &--title {
+        color: var(--blue);
+    }
+
+    &--content {
+        height: 100%;
+
+        .message-area {
+            height: 10rem;
+        }
+    }
+}

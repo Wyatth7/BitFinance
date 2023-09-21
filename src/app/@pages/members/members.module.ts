@@ -30,6 +30,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { AdvancedComponent } from './user-info/advanced/advanced.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatListModule} from '@angular/material/list';
+import { MessageComponent } from './user-info/message/message.component';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     EditUserComponent,
     ViewComponent,
     UserInfoComponent,
-    AdvancedComponent
+    AdvancedComponent,
+    MessageComponent
   ],
   imports: [
     CommonModule,
@@ -66,7 +69,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatListModule,
   ],
   providers: [
     MatDatepickerModule
