@@ -7,6 +7,7 @@ import { UserModel } from '../../models/users/user-model';
 import { UserStatus } from '../../enums/user/user-status';
 import { EditUserModel } from '../../models/users/edit-user-model';
 import { LoaderService } from '../component-services/loader.service';
+import { DialogService } from '../dialogs/dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,9 @@ export class UserService {
 
   private _users: UserListModel | undefined = undefined;
 
-  constructor(private functions: Functions, private loaderService: LoaderService) { }
+  constructor(private functions: Functions,
+     private loaderService: LoaderService,
+     private dialogService: DialogService) { }
 
   /**
    * Creates a user in Firebase
@@ -94,13 +97,22 @@ export class UserService {
   async getUserList() {
     this.loaderService.showLoader('Users');
 
-    if (!this._users) {
-      const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
-      this._users = (await usersQuery()).data as UserListModel;
+    try {
+      if (!this._users) {
+        const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
+        this._users = (await usersQuery()).data as UserListModel;
+      }
+  
+      this.loaderService.stopLoader();
+      return this._users;
+      
+    } catch (error) {
+      console.log(error);
+      this.dialogService.openErrorDialog({title: 'User Load Failed', data: 'There was an issue retrieving users from the server. Please refresh the page or try again later.'})
+      this.loaderService.stopLoader();
     }
 
-    this.loaderService.stopLoader();
-    return this._users;
+    return;
   }
 
   /**
