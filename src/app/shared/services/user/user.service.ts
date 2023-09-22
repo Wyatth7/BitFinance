@@ -120,6 +120,8 @@ export class UserService {
   updateUserStoreSuspension(userId: string, start?: Date, end?: Date) {
     const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
 
+    console.log(userIndex);
+    
     if (!userIndex || !this._users) return;
 
     
@@ -142,13 +144,15 @@ export class UserService {
    * @param userId ID of the user to toggle activation
    */
   updateUserActivationStore(userId: string) {
-    const userIndex = this.getUserIndex(userId);
+    const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
 
-    if (userIndex < 0 || !this._users) {
+    console.log(userIndex);
+    
+    if (userIndex! < 0 || !this._users) {
       return;
     }
 
-    this._users.acceptedUsers[userIndex].isActive = !this._users.acceptedUsers[userIndex].isActive;
+    this._users.acceptedUsers[userIndex!].isActive = !this._users.acceptedUsers[userIndex!].isActive;
   }
 
   /**

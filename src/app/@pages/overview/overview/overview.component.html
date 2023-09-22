@@ -8,11 +8,11 @@
         [requiredButtonRoles]="[1]">
         <div class="member-card">
             <div class="members-group">
-                <h1 [style.color]="color.green" class="members-group--number">{{4 | number}}</h1>
+                <h1 [style.color]="color.green" class="members-group--number">{{overviewData!.users.accepted | number}}</h1>
                 <p class="members-group--text">Sign Ups</p>
             </div>
             <div class="members-group">
-                <h1 [style.color]="color.red" class="members-group--number">{{2 | number}}</h1>
+                <h1 [style.color]="color.red" class="members-group--number">{{ overviewData!.users.requested | number}}</h1>
                 <p class="members-group--text">On Leave</p>
             </div>
         </div>
