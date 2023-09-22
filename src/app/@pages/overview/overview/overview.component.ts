@@ -11,7 +11,7 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  overviewData?: OverviewDataModel;
+  overviewData: OverviewDataModel | undefined;
 
   constructor(private topNavService: TopNavService, private overviewService: OverviewService) { }
 
@@ -24,7 +24,7 @@ export class OverviewComponent implements OnInit {
       })
 
       this.overviewData = await this.overviewService.getOverviewData();
-  }
+    }
 
   get color(): typeof Colors {
     return Colors;

@@ -2,6 +2,7 @@
     <app-side-nav></app-side-nav>
     <app-top-nav></app-top-nav>
     <div class="dashboard-content">
+        <app-content-loading-screen *ngIf="pageIsLoading.isLoading" [loadingText]="pageIsLoading.pageTitle"></app-content-loading-screen>
         <router-outlet></router-outlet>
     </div>
 </div>
