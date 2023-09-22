@@ -1,4 +1,4 @@
-<div class="overview">
+<div class="overview" >
     <app-card 
         route="/users/view"
         icon="group" 
@@ -8,12 +8,12 @@
         [requiredButtonRoles]="[1]">
         <div class="member-card">
             <div class="members-group">
-                <h1 [style.color]="color.green" class="members-group--number">{{4 | number}}</h1>
+                <h1 [style.color]="color.green" class="members-group--number">{{overviewData?.users?.accepted || 0 | number}}</h1>
                 <p class="members-group--text">Sign Ups</p>
             </div>
             <div class="members-group">
-                <h1 [style.color]="color.red" class="members-group--number">{{2 | number}}</h1>
-                <p class="members-group--text">On Leave</p>
+                <h1 [style.color]="color.red" class="members-group--number members-group--number-right">{{ overviewData?.users?.requested || 0 | number}}</h1>
+                <p class="members-group--text">Suspended/Leave</p>
             </div>
         </div>
     </app-card>
