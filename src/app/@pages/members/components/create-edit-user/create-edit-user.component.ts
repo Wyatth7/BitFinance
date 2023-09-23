@@ -63,7 +63,7 @@ export class CreateEditUserComponent {
     
 
     cancel() {
-        this.formControls.reset();
+        // this.formControls.reset();
         this.router.navigate(['../view'], {relativeTo: this.route})
     }
 
