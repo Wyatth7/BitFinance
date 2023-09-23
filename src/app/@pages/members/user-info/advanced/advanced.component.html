@@ -8,9 +8,9 @@
                 <mat-expansion-panel-header>Security Questions</mat-expansion-panel-header>
 
                 <mat-list class="questions">
-                    <mat-list-item *ngFor="let question of securityQuestions">
-                        <p class="question">{{ question.question }}</p>
-                        <p class="answer">{{ question.answer | date }}</p>
+                    <mat-list-item >
+                        <p class="question">What is your date of birth?</p>
+                        <p class="answer">{{ user.securityQuestionAnswer | date }}</p>
                     </mat-list-item>
                 </mat-list>
             </mat-expansion-panel>
@@ -36,6 +36,7 @@
                 <div class="suspensions">
                     <div class="suspensions--form">
                         <div class="form-items" *ngIf="!user.suspended; else unSuspendTemplate">
+                            <p>Enter a suspension date range.</p>
                             <mat-form-field appearance="outline">
                                 <mat-label>Enter a date range</mat-label>
                                 <mat-date-range-input [formGroup]="suspendForm" [rangePicker]="picker">

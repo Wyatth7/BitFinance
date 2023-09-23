@@ -7,4 +7,5 @@ export interface CreateUserModel {
     password: string;
     role: Roles;
     requested?: boolean;
+    securityQuestionAnswer: Date;
 }

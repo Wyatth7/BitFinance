@@ -13,4 +13,5 @@ export interface UserModel {
     suspended: SuspendedAccountModel | null;
     uid: string;
     isActive: boolean;
+    securityQuestionAnswer: Date;
 }

@@ -12,7 +12,7 @@ export class ViewComponent implements OnInit {
   renderUsers: boolean = true;
   listSortValue = 'newest'
   tableTitle = 'Users'
-  users!: UserListModel;
+  users?: UserListModel;
 
   constructor(private userService: UserService) {}
 

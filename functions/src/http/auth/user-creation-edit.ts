@@ -68,7 +68,7 @@ const configureCreatedUser = (newUser: CreateUserModel): UserModel => {
 
     // configure username
     const date = new Date();
-    user.userName = `${user.firstName[0].toLowerCase()}${user.lastName.toLowerCase()}${date.getUTCMonth() + 1}${date.getUTCFullYear()}`
+    user.userName = `${user.firstName[0].toLowerCase()}${user.lastName.toLowerCase()}${String(date.getUTCMonth() + 1).padStart(2, '0')}${date.getUTCFullYear().toString().substring(2)}`
 
     // configure requested status
     user.requested = false;
