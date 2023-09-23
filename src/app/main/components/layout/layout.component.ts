@@ -11,7 +11,7 @@ import { LoaderService } from 'src/app/shared/services/component-services/loader
 export class LayoutComponent implements OnInit, OnDestroy, AfterContentChecked {
   pageIsLoading: PageLoadModel = {
     pageTitle: '',
-    isLoading: true
+    isLoading: false
   };
 
   private loaderSubscription!: Subscription;

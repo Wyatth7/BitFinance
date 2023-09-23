@@ -1,5 +1,7 @@
-<div class="header">
-    <div class="left-content">
+<div class="view-content">
+
+    <div class="header">
+        <div class="left-content">
         <h1>Current {{ tableTitle }}</h1>
         <mat-divider class="vertical-divider" vertical></mat-divider>
         <div class="chips">
@@ -17,9 +19,10 @@
             <mat-option value="lastName">Last Name</mat-option>
         </mat-select>
     </div>
-</div>
-<div class="members-table" *ngIf="users; else noUsers">
-    <app-member-table *ngIf="renderUsers; else showRequestedMembers" [userData]="users.acceptedUsers"></app-member-table>   
+    </div>
+    <div class="members-table" *ngIf="users; else noUsers">
+        <app-member-table *ngIf="renderUsers; else showRequestedMembers" [userData]="users.acceptedUsers"></app-member-table>   
+    </div>
 </div>
 
 <ng-template #showRequestedMembers>

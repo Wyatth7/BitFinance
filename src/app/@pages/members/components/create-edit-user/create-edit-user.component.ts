@@ -3,8 +3,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CreateEditUserForm } from "src/app/shared/form/partials/create-edit-form";
 import { passwordValidator, passwordsMatchValidator } from "src/app/shared/form/validators/password-validator";
-import { SnackBarService } from "src/app/shared/services/component-services/snack-bar.service";
-import { UserService } from "src/app/shared/services/user/user.service";
 
 @Component({
     selector: 'app-create-edit-user',
@@ -18,10 +16,12 @@ export class CreateEditUserComponent {
     submitInProgress = false;
 
     constructor(private formBulider: FormBuilder,
-        private userService: UserService,
-        private _snackBar: SnackBarService,
         private router: Router,
-        private route: ActivatedRoute){ }
+        private route: ActivatedRoute){
+    
+    
+      this.formControls.get('passwords')?.setValidators(passwordsMatchValidator())
+    }
 
 
     formControls = this.formBulider.group({
@@ -55,7 +55,8 @@ export class CreateEditUserComponent {
 
         await this.action();
         
-        this.formControls.reset();
+        this.router.navigate(['../view'], {relativeTo: this.route})
+
         this.submitInProgress = false;
     }
 
@@ -68,6 +69,7 @@ export class CreateEditUserComponent {
 
     get passwordControls():boolean {
       const passwordsGroup = this.formControls.get('passwords');
+      
       return (passwordsGroup?.errors?.['passwordMatchError'] && passwordsGroup.get('confirmPassword')?.dirty);
     }
     
