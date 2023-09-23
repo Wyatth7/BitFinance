@@ -8,4 +8,5 @@ export interface CreateUserModel {
     password: string;
     role: UserRole;
     requested: boolean;
+    securityQuestionAnswer: Date;
 }

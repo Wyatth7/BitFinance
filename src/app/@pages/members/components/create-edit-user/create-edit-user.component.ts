@@ -44,7 +44,8 @@ export class CreateEditUserComponent {
             passwordValidator()]
           ],
         }, {validators: passwordsMatchValidator}),
-        role: [4, Validators.required]
+        role: [4, Validators.required],
+        securityQuestionAnswer: [null, Validators.required]
       })
 
     async executeAction() {

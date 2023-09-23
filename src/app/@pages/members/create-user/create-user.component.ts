@@ -28,7 +28,8 @@ export class CreateUserComponent {
           email: this.formData?.email!,
           password: this.formData.passwords?.password!,
           role: +this.formData.role!,
-          requested: false
+          requested: false,
+          securityQuestionAnswer: this.formData.securityQuestionAnswer!
         }
         
         const userCreated = await this.userService.createUser(createUserModel)

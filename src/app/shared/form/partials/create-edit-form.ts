@@ -11,4 +11,5 @@ export interface CreateEditUserForm {
         confirmPassword: string;
     };
     role: Roles;
+    securityQuestionAnswer: Date;
 }

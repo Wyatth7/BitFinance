@@ -32,7 +32,8 @@ export class SignUpComponent {
         Validators.minLength(8),
         passwordValidator()]
       ],
-    }, {validators: passwordsMatchValidator})
+    }, {validators: passwordsMatchValidator}),
+    securityQuestionAnswer: ['', Validators.required]
   })
 
   formData: AuthenticationFormModel = {

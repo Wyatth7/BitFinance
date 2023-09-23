@@ -56,7 +56,14 @@
             <mat-error *ngIf="passwordControls" style="margin-bottom: 1rem;">Confirm password must match password</mat-error>
             
             </div>
-            <div class="half-width">
+            <div class="form-group-2x">
+                <mat-form-field appearance="outline">
+                    <mat-label>Date of Birth</mat-label>
+                    <input formControlName="securityQuestionAnswer" matInput [matDatepicker]="securityQuestionAnswer">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="securityQuestionAnswer"></mat-datepicker-toggle>
+                    <mat-datepicker #securityQuestionAnswer></mat-datepicker>
+                </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Role</mat-label>
                     <mat-select [value]="4" 
