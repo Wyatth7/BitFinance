@@ -8,6 +8,7 @@ import { UserListModel } from "../../shared/models/users/user-list-model";
 import { SuspendUserModel } from "../../shared/models/users/suspend-user-model";
 import * as logger from "firebase-functions/logger";
 import { EditUserModel } from "../../shared/models/auth/edit-user-model";
+import { CreateUserModel } from "../../shared/models/auth/create-user-model";
 
 export const getUser = onRequest(
     {cors: true},
@@ -201,6 +202,26 @@ export const editUser = onRequest(
         } catch (error) {
             logger.error(error);
             return badRequestResponse("An error occurred during the request and the user could not be updated.", res);
+        }
+    }
+);
+
+export const createUser = onRequest(
+    {cors: true},
+    async (req, res) => {
+        const user = req.body.data as CreateUserModel;
+
+        if (!user) return badRequestResponse("The user data provided is invalid.", res);
+
+        console.log(user)
+        try {
+    
+            await admin.firestore().collection(FirestoreCollections.users.toString()).add(user)    
+            return okResponse({}, 200, res);
+
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse("An error occurred during the request and the user could not be created.", res);
         }
     }
 );

@@ -8,6 +8,7 @@ import { UserStatus } from '../../enums/user/user-status';
 import { EditUserModel } from '../../models/users/edit-user-model';
 import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,10 @@ export class UserService {
 
   private _users: UserListModel | undefined = undefined;
 
-  constructor(private functions: Functions,
+  constructor(private router: Router,
+    private functions: Functions,
      private loaderService: LoaderService,
-     private dialogService: DialogService) { }
+    private dialogService: DialogService) { }
 
   /**
    * Creates a user in Firebase
@@ -31,6 +33,9 @@ export class UserService {
 
     try {
       await createUserFunction(createUserModel)
+
+      // TODO:: Change route path below 
+      // this.router.navigateByUrl('/auth/login')
       return true;
     } catch (error) {
       return false;
