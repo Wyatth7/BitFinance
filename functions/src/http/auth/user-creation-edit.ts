@@ -7,7 +7,11 @@ import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 import { UserModel } from '../../shared/models/users/user-model';
 import { badRequestResponse, okResponse } from '../../shared/responses/responses';
 import { Encryptor } from '../../shared/helpers/encryption/encryptor';
+import { AcceptDenyModel } from '../../shared/models/auth/accept-deny-model';
 
+/**
+ * Creates a user.
+ */
 export const createUser = onRequest(
     {cors: true},
     async (req, res) => {
@@ -35,6 +39,59 @@ export const createUser = onRequest(
             logger.error(error.message);
 
             return badRequestResponse('There was a problem during the request, and the user could not be created.', res)
+        }
+
+    }
+);
+
+/**
+ * Accepts or declines an accepted user
+ */
+export const acceptDenyUser = onRequest(
+    {cors: true},
+    async (req, res) => {
+
+        const acceptDenyData = req.body.data as AcceptDenyModel
+
+        if (!acceptDenyData) return badRequestResponse("The user request data provided was invalid.", res);
+
+        try {
+            const userSnapshot = await admin.firestore()
+                .collection(FirestoreCollections.users.toString())
+                .doc(acceptDenyData.uid).get();
+            
+            const user = userSnapshot.data() as UserModel;
+
+            if (!user.requested) return badRequestResponse("User has already been accepted.", res);
+
+            if (!acceptDenyData.shouldAccept) {
+                // delete user from firestore
+                await admin.firestore().collection(FirestoreCollections.users.toString())
+                    .doc(acceptDenyData.uid).delete();
+
+                // delete user from auth
+                await admin.auth().deleteUser(acceptDenyData.uid);
+
+                return okResponse({}, 200, res);
+            }
+
+            // update user to accepted
+            await admin.auth().updateUser(acceptDenyData.uid, {
+                disabled: false
+            });
+            
+            // set user requested to false
+            await admin.firestore()
+                .collection(FirestoreCollections.users.toString())
+                .doc(acceptDenyData.uid)
+                .update({
+                    requested: false
+            });
+            
+            return okResponse({}, 200, res);
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse("An error occurred and the user requested status could not be changed.", res);
         }
 
     }

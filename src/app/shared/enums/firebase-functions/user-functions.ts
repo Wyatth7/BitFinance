@@ -1,5 +1,6 @@
 export enum UserFunctions {
     createUser = 'auth-createUser',
+    acceptDenyUser = 'auth-acceptDenyUser',
     editUser = 'users-editUser',
     getUser = 'users-getUser',
     getUsers = 'users-getUsers',
