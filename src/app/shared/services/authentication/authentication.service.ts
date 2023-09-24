@@ -7,6 +7,7 @@ import { Functions } from '@angular/fire/functions';
 import { httpsCallable } from 'firebase/functions';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserModel } from '../../models/users/user-model';
+import { CreateUserModel } from '../../models/users/create-user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,24 @@ export class AuthenticationService {
 
     this.toggleAuthenticated();
     this.router.navigateByUrl('/auth/login')
+  }
+
+  /**
+   * Signup a user in Firebase
+   * @param createUserModel Model data of the new user
+   */
+  async signUpUser(createUserModel: CreateUserModel) {
+      
+    const singUpUserFunction = httpsCallable(this.functions, UserFunctions.userSignUp)
+
+    try {
+      await singUpUserFunction(createUserModel)
+      this.router.navigateByUrl('/auth/login')
+      return true;
+    } catch (error) {
+      return false;
+    }
+
   }
 
   /**

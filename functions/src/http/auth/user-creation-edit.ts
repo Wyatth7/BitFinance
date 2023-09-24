@@ -45,6 +45,28 @@ export const createUser = onRequest(
 );
 
 /**
+* Signup user 
+*/
+export const userSignUp = onRequest(
+    {cors: true},
+    async (req, res) => {
+        const user = req.body.data as CreateUserModel;
+        if (!user) return badRequestResponse("The user data provided is invalid.", res);
+        try {
+            user.requested = true;
+            (user as any).suspended = null;
+            
+            await admin.firestore().collection("users").doc().set(user);
+            return okResponse({}, 200, res);
+
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse("An error occurred during the request and the user could not be created.", res);
+        }
+    }
+);
+
+/**
  * Accepts or declines an accepted user
  */
 export const acceptDenyUser = onRequest(
