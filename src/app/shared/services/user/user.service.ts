@@ -8,6 +8,7 @@ import { UserStatus } from '../../enums/user/user-status';
 import { EditUserModel } from '../../models/users/edit-user-model';
 import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
+import { SnackBarService } from '../component-services/snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class UserService {
 
   constructor(private functions: Functions,
      private loaderService: LoaderService,
-     private dialogService: DialogService) { }
+     private dialogService: DialogService,
+     private snackBarService: SnackBarService) { }
 
   /**
    * Creates a user in Firebase
@@ -36,6 +38,18 @@ export class UserService {
       return false;
     }
 
+  }
+
+  async acceptDenyUser(userId: string, shouldAccept = false) {
+    try {
+      
+      const acceptDenyUserQuery = httpsCallable(this.functions, UserFunctions.acceptDenyUser);
+
+      await acceptDenyUserQuery({uid: userId, shouldAccept})
+
+    } catch (error) {
+      
+    }
   }
 
   async updateUser(editUserModel: EditUserModel) {
