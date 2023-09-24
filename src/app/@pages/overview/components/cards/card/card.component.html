@@ -10,10 +10,10 @@
             {{ subTitle }}
         </mat-card-subtitle>
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content [ngClass]="hasRequiredRole ? 'content' : ''">
         <ng-content></ng-content>
     </mat-card-content>
-    <app-required-role-view [roles]="requiredButtonRoles || []">
+    <app-required-role-view [roles]="requiredButtonRoles || []" (hasRequiredRole)="hasRoleEvent($event)">
     <mat-card-actions [align]="'end'">
             <button (click)="navigateToRoute()"
             class="card-button"

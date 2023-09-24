@@ -6,15 +6,19 @@ import { UserListModel } from '../../models/users/user-list-model';
 import { UserModel } from '../../models/users/user-model';
 import { UserStatus } from '../../enums/user/user-status';
 import { EditUserModel } from '../../models/users/edit-user-model';
+import { LoaderService } from '../component-services/loader.service';
+import { DialogService } from '../dialogs/dialog.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private _users: UserListModel | null = null;
+  private _users: UserListModel | undefined = undefined;
 
-  constructor(private functions: Functions) { }
+  constructor(private functions: Functions,
+     private loaderService: LoaderService,
+     private dialogService: DialogService) { }
 
   /**
    * Creates a user in Firebase
@@ -91,12 +95,24 @@ export class UserService {
    * @returns List of users in the system
    */
   async getUserList() {
-    if (!this._users) {
-      const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
-      this._users = (await usersQuery()).data as UserListModel;
+    this.loaderService.showLoader('Users');
+
+    try {
+      if (!this._users) {
+        const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
+        this._users = (await usersQuery()).data as UserListModel;
+      }
+  
+      this.loaderService.stopLoader();
+      return this._users;
+      
+    } catch (error) {
+      console.log(error);
+      this.dialogService.openErrorDialog({title: 'User Load Failed', data: 'There was an issue retrieving users from the server. Please refresh the page or try again later.'})
+      this.loaderService.stopLoader();
     }
 
-    return this._users;
+    return;
   }
 
   /**
@@ -120,6 +136,8 @@ export class UserService {
   updateUserStoreSuspension(userId: string, start?: Date, end?: Date) {
     const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
 
+    console.log(userIndex);
+    
     if (!userIndex || !this._users) return;
 
     
@@ -142,13 +160,15 @@ export class UserService {
    * @param userId ID of the user to toggle activation
    */
   updateUserActivationStore(userId: string) {
-    const userIndex = this.getUserIndex(userId);
+    const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
 
-    if (userIndex < 0 || !this._users) {
+    console.log(userIndex);
+    
+    if (userIndex! < 0 || !this._users) {
       return;
     }
 
-    this._users.acceptedUsers[userIndex].isActive = !this._users.acceptedUsers[userIndex].isActive;
+    this._users.acceptedUsers[userIndex!].isActive = !this._users.acceptedUsers[userIndex!].isActive;
   }
 
   /**

@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SpinnerButtonComponent } from './components/buttons/spinner-button/spinner-button.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { ContentLoadingScreenComponent } from './components/spinners-loader/content-loading-screen/content-loading-screen.component';
 
 
 
@@ -26,7 +27,8 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
     TableComponent,
     ErrorComponent,
     SpinnerButtonComponent,
-    EllipsisPipe
+    EllipsisPipe,
+    ContentLoadingScreenComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
     TableComponent,
     ErrorComponent,
     SpinnerButtonComponent,
-    EllipsisPipe
+    EllipsisPipe,
+    ContentLoadingScreenComponent
   ]
 })
 export class SharedModule { }

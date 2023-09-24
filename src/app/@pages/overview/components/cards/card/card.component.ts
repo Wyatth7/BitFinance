@@ -15,10 +15,18 @@ export class CardComponent {
   @Input() route: string = '';
   @Input() requiredButtonRoles?: Roles[];
 
+  hasRequiredRole?: boolean;
+
   constructor(private router: Router) {}
 
   navigateToRoute() {
     this.router.navigateByUrl(this.route);
+  }
+
+  hasRoleEvent(hasRole: boolean) {
+    console.log(hasRole);
+    
+    this.hasRequiredRole = !hasRole;
   }
 
 }
