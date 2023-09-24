@@ -50,13 +50,17 @@ export const createUser = onRequest(
 export const userSignUp = onRequest(
     {cors: true},
     async (req, res) => {
-        const user = req.body.data as CreateUserModel;
-        if (!user) return badRequestResponse("The user data provided is invalid.", res);
+        const createUser = req.body.data as CreateUserModel;
+        if (!createUser) return badRequestResponse("The user data provided is invalid.", res);
         try {
+            const user = configureCreatedUser(createUser);
             user.requested = true;
-            (user as any).suspended = null;
+
+            const uid = await createFirebaseUser(user, true);
             
-            await admin.firestore().collection("users").doc().set(user);
+            await admin.firestore().collection(FirestoreCollections.users.toString())
+                .doc(uid).create(user);
+
             return okResponse({}, 200, res);
 
         } catch (error) {
@@ -124,12 +128,13 @@ export const acceptDenyUser = onRequest(
  * @param createUserModel Model data of user to be created
  * @returns A new user id
  */
-const createFirebaseUser = async (createUserModel: UserModel): Promise<string> => {
+const createFirebaseUser = async (createUserModel: UserModel, disable = false): Promise<string> => {
     const createdUser: UserRecord = await admin.auth().createUser({
         email: createUserModel.email,
         password: createUserModel.passwords[0].password,
         displayName: createUserModel.userName,
-        emailVerified: true
+        emailVerified: true,
+        disabled: disable
         // photoURL: '', we may need this, not sure about the requirements doc.
     });
 
@@ -154,7 +159,7 @@ const configureCreatedUser = (newUser: CreateUserModel): UserModel => {
 
     // add new password
     user.passwords.push({
-        password: newUser.password,
+        password: Encryptor.base64Encryption(newUser.password),
         isActive: true
     })
 
