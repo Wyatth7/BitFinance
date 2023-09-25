@@ -52,6 +52,6 @@ export class LoginComponent implements OnInit {
     const email = controls.email.value || "";
     const password = controls.password.value || "";
 
-    this.authService.login(email, password);
+    await this.authService.login(email, password);
   }
 }

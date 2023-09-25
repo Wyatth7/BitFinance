@@ -6,7 +6,7 @@ const routes: Routes = [
   {
       path: 'view', 
       component: OverviewComponent,
-      title: 'Overview | City Gym'
+      title: 'Overview | BitFinance'
   }
 ]
 

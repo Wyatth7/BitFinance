@@ -23,8 +23,15 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { CreateUserComponent } from './components/create-user/create-user.component';
-
+import { CreateUserComponent } from './create-user/create-user.component';
+import { ViewComponent } from './view/view.component';
+import { EditUserComponent } from './user-info/edit-user/edit-user.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { AdvancedComponent } from './user-info/advanced/advanced.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatListModule} from '@angular/material/list';
+import { MessageComponent } from './user-info/message/message.component';
 
 
 @NgModule({
@@ -35,7 +42,12 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     MemberTableComponent,
     RequestedMemberTableComponent,
     CreateEditUserComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent,
+    ViewComponent,
+    UserInfoComponent,
+    AdvancedComponent,
+    MessageComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +67,13 @@ import { CreateUserComponent } from './components/create-user/create-user.compon
     MatProgressBarModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatListModule,
+  ],
+  providers: [
+    MatDatepickerModule
   ]
 })
 export class MembersModule { }

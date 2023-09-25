@@ -1,0 +1,82 @@
+.advanced {
+    // width: 30rem;
+    // min-height: 50%;
+    height: 100%;;
+
+    &--title {
+        color: var(--blue);
+    }
+
+    &--content {
+        
+        
+        .text-button {
+            p {
+                font-size: 1rem;
+                margin-bottom: 1rem !important;
+            }
+        }
+        
+        .suspensions {
+            
+            &--form {
+                
+                .form-items {
+                    p {
+                        font-size: 1rem;
+                        margin-bottom: 1rem !important;
+                    }
+                }
+
+                button {
+                    margin-top: 1rem !important;
+                }
+            }
+
+            &--cancel {
+
+                p {
+                    font-size: 1rem;
+                }
+
+                button {
+                    margin-top: 1rem;
+                }
+            }
+        }
+
+        .questions {
+            text-wrap: wrap;
+            white-space: nowrap;
+            
+            .question {
+                font-weight: 500;
+            }
+            
+            .answer {
+                font-size: .9rem;
+            }
+        }
+        
+        .passwords {
+            max-height: 10rem !important;
+            overflow-y: auto;
+            
+            &--item {
+                display: flex;
+                gap: 1rem;
+                
+                p {
+                    max-width: 2rem;
+                    text-wrap: wrap;
+                   
+                    span {
+                        font-weight: 500;
+                        display: inline-block;
+                    }
+                    
+                }
+            }
+        }
+    }
+}

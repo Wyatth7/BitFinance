@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Roles } from '../../enums/authentication/roles';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
 
@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../services/authentication/authenticat
 })
 export class RequiredRoleViewComponent implements OnInit {
   @Input() roles!: Roles[];
+  @Output() hasRequiredRole = new EventEmitter<boolean>();
   renderContent: boolean = false;
 
   constructor(private authService: AuthenticationService) {}
@@ -18,7 +19,8 @@ export class RequiredRoleViewComponent implements OnInit {
         this.renderContent = true;
         return;
       }
-
+      
       this.renderContent = false;
+      this.hasRequiredRole.emit(false);
   }
 }

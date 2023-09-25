@@ -1,0 +1,96 @@
+<mat-card class="advanced">
+    <mat-card-header>
+        <mat-card-title class="advanced--title">Advanced</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="advanced--content">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>Security Questions</mat-expansion-panel-header>
+
+                <mat-list class="questions">
+                    <mat-list-item >
+                        <p class="question">What is your date of birth?</p>
+                        <p class="answer">{{ user.securityQuestionAnswer | date }}</p>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel >
+                <mat-expansion-panel-header>Passwords</mat-expansion-panel-header>
+                <mat-list class="passwords" >
+                    <mat-list-item *ngFor="let password of user.passwords">
+                        <div class="passwords--item" [matTooltip]="password.password" matTooltipPosition="before">
+                            <mat-icon [color]="password.isActive ? 'primary' : 'warn'">{{ password.isActive ? 'done' : 'close' }}</mat-icon>
+                            <p >({{ password.isActive ? 'Current' : 'Expired' }})<span>{{ password.password | ellipsis:40 }}</span></p>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-expansion-panel>
+            <!-- Suspend expansion -->
+            <mat-expansion-panel >
+                <mat-expansion-panel-header>Suspensions</mat-expansion-panel-header>
+            
+                <!-- Has two states, 1 for set suspension, 2 for unsuspension -->
+                <!-- if user is not suspened, show 1; else, show 2 -->
+
+                <div class="suspensions">
+                    <div class="suspensions--form">
+                        <div class="form-items" *ngIf="!user.suspended; else unSuspendTemplate">
+                            <p>Enter a suspension date range.</p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Enter a date range</mat-label>
+                                <mat-date-range-input [formGroup]="suspendForm" [rangePicker]="picker">
+                                  <input required matStartDate formControlName="start" placeholder="Start date">
+                                  <input required matEndDate formControlName="end" placeholder="End date">
+                                </mat-date-range-input>
+                                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                              
+                                <mat-error *ngIf="suspendForm.controls['start'].hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                                <mat-error *ngIf="suspendForm.controls['end'].hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                              </mat-form-field>
+                                <app-spinner-button
+                                    [spin]="submitInProgress"
+                                    [disabled]="suspendForm.invalid" 
+                                    color="warn" text="Suspend User" 
+                                    (click)="suspendUser()"
+                                 ></app-spinner-button>
+                        </div>
+                    </div>
+
+                </div>
+            </mat-expansion-panel>
+            <!-- Delete expansion -->
+            <mat-expansion-panel>
+                <!-- Render header based on the user's activation status -->
+                <mat-expansion-panel-header>{{ user.isActive ? "Deactivate" : "Activate" }} User</mat-expansion-panel-header>
+                <!-- Has two states, 1 for activate, 2 for deactivate -->
+                <div class="text-button">
+                    <p>{{ user.firstName | titlecase }} is currently {{ user.isActive ? "active" : "deactivated" }}. Click the button below to  {{ !user.isActive ? "activate" : "deactivate" }} them.</p>
+                    <app-spinner-button 
+                        [spin]="submitInProgress" 
+                        [color]="user.isActive ? 'warn' : 'primary'" 
+                        [text]="user.isActive ? 'Deactivate' : 'Activate'"
+                        (click)="toggleActivation()"
+                    ></app-spinner-button>
+                </div>
+            </mat-expansion-panel>
+
+
+
+        </mat-accordion>
+    </mat-card-content>
+</mat-card>
+
+<ng-template #unSuspendTemplate>
+    <div class="text-button">
+        <p>{{ user.firstName }} {{ futureSuspension ? 'is currently' : 'will be' }} suspened from {{ user.suspended!.start | date }} until {{ user.suspended!.end | date }}.</p>
+            <app-spinner-button 
+                [spin]="submitInProgress" 
+                color="primary" 
+                [text]="futureSuspension ? 'Unsuspend' : 'Cancel'"
+                (click)="unsuspendUser()"
+            ></app-spinner-button>
+    </div>
+</ng-template>

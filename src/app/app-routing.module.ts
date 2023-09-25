@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuardChild } from './shared/activation-guards/auth-guard';
 import { accessLoginPageGuard } from './shared/activation-guards/auth-pages-guard';
-import { requiredRoleGuard } from './shared/activation-guards/required-role-guard';
-import { Roles } from './shared/enums/authentication/roles';
 
 const routes: Routes = [
   {

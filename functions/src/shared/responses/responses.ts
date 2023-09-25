@@ -15,3 +15,9 @@ export const okResponse = (data: any, status: number, res: any) => {
         result: {...data}
     })
 }
+
+export const internalServerError = (message: string, res: any) => {
+    res.status(500).json({
+        result: {message}
+    });
+};

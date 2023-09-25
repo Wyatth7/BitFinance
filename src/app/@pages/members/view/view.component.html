@@ -1,0 +1,34 @@
+<div class="view-content">
+
+    <div class="header">
+        <div class="left-content">
+        <h1>Current {{ tableTitle }}</h1>
+        <mat-divider class="vertical-divider" vertical></mat-divider>
+        <div class="chips">
+            <mat-chip-listbox (change)="change($event)">
+                <mat-chip-option [value]="true" matTooltip="View Created Users" selected>Users ({{users?.acceptedUsers?.length || 0}})</mat-chip-option>
+                <mat-chip-option [value]="false" matTooltip="View Requested Users">Requested Users ({{users?.requestedUsers?.length || 0}})</mat-chip-option>
+            </mat-chip-listbox>
+        </div>
+    </div>
+    <div class="right-content">
+        <label for="listSort">Order By:</label>
+        <mat-select name="listSort" [(value)]="listSortValue">
+            <mat-option value="newest">Newest</mat-option>
+            <mat-option value="oldest">Oldest</mat-option>
+            <mat-option value="lastName">Last Name</mat-option>
+        </mat-select>
+    </div>
+    </div>
+    <div class="members-table" *ngIf="users; else noUsers">
+        <app-member-table *ngIf="renderUsers; else showRequestedMembers" [userData]="users.acceptedUsers"></app-member-table>   
+    </div>
+</div>
+
+<ng-template #showRequestedMembers>
+    <app-requested-member-table *ngIf="users" [userData]="users.requestedUsers"></app-requested-member-table>      
+</ng-template>
+
+<ng-template #noUsers>
+    <p>No users</p>
+</ng-template>

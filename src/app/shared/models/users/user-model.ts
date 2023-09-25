@@ -11,4 +11,7 @@ export interface UserModel {
     role: Roles;
     requested: boolean;
     suspended: SuspendedAccountModel | null;
+    uid: string;
+    isActive: boolean;
+    securityQuestionAnswer: Date;
 }

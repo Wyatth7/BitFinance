@@ -1,0 +1,28 @@
+.create-edit-user {
+    // width: fit-content;
+    // min-height: 50%;
+    width: 100% !important;
+    height: 100%;
+    .content {
+        height: 100%;
+        
+        .form {
+            
+            .half-width {
+                width: 50%;
+            }
+        }
+        
+        .form-group-2x {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+    }
+
+    &--title {
+        color: var(--blue);
+    }
+
+}
+

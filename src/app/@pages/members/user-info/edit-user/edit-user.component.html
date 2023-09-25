@@ -1,0 +1,60 @@
+    <mat-card class="create-edit-user">
+        <mat-card-header>
+            <mat-card-title class="create-edit-user--title">
+                Edit User
+            </mat-card-title>
+        </mat-card-header>
+        
+        <mat-card-content class="content">
+            
+            <div [formGroup]="formControls" class="form">
+                <div class="form-group-2x" formGroupName="name">
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                    <input 
+                    matInput 
+                    required 
+                    formControlName="firstName">
+                    <mat-error>You must enter a first name</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input 
+                    matInput 
+                    required 
+                    formControlName="lastName">
+                    <mat-error>You must enter a last name</mat-error>
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label type="email">Email</mat-label>
+                <input 
+                matInput 
+                required
+                formControlName="email">
+                <mat-error>You must enter a valid email address</mat-error>
+            </mat-form-field>
+            <div class="half-width">
+                <mat-form-field appearance="outline">
+                    <mat-label>Role</mat-label>
+                    <mat-select [value]="4" 
+                    required 
+                    formControlName="role">
+                    <mat-option [value]="4">User</mat-option>
+                    <mat-option [value]="2">Manager</mat-option>
+                    <mat-option [value]="1">Administrator</mat-option>
+                    </mat-select>
+                    <mat-error>A user must have a role</mat-error>
+                </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+
+    <mat-card-actions >
+        <button [disabled]="formControls.invalid" class="create-button" mat-flat-button color="primary" (click)="editUserAction()">Update</button>
+    </mat-card-actions>
+
+    <mat-card-footer>
+        <mat-progress-bar *ngIf="submitInProgress" mode="indeterminate"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>

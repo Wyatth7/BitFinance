@@ -14,7 +14,9 @@ import {initializeApp} from "firebase-admin/app";
 
 initializeApp();
 
-export {testFunc} from './http/test';
-export * as auth from './http/auth/user-creation';
-export * as users from './http/users/users'
+export * as auth from './http/auth/user-creation-edit';
+export * as users from './http/users/users';
+export * as email from './messaging/emailer';
 export { forgotPassword } from './http/auth/forgotPassword';
+export * as overview from './http/overviews/overview';
+export * as scheduler from './schedule/scheduler';
