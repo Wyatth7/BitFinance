@@ -8,14 +8,22 @@ export class SnackBarService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-  openSnackBar() {
+  showSuccess(message: string) {
+    this.open(message, ['snack-styles--success']);
+  }
+
+  showError(message: string) {
+    this.open(message, ['snack-styles--error'])
+  }
+
+  private open(message: string, panelClass: string[]) {
     this._snackBar.open(
-        'User Created Successfully',
-        'Close',
-        {
-            duration: 3000,
-            panelClass: ['snack-styles']
-        }
-    )
-}
+      message,
+      'Close',
+      {
+          duration: 3000,
+          panelClass: [...panelClass]
+      }
+  )
+  }
 }
