@@ -45,13 +45,13 @@ export class LoginComponent implements OnInit {
   }
 
   async signInAction(): Promise<void> {
-    console.log('form data' + this.formData.form)
-
-    const controls = this.formControls.controls;
-    
-    const email = controls.email.value || "";
-    const password = controls.password.value || "";
-
-    await this.authService.login(email, password);
+      console.log('form data' + this.formData.form)
+      
+      const controls = this.formControls.controls;
+      
+      const email = controls.email.value || "";
+      const password = controls.password.value || "";
+  
+      await this.authService.login(email, password);
   }
 }

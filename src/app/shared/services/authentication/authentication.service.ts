@@ -8,6 +8,7 @@ import { httpsCallable } from 'firebase/functions';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserModel } from '../../models/users/user-model';
 import { CreateUserModel } from '../../models/users/create-user-model';
+import { SnackBarService } from '../component-services/snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class AuthenticationService {
 
   // token and roles come from login and should be saved to local storage.
   private _user?: UserModel;
-  private _userRole: Roles = Roles.administrator;
-  private _userToken: string | undefined = 'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImFhMDhlN2M3ODNkYjhjOGFjNGNhNzJhZjdmOWRkN2JiMzk4ZjE2ZGMiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoid2hhcmRpbjkyMDIzIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2FjY291bnRpbmctYXBwLXRlc3QiLCJhdWQiOiJhY2NvdW50aW5nLWFwcC10ZXN0IiwiYXV0aF90aW1lIjoxNjk1MDY3NjY4LCJ1c2VyX2lkIjoiQ0lkSDNvOVNsRU45em9veWhJalNsMm1wUVlNMiIsInN1YiI6IkNJZEgzbzlTbEVOOXpvb3loSWpTbDJtcFFZTTIiLCJpYXQiOjE2OTUwNjc2NjgsImV4cCI6MTY5NTA3MTI2OCwiZW1haWwiOiJ3aGFyZGluMTAxMEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ3aGFyZGluMTAxMEBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.pNn3WxnHxP6LA9lms1Bz-HsOfKKo0vAmyAGay2jo6Mq7AygSxNmzEpqEs93eO2RmKDpH61kZCQVIIpyeqBuErPMsdYS1J-LMWkZJ8l8kjltYe84qE0zaqxN67-ibF0R6LulTrAQePGlfiXYM4Ic0MpbY8-tm5myLMnRaYL4ZJfpR_JixZYnJKZRI8pxAlKYkG3Bh50lg83PkuJ6zbQBlHYxm6-DvHbJyrjvQZD5G_mAy3vmtBye4mJpyLl_Yk_qsT6QicfTwQ5bKUu-fq6fTWc7YKpZ4bf5aSXzG8Smr48f7qWNED9YBHDgY7GxTAKmfsQUC2Hd8HIGbYuK6Talpwg';
+  private _userRole: Roles = Roles.loggedOut;
+  private _userToken: string | undefined = '';
 
   public get isAuthenticated() {
     return this._isAuthenticated;
@@ -35,13 +36,13 @@ export class AuthenticationService {
 
   constructor(private router: Router,
     private auth: Auth,
-    private functions: Functions) {}
+    private functions: Functions,
+    private _snackBarService: SnackBarService) {}
 
   // This will call a login API
   // If login, set role and auth status
   async login(email: string, password: string) {
 
-    try {
       await signInWithEmailAndPassword(this.auth, email, password)
   
       const userQuery = httpsCallable<string, UserModel>(this.functions, UserFunctions.getUser)
@@ -53,9 +54,6 @@ export class AuthenticationService {
 
       this.toggleAuthenticated(true);
       this.router.navigateByUrl('/overview/view')
-    } catch(e) {
-      console.log(e);
-    }
   }
 
   async logout() {
@@ -76,13 +74,12 @@ export class AuthenticationService {
       
     const singUpUserFunction = httpsCallable(this.functions, UserFunctions.userSignUp)
 
-    try {
-      await singUpUserFunction(createUserModel)
-      this.router.navigateByUrl('/auth/login')
-      return true;
-    } catch (error) {
-      return false;
-    }
+    await singUpUserFunction(createUserModel)
+
+    this._snackBarService.showSuccess("User requested created");
+
+    this.router.navigateByUrl('/auth/login')
+    return true;
 
   }
 
