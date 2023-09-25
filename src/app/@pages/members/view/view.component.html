@@ -5,8 +5,8 @@
         <h1>Current {{ tableTitle }}</h1>
         <mat-divider class="vertical-divider" vertical></mat-divider>
         <div class="chips">
-            <mat-chip-listbox (change)="change($event)">
-                <mat-chip-option [value]="true" matTooltip="View Created Users" selected>Users ({{users?.acceptedUsers?.length || 0}})</mat-chip-option>
+            <mat-chip-listbox #chipList (change)="change($event)">
+                <mat-chip-option [value]="true" matTooltip="View Accepted Users" selected>Users ({{users?.acceptedUsers?.length || 0}})</mat-chip-option>
                 <mat-chip-option [value]="false" matTooltip="View Requested Users">Requested Users ({{users?.requestedUsers?.length || 0}})</mat-chip-option>
             </mat-chip-listbox>
         </div>
@@ -21,14 +21,21 @@
     </div>
     </div>
     <div class="members-table" *ngIf="users; else noUsers">
-        <app-member-table *ngIf="renderUsers; else showRequestedMembers" [userData]="users.acceptedUsers"></app-member-table>   
+        <app-member-table *ngIf="renderUsers && users.acceptedUsers.length > 0; else showRequestedMembers" [userData]="users.acceptedUsers"></app-member-table>   
     </div>
 </div>
 
 <ng-template #showRequestedMembers>
-    <app-requested-member-table *ngIf="users" [userData]="users.requestedUsers"></app-requested-member-table>      
+    <app-requested-member-table *ngIf="users && users.requestedUsers.length > 0;else noUsers" [userData]="users.requestedUsers"></app-requested-member-table>      
 </ng-template>
 
 <ng-template #noUsers>
-    <p>No users</p>
+    <div class="no-users">
+        <h1 class="no-users--header">It looks like there are no {{!renderUsers ? 'requested users' : 'users'}} in your organization.</h1>
+        <button 
+            mat-flat-button
+            class="no-users--button"
+            color="primary"
+            (click)="emptyListAction()">{{!renderUsers ? 'Back to Users' : 'Create User'}}</button>
+    </div>
 </ng-template>
