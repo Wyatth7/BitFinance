@@ -7,12 +7,8 @@ import { Functions } from '@angular/fire/functions';
 import { httpsCallable } from 'firebase/functions';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserModel } from '../../models/users/user-model';
-<<<<<<< HEAD
-import { ResetPasswordModel } from 'functions/src/shared/models/auth/reset-password-model';
-//import { forgotPassword } from 'functions/src';
-=======
 import { CreateUserModel } from '../../models/users/create-user-model';
->>>>>>> develop
+import { badRequestResponse } from 'functions/src/shared/responses/responses';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +69,7 @@ export class AuthenticationService {
     this.router.navigateByUrl('/auth/login')
   }
 
-  async resetPassword(email : string, userId: string){
+  async forgotPassword(email : string, userName: string, dob: Date){
 
     try{
         // [Figure Out]How to validate email and User Id before then call function
@@ -81,23 +77,53 @@ export class AuthenticationService {
         console.log(`It did it`);
 
         const userQuery = httpsCallable(this.functions, 'forgotPassword');
-        const data = await userQuery({email});
-
-        //console.log(data)
+        const data = await userQuery({email, userName});
+        
 
         console.log(data);
         const user1 = data.data as UserModel;
         console.log(user1.email);
-        
+        console.log(user1.userName);
+        console.log(new Date(user1.securityQuestionAnswer));
+        var queryDOB = new Date(user1.securityQuestionAnswer);
+        if (dob.getDate == queryDOB.getDate){
+          console.log("GOOD");
+          const lastIndex = user1.passwords.length-1;
+          const password = user1.passwords[lastIndex].password || " ";
+          await signInWithEmailAndPassword(this.auth, user1.email, password);
+          console.log("Made it here 1");
+          
+  
+          const userQuery = httpsCallable<string, UserModel>(this.functions, UserFunctions.getUser)
+          const userData = await userQuery(this.auth.currentUser?.uid)
+    
+          this._user = userData.data;
+          this._userRole = userData.data.role;
+          this._userToken = await this.auth.currentUser?.getIdToken();
+    
+          //this.toggleAuthenticated(true);
+          console.log("Made it here 2");
+          console.log(this._user.firstName + this._user.lastName);
+          
+          
+          // You Stopped Here await signInWithEmailAndPassword(this.auth, user1.email, user1.passwords);
+          this.router.navigateByUrl('/auth/resetPassword')
+          return true
+        }
 
-      //this.router.navigateByUrl('')
+        return false
+
     } catch(e){
-      console.log(e);
+      console.log(e + '  Went Bad');
+      return false
     }
     
 
   }
 
+  async resetPassword(){
+
+  }
 
 
   /**

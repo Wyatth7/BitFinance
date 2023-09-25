@@ -14,10 +14,11 @@ export const forgotPassword = onRequest(
         const userSnapshot = await admin.firestore()
                                         .collection('0')
                                         .where('email', '==',req.body.data.email)
+                                        .where('userName', '==', req.body.data.userName)
                                         .get();
 
         if (userSnapshot.empty) {
-           return badRequestResponse(`Could not find user with the email`, res);
+           return badRequestResponse(`Could not find user with the email and username`, res);
         }
                                         
         const allData = userSnapshot.docs;
