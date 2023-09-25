@@ -17,3 +17,4 @@ initializeApp();
 export {testFunc} from './http/test';
 export * as auth from './http/auth/user-creation';
 export * as users from './http/users/users'
+export { forgotPassword } from './http/auth/forgotPassword';
