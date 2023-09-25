@@ -7,6 +7,8 @@ import { Functions } from '@angular/fire/functions';
 import { httpsCallable } from 'firebase/functions';
 import { UserFunctions } from '../../enums/firebase-functions/user-functions';
 import { UserModel } from '../../models/users/user-model';
+import { CreateUserModel } from '../../models/users/create-user-model';
+import { SnackBarService } from '../component-services/snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,13 +36,13 @@ export class AuthenticationService {
 
   constructor(private router: Router,
     private auth: Auth,
-    private functions: Functions) {}
+    private functions: Functions,
+    private _snackBarService: SnackBarService) {}
 
   // This will call a login API
   // If login, set role and auth status
   async login(email: string, password: string) {
 
-    try {
       await signInWithEmailAndPassword(this.auth, email, password)
   
       const userQuery = httpsCallable<string, UserModel>(this.functions, UserFunctions.getUser)
@@ -52,9 +54,6 @@ export class AuthenticationService {
 
       this.toggleAuthenticated(true);
       this.router.navigateByUrl('/overview/view')
-    } catch(e) {
-      console.log(e);
-    }
   }
 
   async logout() {
@@ -65,6 +64,23 @@ export class AuthenticationService {
 
     this.toggleAuthenticated();
     this.router.navigateByUrl('/auth/login')
+  }
+
+  /**
+   * Signup a user in Firebase
+   * @param createUserModel Model data of the new user
+   */
+  async signUpUser(createUserModel: CreateUserModel) {
+      
+    const singUpUserFunction = httpsCallable(this.functions, UserFunctions.userSignUp)
+
+    await singUpUserFunction(createUserModel)
+
+    this._snackBarService.showSuccess("User requested created");
+
+    this.router.navigateByUrl('/auth/login')
+    return true;
+
   }
 
   /**

@@ -19,7 +19,6 @@ export class CreateUserComponent {
     private dialog: DialogService) { }
     
     async createUser() {
-      console.log('creating user');
       
       try {
         const createUserModel: CreateUserModel = {
@@ -36,7 +35,7 @@ export class CreateUserComponent {
         
         if (!userCreated) throw new Error();
 
-        this._snackBar.openSnackBar();
+        this._snackBar.showSuccess('User Created Successfully');
         
       } catch (error) {
         console.log(error);

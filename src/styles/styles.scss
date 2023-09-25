@@ -29,7 +29,24 @@ mat-form-field {
   width: 10px;
 }
 
-.snack-styles {
+.snack-styles--error {
+  .mdc-snackbar__surface{
+    background-color: var(--red) !important;
+    
+    div {
+      color: var(--white) !important;
+    }
+  }
+  
+  .mat-mdc-snack-bar-actions{
+    button{
+      color: var(--white) !important;
+    }
+  }
+}
+
+
+.snack-styles--success {
   .mdc-snackbar__surface{
     background-color: var(--green) !important;
     
