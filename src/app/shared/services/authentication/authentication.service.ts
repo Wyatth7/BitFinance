@@ -108,7 +108,6 @@ export class AuthenticationService {
           
           // You Stopped Here await signInWithEmailAndPassword(this.auth, user1.email, user1.passwords);
           this.router.navigateByUrl('/auth/resetPassword')
-          return true
         }
 
         return false
@@ -121,7 +120,10 @@ export class AuthenticationService {
 
   }
 
-  async resetPassword(){
+  async resetPassword(password: string, confirmPassword: string){
+    console.log(this._user?.firstName);
+    console.log("Here");
+    
 
   }
 
