@@ -59,7 +59,7 @@ export const userSignUp = onRequest(
             const uid = await createFirebaseUser(user, true);
             
             await admin.firestore().collection(FirestoreCollections.users.toString())
-                .doc(uid).create(user);
+                .doc(uid).create({uid, ...user});
 
             return okResponse({}, 200, res);
 
@@ -85,7 +85,7 @@ export const acceptDenyUser = onRequest(
             const userSnapshot = await admin.firestore()
                 .collection(FirestoreCollections.users.toString())
                 .doc(acceptDenyData.uid).get();
-            
+
             const user = userSnapshot.data() as UserModel;
 
             if (!user.requested) return badRequestResponse("User has already been accepted.", res);
