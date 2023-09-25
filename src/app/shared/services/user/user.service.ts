@@ -115,10 +115,10 @@ export class UserService {
     this.loaderService.showLoader('Users');
 
     try {
-      if (!this._users) {
+  
         const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
         this._users = (await usersQuery()).data as UserListModel;
-      }
+
   
       this.loaderService.stopLoader();
       return this._users;
