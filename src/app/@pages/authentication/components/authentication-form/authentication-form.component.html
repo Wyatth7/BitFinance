@@ -1,6 +1,7 @@
 <div class="authentication-form-wrapper">
     <h1 class="header-text">{{ formData.pageHeader }}</h1>
     <form class="authentication-form mat-elevation-z1">
+        <p *ngIf="showFailMessage" class="fail-text"><mat-icon>error</mat-icon>  <span>{{ failText }}</span></p>
         <div class="form-controls">
             <ng-content></ng-content>
         </div>
@@ -12,6 +13,7 @@
         >
             {{ formData.actionButtonText }}
         </button>
+        <mat-progress-bar mode="indeterminate" *ngIf="executing"></mat-progress-bar>
         <div class="extra-actions">
             <a 
                 [routerLink]="[formData.helperActionLeft?.actionLink]"
