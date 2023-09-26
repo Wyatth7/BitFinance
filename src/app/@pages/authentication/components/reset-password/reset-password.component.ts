@@ -76,7 +76,7 @@ export class ResetPasswordComponent {
       actionText: 'Have an Account? Login',
       actionLink: '/auth/login'
     },
-    form: this.formControls
+    form: {}
   }
 
   async resetPasswordAction(): Promise<void> {
