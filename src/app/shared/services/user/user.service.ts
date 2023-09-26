@@ -9,6 +9,7 @@ import { EditUserModel } from '../../models/users/edit-user-model';
 import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
 import { SnackBarService } from '../component-services/snack-bar.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ import { SnackBarService } from '../component-services/snack-bar.service';
 export class UserService {
 
   private _users: UserListModel | undefined = undefined;
+  users$ = new Subject<UserListModel>();
 
   constructor(private functions: Functions,
      private loaderService: LoaderService,
@@ -47,7 +49,15 @@ export class UserService {
 
       await acceptDenyUserQuery({uid: userId, shouldAccept})
 
+      this.renderSnackBar(
+        shouldAccept ? 'The user was accepted' : 'The user was declined'
+      )
+      await this.getUserList();
     } catch (error) {
+      this.renderSnackBar(
+          'An error occured, try again later.',
+          false
+        )
       
     }
   }
@@ -61,8 +71,10 @@ export class UserService {
 
       this.updateUserStore(editUserModel);
 
+      this.renderSnackBar(`${editUserModel.firstName} was successfully editted`)
       return true;
     } catch (error) {
+      this.renderSnackBar(`An error occurred while updating ${editUserModel.firstName}`, false)
       return false;
     }
 
@@ -112,13 +124,11 @@ export class UserService {
     this.loaderService.showLoader('Users');
 
     try {
-      if (!this._users) {
         const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
         this._users = (await usersQuery()).data as UserListModel;
-      }
   
       this.loaderService.stopLoader();
-      return this._users;
+      this.users$.next(this._users);
       
     } catch (error) {
       console.log(error);
@@ -201,10 +211,15 @@ export class UserService {
   
       this.updateUserStoreSuspension(userId, start, end);
 
+      this.renderSnackBar('The user was suspended')
+
       return true;
       
     } catch (error) {
       console.log(error);
+
+      this.renderSnackBar('User suspension failed', false);
+
       return false;
     }
     
@@ -224,10 +239,15 @@ export class UserService {
 
       this.updateUserStoreSuspension(userId);
 
+      this.renderSnackBar('The suspension was cancelled');
+
       return true;
 
     } catch(error) {
       console.log(error);
+
+      this.renderSnackBar('User unsuspension failed', false);
+
       return false;
     }
     
@@ -246,9 +266,14 @@ export class UserService {
 
       this.updateUserActivationStore(userId);
 
+      this.renderSnackBar('User activation toggle successful');
+
       return true;
     } catch (error) {
       console.log(error);
+
+      this.renderSnackBar('User activation toggle failed', false);
+
       return false;
     }
   }
@@ -280,5 +305,20 @@ export class UserService {
     if (!userIndex || !this._users) return -1;
 
     return userIndex;
+  }
+
+  /**
+   * renders a snackbar using the snackbar service
+   * @param message Message shown in snackbar
+   * @param isSuccess Sucess snackbar indicator
+   */
+  private renderSnackBar(message: string, isSuccess = true){ 
+    if (isSuccess) {
+      this.snackBarService.showSuccess(message)
+      return;
+    }
+
+    // show error snackbar here
+    this.snackBarService.showError(message);
   }
 }

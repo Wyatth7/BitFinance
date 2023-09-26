@@ -9,13 +9,25 @@ import { AuthenticationFormModel } from 'src/app/shared/models/members/form/auth
 export class AuthenticationFormComponent {
 
   @Input() formData!: AuthenticationFormModel;
+  @Input() failText: string = 'Authentication failed';
 
+  executing = false;
+  showFailMessage = false;
 
   async executeFormAction(event: any): Promise<void> {
     event.preventDefault();
 
     if (!this.formData.form.valid) return;
 
-    await this.formData.actionAsync();
+    this.executing = true;
+
+    try {
+      await this.formData.actionAsync();
+    } catch (error) {
+      this.showFailMessage = true;
+    }
+
+  
+    this.executing = false;
   }
 }

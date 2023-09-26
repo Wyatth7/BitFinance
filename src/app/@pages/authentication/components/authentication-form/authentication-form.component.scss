@@ -14,6 +14,20 @@
         border: 2px solid var(--blue);
         border-radius: 5px;
         padding: 2rem;
+
+        .fail-text {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem !important;
+            max-width: 20rem;
+            
+            color: var(--red);
+
+            span {
+                font-size: 1.3rem;
+                margin-left: .3rem;
+            }
+        }
         
         button {
             width: 100%;
