@@ -185,7 +185,7 @@ export const editUser = onRequest(
                 displayName: displayName
             });
     
-            const userName = `${user.firstName[0]}${user.lastName}${new Date().toLocaleDateString('en', {month: '2-digit', year: '2-digit'})}`
+            // const userName = `${user.firstName[0]}${user.lastName}${new Date().toLocaleDateString('en', {month: '2-digit', year: '2-digit'})}`
             // update user in firestore
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(user.uid).update({
@@ -193,7 +193,6 @@ export const editUser = onRequest(
                     firstName: user.firstName,
                     lastName: user.lastName,
                     role: user.role,
-                    userName
                 });
     
             return okResponse({}, 200, res);
