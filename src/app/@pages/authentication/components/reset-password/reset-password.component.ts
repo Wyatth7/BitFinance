@@ -15,42 +15,8 @@ export class ResetPasswordComponent {
       this.formControls.get('passwords')?.setValidators(passwordsMatchValidator())
     }
 
-  // formControls = this.formBuilder.group({
-  // //   password: [
-  // //     '',
-  // //    [ Validators.required,
-  // //     Validators.minLength(8),
-  // //     passwordValidator()]
-  // //   ],
-  // //   confirmPassword: [
-  // //     '',
-  // //     [Validators.required,
-  // //     Validators.minLength(8),
-  // //     passwordValidator()]
-  // //   ],
-  // // }, 
-  // // {validators: passwordsMatchValidator})
-  // passwords: this.formBuilder.group({
-  //   password: [
-  //     '',
-  //    [ Validators.required,
-  //     Validators.minLength(8),
-  //     passwordValidator()]
-  //   ],
-  //   confirmPassword: [
-  //     '',
-  //     [Validators.required,
-  //     Validators.minLength(8),
-  //     passwordValidator()]
-  //   ],
-  // }, {validators: passwordsMatchValidator})})
 
   formControls = this.formBuilder.group({
-    name: this.formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]]
-    }),
-    email: ['', [Validators.required, Validators.email]],
     passwords: this.formBuilder.group({
       password: [
         '',
@@ -76,19 +42,18 @@ export class ResetPasswordComponent {
       actionText: 'Have an Account? Login',
       actionLink: '/auth/login'
     },
-    form: {}
+    form: this.formControls
   }
 
   async resetPasswordAction(): Promise<void> {
 
     const controls = this.formControls.value;
-    const password = controls.passwords?.password?.toString();
-    const confirmPassword = controls.passwords?.confirmPassword?.toString();
+    const password = controls.passwords?.password?.toString() || '';
+    const confirmPassword = controls.passwords?.confirmPassword?.toString() || '';
     console.log(password);
+    console.log(confirmPassword);
     
-    //const confirmPassword = this.formControls.controls.confirmPassword.value || '';
-    
-   // await this.authService.resetPassword(password, confirmPassword)
+    await this.authService.resetPassword(password, confirmPassword)
     console.log('Your password has been reset');
   }
 
