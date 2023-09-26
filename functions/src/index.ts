@@ -11,8 +11,13 @@
 // https://firebase.google.com/docs/functions/typescript
 
 import {initializeApp} from "firebase-admin/app";
+import * as sgMail from "@sendgrid/mail";
+import { environment } from "./environment/environment";
 
 initializeApp();
+
+// Init Send Grid
+sgMail.setApiKey(environment.sendGridAPIKey);
 
 export * as scheduler from './schedule/scheduler';
 export * as overview from './http/overviews/overview';
