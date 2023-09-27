@@ -6,9 +6,6 @@ import { UserRoleType } from "../../models/enums/user-role-type";
 import { UserWithIdModel } from "../../models/users/user-with-id-model";
 import { environment } from "../../../environment/environment";
 
-
-sgMail.setApiKey(environment.sendGridAPIKey)
-
 export class Emailer {
     
     constructor() {
