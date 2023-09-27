@@ -9,6 +9,7 @@ import { badRequestResponse, okResponse, unauthorizedResponse } from '../../shar
 import { Encryptor } from '../../shared/helpers/encryption/encryptor';
 import { AcceptDenyModel } from '../../shared/models/auth/accept-deny-model';
 import { verifyToken } from '../../shared/helpers/auth/verify-token';
+import { Emailer } from '../../shared/helpers/messaging/emailer';
 
 /**
  * Creates a user.
@@ -65,9 +66,15 @@ export const userSignUp = onRequest(
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(uid).create({uid, ...user});
 
+            // send email to admin users
+            await Emailer.sendEmailToAdmin(
+                'New Requested User',
+                `${user.firstName} ${user.lastName} has requested to join BitFinance.\n\nLogin to accept or decline the user.\n\nhttps://accounting-app-test.web.app/users/view`
+                )
+
             return okResponse({}, 200, res);
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             return badRequestResponse("An error occurred during the request and the user could not be created.", res);
         }
@@ -120,6 +127,8 @@ export const acceptDenyUser = onRequest(
                 .update({
                     requested: false
             });
+
+            await Emailer.sendSingleFromAdmin(user.email, 'User Request Accepted', 'Your user request has been accepted to BitFiannce.\n\nClick the link below to login.\n\nhttps://accounting-app-test.web.app/auth/login')
             
             return okResponse({}, 200, res);
         } catch (error) {
