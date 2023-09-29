@@ -15,6 +15,7 @@ import { SpinnerButtonComponent } from './components/buttons/spinner-button/spin
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { ContentLoadingScreenComponent } from './components/spinners-loader/content-loading-screen/content-loading-screen.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 
@@ -37,7 +38,8 @@ import { ContentLoadingScreenComponent } from './components/spinners-loader/cont
     MatSnackBarModule,
     MatDialogModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule
   ],
   exports: [
     SecondaryTopNavComponent,

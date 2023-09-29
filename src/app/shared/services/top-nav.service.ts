@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs"
 import { NotificationModel } from '../models/top-nav/notifications/notification-model';
 import { TopNavActionModel } from '../models/top-nav/action/top-nav-action';
+import { TopNavData } from '../models/top-nav/top-nav-data';
+import { PageIcon } from '../enums/page-icon';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TopNavService {
   notifications$ = new BehaviorSubject<NotificationModel[]>([]);
-  topNavActionData$ = new BehaviorSubject<TopNavActionModel>({
-    show: false,
-    icon: '',
-    tooltip: '',
-    action: () => {}
-  });
+  topNavData$ = new BehaviorSubject<TopNavData>({
+    topNavHeader: 'Overview',
+    topNavIcon: PageIcon.overview.toString(),
+  })
 
   constructor() { }
 
@@ -26,10 +26,10 @@ export class TopNavService {
   }
 
   /**
-   * Sets a new top nav action button
-   * @param actionObject New top nav action button data
+   * Sets top nav data
+   * @param topNavData Data for the top nav
    */
-  setTopNavAction(actionObject: TopNavActionModel): void {
-    this.topNavActionData$.next(actionObject);
+  setTopNav(topNavData: TopNavData) {
+    this.topNavData$.next(topNavData);
   }
 }

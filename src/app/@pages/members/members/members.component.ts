@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageIcon } from 'src/app/shared/enums/page-icon';
 import { UserListModel } from 'src/app/shared/models/users/user-list-model';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
@@ -19,11 +20,14 @@ export class UsersComponent implements OnInit {
      private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<void> {
-      this.topNavService.setTopNavAction({
-        show: true,
-        icon: 'person_add',
-        tooltip: 'Create A User',
-        action: () => this.navigateToCreate()
+      this.topNavService.setTopNav({
+        topNavHeader: 'Users',
+        topNavIcon: PageIcon.users.toString(),
+        topNavAction: {
+          icon: 'person_add',
+          tooltip: 'Create A User',
+          action: () => this.navigateToCreate()
+        }
       })
 
       // redirect to view if /users is called

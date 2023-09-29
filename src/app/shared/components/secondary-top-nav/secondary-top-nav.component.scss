@@ -1,6 +1,23 @@
 .secondary-top-nav {
-    position: sticky;
     width: 100%;
-    border-bottom: 2px solid var(--div-grey);
-    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .left-content {
+
+        display: flex;
+        align-items: center;
+        
+        .vertical-divider {
+            margin: 0 .5rem;
+            height: 2rem;
+        }
+        
+        h1 {
+            padding: 0 !important;
+            margin: 0;
+        }
+    }
 }

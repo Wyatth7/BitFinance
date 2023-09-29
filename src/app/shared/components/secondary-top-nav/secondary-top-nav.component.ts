@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * This component can be placed anywhere on the page.
@@ -9,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./secondary-top-nav.component.scss']
 })
 export class SecondaryTopNavComponent {
+  
+  @Input() title!: string;
 
 }
