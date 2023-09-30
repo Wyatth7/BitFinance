@@ -6,6 +6,7 @@ import { AccountsRoutingModule } from './accounts-routing-module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -19,7 +20,8 @@ import { MatSortModule } from '@angular/material/sort';
     AccountsRoutingModule,
     SharedModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatButtonModule
   ]
 })
 export class AccountsModule { }

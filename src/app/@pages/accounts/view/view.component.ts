@@ -13,7 +13,7 @@ export class ViewComponent implements OnInit{
   filter: string | undefined = '';
 
   dataSource!: MatTableDataSource<AccountTableModel>;
-  displayedColumns = ['accountNumber', 'accountName', 'balance', 'category']
+  displayedColumns = ['actions', 'accountName', 'balance','category', 'entries', 'accountNumber',  ]
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -55,5 +55,9 @@ export class ViewComponent implements OnInit{
 
   getCategory(category: number) {
     return AccountType[category];
+  }
+
+  random(): number{ 
+    return Math.floor(Math.random() * 2000)
   }
 }
