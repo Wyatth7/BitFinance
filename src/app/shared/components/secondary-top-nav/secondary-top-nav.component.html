@@ -3,5 +3,28 @@
         <h1>{{ title }}</h1>
         <mat-divider class="vertical-divider" vertical></mat-divider>
     </div>
-    <ng-content></ng-content>
+    <div class="filtering" *ngIf="!showCustomContent; else custom">
+        <!-- <mat-form-field>
+            <mat-select>
+                <mat-option 
+                    *ngFor="let option of selectOptions"
+                    [value]="option.value">
+                    {{option.title}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+        <mat-form-field appearance="outline" class="search-bar" subscriptSizing="dynamic">
+            <mat-label>{{searchPlaceholder}}</mat-label>
+            <input 
+                matInput    
+                type="text"
+                [(ngModel)]="searchValue"
+             />
+             <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
 </div>
+
+<ng-template #custom>
+    <ng-content></ng-content>
+</ng-template>

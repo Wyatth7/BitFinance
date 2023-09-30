@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterContentInit, Component, ContentChildren, Input, OnInit, QueryList, ViewChild } from '@angular/core';
-import { MatColumnDef, MatTable } from '@angular/material/table';
-import { TableLayout } from 'src/app/shared/models/members/table/table-layout';
+import { AfterContentInit, AfterViewInit, Component, ContentChildren, Input, OnInit, QueryList, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-table',
@@ -11,21 +11,29 @@ import { TableLayout } from 'src/app/shared/models/members/table/table-layout';
 export class TableComponent<T> implements OnInit, AfterContentInit {
   @Input() tableData!: T[];
   @Input() displayedColumns!: string[];
- 
+  @Input() filters?: string[];
+  
+  dataSource!: MatTableDataSource<T>;
   selection = new SelectionModel<any>(true, []);
 
   @ViewChild(MatTable, {static: true}) table!: MatTable<T>
   @ContentChildren(MatColumnDef) columnDefs!: QueryList<MatColumnDef>;
+  @ContentChildren(MatSort) sort!: QueryList<MatSort>;
 
   ngOnInit(): void {
       this.displayedColumns.unshift('select')
-      console.log(this.displayedColumns);
-      
+      this.dataSource = new MatTableDataSource(this.tableData);
   }
 
   ngAfterContentInit(): void {
-      this.columnDefs
-        .forEach(columnDef => this.table.addColumnDef(columnDef));
+    this.sort.forEach(sort => {
+      this.dataSource.sort = sort
+    })
+
+    this.columnDefs
+      .forEach(columnDef => {
+        this.table.addColumnDef(columnDef)
+      });
   }
 
    /** Whether the number of selected elements matches the total number of rows. */
@@ -33,6 +41,15 @@ export class TableComponent<T> implements OnInit, AfterContentInit {
     const numSelected = this.selection.selected.length;
     const numRows = this.tableData.length;
     return numSelected === numRows;
+  }
+
+  applyFilter() {
+    if (!this.filters) return;
+
+    this.dataSource.filter = this.filters
+      .join('+')
+      .trim()
+      .toLowerCase();
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */

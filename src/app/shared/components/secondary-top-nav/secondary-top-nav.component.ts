@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
  * This component can be placed anywhere on the page.
@@ -11,5 +11,14 @@ import { Component, Input } from '@angular/core';
 export class SecondaryTopNavComponent {
   
   @Input() title!: string;
+  @Input() showCustomContent = false;
+  @Input() searchPlaceholder = 'Search';
+  @Input() selectOptions!: {value: any; title: string}[];
 
+  @Output() searchString = new EventEmitter<string | null>();
+  @Output() filterString = new EventEmitter<string>();
+
+  set searchValue(value: string) {
+    this.searchString.emit(value)
+  }
 }

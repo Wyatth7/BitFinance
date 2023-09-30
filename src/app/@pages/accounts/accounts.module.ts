@@ -4,6 +4,8 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { ViewComponent } from './view/view.component';
 import { AccountsRoutingModule } from './accounts-routing-module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -15,7 +17,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     AccountsRoutingModule,
-    SharedModule
+    SharedModule,
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class AccountsModule { }
