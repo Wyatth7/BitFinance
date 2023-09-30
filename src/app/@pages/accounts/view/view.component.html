@@ -1,4 +1,5 @@
-<app-table [tableData]="accountsData" [displayedColumns]="displayedColumns">
+<app-secondary-top-nav title="Chart of Accounts" (searchString)="searchEmitted($event)"></app-secondary-top-nav>
+<app-table [tableData]="accountsData" [displayedColumns]="displayedColumns" [filters]="filter">
     <ng-container matSort>
 
         <ng-container matColumnDef="accountNumber" >

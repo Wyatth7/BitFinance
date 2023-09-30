@@ -10,6 +10,8 @@ import { AccountTableModel } from 'src/app/shared/models/accounts/account-table-
   styleUrls: ['./view.component.scss']
 })
 export class ViewComponent implements OnInit{
+  filter: string | undefined = '';
+
   dataSource!: MatTableDataSource<AccountTableModel>;
   displayedColumns = ['accountNumber', 'accountName', 'balance', 'category']
 
@@ -19,9 +21,9 @@ export class ViewComponent implements OnInit{
     this.dataSource = new MatTableDataSource(this.accountsData);
   }
 
-  // ngAfterViewInit(): void {
-  //   this.dataSource.sort = this.sort;
-  // }
+  searchEmitted(value: string | null) {
+    this.filter = value || '';
+  }
 
   accountsData: AccountTableModel[] = [
     {

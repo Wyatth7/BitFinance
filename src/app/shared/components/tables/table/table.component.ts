@@ -17,7 +17,10 @@ import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/ta
 export class TableComponent<T> implements OnInit, AfterContentInit {
   @Input() tableData!: T[];
   @Input() displayedColumns!: string[];
-  @Input() filters?: string[];
+  @Input() 
+    set filters(value: string | string[] | undefined) {
+      this.applyFilter(value);
+    }
   
   dataSource!: MatTableDataSource<T>;
   selection = new SelectionModel<any>(true, []);
@@ -49,13 +52,24 @@ export class TableComponent<T> implements OnInit, AfterContentInit {
     return numSelected === numRows;
   }
 
-  applyFilter() {
-    if (!this.filters) return;
+  applyFilter(value: string | string[] | undefined) {
+    if (!this.dataSource) return;
 
-    this.dataSource.filter = this.filters
-      .join('+')
-      .trim()
-      .toLowerCase();
+    if (!value) {
+      this.dataSource.filter = '';
+      return;
+    };
+    
+
+    if (Array.isArray(value)) {
+      this.dataSource.filter = value
+        .join('+')
+        .trim()
+        .toLowerCase();
+      return;
+    }
+
+    this.dataSource.filter = value.trim().toLowerCase();
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
