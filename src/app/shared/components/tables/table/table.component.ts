@@ -3,6 +3,12 @@ import { AfterContentInit, AfterViewInit, Component, ContentChildren, Input, OnI
 import { MatSort } from '@angular/material/sort';
 import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/table';
 
+/**
+ * Custom table compoennt that extends mat-table.
+ * For table sorting, wrap column def group with in ng-container 
+ *  with the matSort directive on it. Look at accounts view component.
+ * 
+ */
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
