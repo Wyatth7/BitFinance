@@ -25,7 +25,83 @@ export class ViewComponent implements OnInit{
     this.filter = value || '';
   }
 
+  getCategory(category: number) {
+    return AccountType[category];
+  }
+
   accountsData: AccountTableModel[] = [
+    {
+      accountName: 'Cash',
+      accountNumber: '000001',
+      category: AccountType.asset,
+      balance: 14000.58999
+    },
+    {
+      accountName: 'Accounts Payable',
+      accountNumber: '000002',
+      category: AccountType.liability,
+      balance: 5000.46
+    },
+    {
+      accountName: 'Income',
+      accountNumber: '000003',
+      category: AccountType.equity,
+      balance: 10000
+    },
+    {
+      accountName: 'Vehicles',
+      accountNumber: '000004',
+      category: AccountType.asset,
+      balance: 56000.98
+    },
+    {
+      accountName: 'Cash',
+      accountNumber: '000001',
+      category: AccountType.asset,
+      balance: 14000.58999
+    },
+    {
+      accountName: 'Accounts Payable',
+      accountNumber: '000002',
+      category: AccountType.liability,
+      balance: 5000.46
+    },
+    {
+      accountName: 'Income',
+      accountNumber: '000003',
+      category: AccountType.equity,
+      balance: 10000
+    },
+    {
+      accountName: 'Vehicles',
+      accountNumber: '000004',
+      category: AccountType.asset,
+      balance: 56000.98
+    },
+    {
+      accountName: 'Cash',
+      accountNumber: '000001',
+      category: AccountType.asset,
+      balance: 14000.58999
+    },
+    {
+      accountName: 'Accounts Payable',
+      accountNumber: '000002',
+      category: AccountType.liability,
+      balance: 5000.46
+    },
+    {
+      accountName: 'Income',
+      accountNumber: '000003',
+      category: AccountType.equity,
+      balance: 10000
+    },
+    {
+      accountName: 'Vehicles',
+      accountNumber: '000004',
+      category: AccountType.asset,
+      balance: 56000.98
+    },
     {
       accountName: 'Cash',
       accountNumber: '000001',
@@ -53,9 +129,7 @@ export class ViewComponent implements OnInit{
   ]
 
 
-  getCategory(category: number) {
-    return AccountType[category];
-  }
+
 
   random(): number{ 
     return Math.floor(Math.random() * 2000)

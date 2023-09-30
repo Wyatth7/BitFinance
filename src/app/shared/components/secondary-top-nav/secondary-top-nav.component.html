@@ -13,12 +13,16 @@
                 </mat-option>
             </mat-select>
         </mat-form-field> -->
-        <mat-form-field appearance="outline" class="search-bar" subscriptSizing="dynamic">
-            <mat-label>{{searchPlaceholder}}</mat-label>
+        <mat-form-field 
+            appearance="outline" 
+            class="search-bar" 
+            subscriptSizing="dynamic"
+            >
             <input 
                 matInput    
                 type="text"
                 [(ngModel)]="searchValue"
+                [placeholder]="searchPlaceholder"
              />
              <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
