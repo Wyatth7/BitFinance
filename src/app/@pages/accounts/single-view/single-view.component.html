@@ -1,0 +1,76 @@
+<div class="single-account-view">
+    <app-secondary-top-nav
+        title="Accounts Receivable"
+        searchPlaceholder="Search Journal Entries"
+        >
+        <app-number-text
+        [value]="56000"
+        text="Balance"
+        [valueType]="getEnum.valuTextType.currency"
+        [focusColor]="getEnum.color.green"
+        ></app-number-text> 
+        <app-number-text
+            value="000001"
+            text="Account #"
+            [focusColor]="getEnum.color.blue"
+        ></app-number-text>
+        <app-number-text
+            [value]="getEnum.accountTypeString(getEnum.accountType.asset)"
+            text="Account Type"
+            [focusColor]="getEnum.color.blue"
+        ></app-number-text>
+    </app-secondary-top-nav>
+    <div class="single-account-view--info">
+        <h3>An account describing the money owed to the organization.</h3>
+    </div>
+    <div class="journal-table">
+        <app-table [tableData]="journalEntries" [displayedColumns]="displayedColumns">
+
+            <ng-container matSort>
+            
+                <ng-container matColumnDef="actions" >
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let row"> 
+                        <div class="buttons">
+                            <button
+                            mat-stroked-button
+                            color="primary"
+                            >View</button>
+                            <button
+                            mat-stroked-button
+                            color="primary"
+                            >Edit</button>
+                        </div>
+                    </td>
+                </ng-container>
+                
+                
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                    <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                    <td mat-cell *matCellDef="let row"> {{row.amount | currency}} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="transactionType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Type </th>
+                    <td mat-cell *matCellDef="let row"> {{row.transactionType | titlecase }} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By </th>
+                    <td mat-cell *matCellDef="let row"> {{ row.createdBy | titlecase }} </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="date" >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+                    <td mat-cell *matCellDef="let row"> {{row.date | date}} </td>
+                </ng-container>            
+            </ng-container>
+
+        </app-table>
+    </div>
+</div>

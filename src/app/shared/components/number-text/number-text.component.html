@@ -1,7 +1,6 @@
 <div class="nav-member-total">
     <span 
-        *ngIf="number"
         [style.color]="focusColor ? focusColor.toString() : ''"
-        class="nav-member-total--focus-text">{{ number | currency }}</span>
+        class="nav-member-total--focus-text">{{ value }}</span>
     <p class="nav-member-total--plain-text">{{ text }}</p>
 </div>
