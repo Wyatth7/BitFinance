@@ -2,6 +2,24 @@
     <div class="left-content">
         <h1>{{ title }}</h1>
         <mat-divider class="vertical-divider" vertical></mat-divider>
+        <div class="content">
+            <ng-content></ng-content>
+        </div>
     </div>
-    <ng-content></ng-content>
+
+    <div class="filtering" *ngIf="showSearch">
+        <mat-form-field 
+            appearance="outline" 
+            class="search-bar" 
+            subscriptSizing="dynamic"
+            >
+            <input 
+                matInput    
+                type="text"
+                [(ngModel)]="searchValue"
+                [placeholder]="searchPlaceholder"
+             />
+             <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
 </div>

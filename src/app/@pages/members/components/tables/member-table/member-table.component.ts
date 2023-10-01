@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { Roles } from 'src/app/shared/enums/authentication/roles';
 import { UserModel } from 'src/app/shared/models/users/user-model';
@@ -11,7 +12,8 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 })
 export class MemberTableComponent {
   @Input() userData!: UserModel[];
-  displayedColumns = ['actions', 'name', 'username', 'email', 'role', 'status']
+  displayedColumns = ['actions', 'name', 'username', 'email', 'role', 'status'];
+  
 
   constructor(private router: Router,
     private userService: UserService) {}

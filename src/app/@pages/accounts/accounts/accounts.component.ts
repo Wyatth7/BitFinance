@@ -9,6 +9,7 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
   styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent implements OnInit {
+
   constructor(private topNavService: TopNavService,
     private router: Router,
     private route: ActivatedRoute) {}
@@ -20,8 +21,9 @@ export class AccountsComponent implements OnInit {
         topNavAction: {
           icon: 'post_add',
           tooltip: 'Create An Account',
-          action: () => {}
-        }
+          action: () => {},
+          requiredRole: [1]
+        },
       })
     }
 }

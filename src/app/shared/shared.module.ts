@@ -16,6 +16,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { ContentLoadingScreenComponent } from './components/spinners-loader/content-loading-screen/content-loading-screen.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { NumberTextComponent } from './components/number-text/number-text.component';
 
 
 
@@ -29,7 +37,9 @@ import { MatDividerModule } from '@angular/material/divider';
     ErrorComponent,
     SpinnerButtonComponent,
     EllipsisPipe,
-    ContentLoadingScreenComponent
+    ContentLoadingScreenComponent,
+    SearchBarComponent,
+    NumberTextComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +49,13 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    MatDividerModule
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatIconModule,
+    MatSelectModule,
+    MatSortModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -50,7 +66,8 @@ import { MatDividerModule } from '@angular/material/divider';
     ErrorComponent,
     SpinnerButtonComponent,
     EllipsisPipe,
-    ContentLoadingScreenComponent
+    ContentLoadingScreenComponent,
+    NumberTextComponent
   ]
 })
 export class SharedModule { }

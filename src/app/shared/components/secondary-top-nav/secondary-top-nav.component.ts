@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
- * This component can be placed anywhere on the page.
+ * This component is indented to be used as a 
+ * secondary nav below the top nav, however, 
+ * this component can be used anywhere.
  */
 @Component({
   selector: 'app-secondary-top-nav',
@@ -11,5 +13,14 @@ import { Component, Input } from '@angular/core';
 export class SecondaryTopNavComponent {
   
   @Input() title!: string;
+  @Input() showSearch = true;
+  @Input() searchPlaceholder = 'Search';
+  @Input() selectOptions!: {value: any; title: string}[];
 
+  @Output() searchString = new EventEmitter<string | null>();
+  @Output() filterString = new EventEmitter<string>();
+
+  set searchValue(value: string) {
+    this.searchString.emit(value)
+  }
 }

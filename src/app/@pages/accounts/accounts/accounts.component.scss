@@ -1,4 +1,6 @@
 .accounts {
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
 
     .accounts-content {

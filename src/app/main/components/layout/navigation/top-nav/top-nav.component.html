@@ -5,12 +5,16 @@
    </div>
    <div class="top-nav-actions">
       <!-- This tooltip needs to be dynamically updated based on the page -->
-      <button *ngIf="topNavData.topNavAction"
-         mat-mini-fab 
-         [matTooltip]="topNavData.topNavAction.tooltip"
-         (click)="topNavData.topNavAction.action()" >
-         <mat-icon>{{ topNavData.topNavAction.icon }}</mat-icon>
-      </button> 
+      <app-required-role-view 
+         *ngIf="topNavData.topNavAction"
+         [roles]="topNavData.topNavAction.requiredRole || [1,2,4]">
+         <button 
+            mat-mini-fab 
+            [matTooltip]="topNavData.topNavAction.tooltip"
+            (click)="topNavData.topNavAction.action()" >
+            <mat-icon>{{ topNavData.topNavAction.icon }}</mat-icon>
+         </button> 
+      </app-required-role-view>
       <button 
          mat-mini-fab 
          class="top-nav-button"
