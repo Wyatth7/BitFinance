@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
+import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
 interface JournalEntry {
   date: Date;
@@ -14,9 +15,19 @@ interface JournalEntry {
   templateUrl: './single-view.component.html',
   styleUrls: ['./single-view.component.scss']
 })
-export class SingleViewComponent {
+export class SingleViewComponent implements OnInit{
 
-  constructor(public getEnum: GetEnumValueService) {}
+  dateCreated = new Date();
+
+  constructor(public getEnum: GetEnumValueService, private topNavService: TopNavService) {}
+
+  ngOnInit(): void {
+      this.topNavService.setTopNavAction({
+        tooltip: 'Add Transaction',
+        icon: 'add_card',
+        action: () => {},
+      })
+  }
 
   displayedColumns = ['actions', 'description', 'transactionType', 'amount', 'createdBy','date']
   journalEntries: JournalEntry[] = [

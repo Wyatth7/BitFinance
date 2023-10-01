@@ -6,7 +6,10 @@
     overflow: hidden;
 
     &--info {
-        
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
         h3 {
             font-size: 1.2rem;
             color: var(--letter-grey);
