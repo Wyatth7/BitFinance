@@ -21,8 +21,9 @@ export class AccountsComponent implements OnInit {
         topNavAction: {
           icon: 'post_add',
           tooltip: 'Create An Account',
-          action: () => {}
-        }
+          action: () => {},
+          requiredRole: [1]
+        },
       })
     }
 }

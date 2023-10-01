@@ -2,17 +2,12 @@
     <div class="left-content">
         <h1>{{ title }}</h1>
         <mat-divider class="vertical-divider" vertical></mat-divider>
+        <div class="content">
+            <ng-content></ng-content>
+        </div>
     </div>
-    <div class="filtering" *ngIf="!showCustomContent; else custom">
-        <!-- <mat-form-field>
-            <mat-select>
-                <mat-option 
-                    *ngFor="let option of selectOptions"
-                    [value]="option.value">
-                    {{option.title}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field> -->
+
+    <div class="filtering" *ngIf="showSearch">
         <mat-form-field 
             appearance="outline" 
             class="search-bar" 
@@ -28,7 +23,3 @@
         </mat-form-field>
     </div>
 </div>
-
-<ng-template #custom>
-    <ng-content></ng-content>
-</ng-template>

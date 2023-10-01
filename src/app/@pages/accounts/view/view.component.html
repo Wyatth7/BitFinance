@@ -1,6 +1,19 @@
 <div class="accounts-view">
 
-    <app-secondary-top-nav title="Chart of Accounts" (searchString)="searchEmitted($event)" searchPlaceholder="Search Accounts"></app-secondary-top-nav>
+    <app-secondary-top-nav title="Chart of Accounts" (searchString)="searchEmitted($event)" searchPlaceholder="Search Accounts">
+            <app-number-text
+                [number]="50000"
+                text="Assets"
+                [focusColor]="color.green"></app-number-text>
+            <app-number-text
+                [number]="25000"
+                text="Liabilities"
+                [focusColor]="color.red"></app-number-text>
+            <app-number-text
+                [number]="25000"
+                text="Equity"
+                [focusColor]="color.blue"></app-number-text>
+    </app-secondary-top-nav>
     <app-table 
         [tableData]="accountsData" 
         [displayedColumns]="displayedColumns" 

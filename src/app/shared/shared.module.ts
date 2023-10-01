@@ -23,6 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
+import { NumberTextComponent } from './components/number-text/number-text.component';
 
 
 
@@ -37,7 +38,8 @@ import { MatSortModule } from '@angular/material/sort';
     SpinnerButtonComponent,
     EllipsisPipe,
     ContentLoadingScreenComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    NumberTextComponent
   ],
   imports: [
     CommonModule,
@@ -64,7 +66,8 @@ import { MatSortModule } from '@angular/material/sort';
     ErrorComponent,
     SpinnerButtonComponent,
     EllipsisPipe,
-    ContentLoadingScreenComponent
+    ContentLoadingScreenComponent,
+    NumberTextComponent
   ]
 })
 export class SharedModule { }

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AccountType } from 'src/app/shared/enums/accounts/account-type';
+import { Colors } from 'src/app/shared/enums/colors';
 import { AccountTableModel } from 'src/app/shared/models/accounts/account-table-model';
 
 @Component({
@@ -27,6 +28,10 @@ export class ViewComponent implements OnInit{
 
   getCategory(category: number) {
     return AccountType[category];
+  }
+  
+  get color(): typeof Colors {
+    return Colors;
   }
 
   accountsData: AccountTableModel[] = [
