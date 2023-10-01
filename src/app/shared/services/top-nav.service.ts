@@ -15,6 +15,8 @@ export class TopNavService {
     topNavIcon: PageIcon.overview.toString(),
   })
 
+  private _topNavData!: TopNavData;
+
   constructor() { }
 
   /**
@@ -30,6 +32,16 @@ export class TopNavService {
    * @param topNavData Data for the top nav
    */
   setTopNav(topNavData: TopNavData) {
+    this._topNavData = topNavData;
     this.topNavData$.next(topNavData);
+  }
+
+  /**
+   * Updates the current top nav action
+   * @param topNavAction New top nav action data
+   */
+  setTopNavAction(topNavAction: TopNavActionModel) {
+    this._topNavData.topNavAction = topNavAction;
+    this.topNavData$.next(this._topNavData);
   }
 }
