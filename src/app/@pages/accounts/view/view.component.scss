@@ -8,6 +8,11 @@
 
     &--list {
         overflow-y: auto;
+
+        .buttons {
+            display: flex;
+            gap: .5rem;
+        }
     }
 
 }

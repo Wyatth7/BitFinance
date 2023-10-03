@@ -1,0 +1,27 @@
+.single-account-view {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+    &--info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--letter-grey);
+        }
+    }
+
+    .journal-table {
+        overflow-y: auto;
+
+        .buttons {
+            display: flex;
+            gap: .5rem;
+        }
+    }
+}

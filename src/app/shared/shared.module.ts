@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { SecondaryTopNavComponent } from './components/secondary-top-nav/secondary-top-nav.component';
 import { UserCircleImageComponent } from './components/user/user-circle-image/user-circle-image.component';
 import { RenderOnResizeDirective } from './directives/render-on-resize.directive';
@@ -19,11 +19,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
-import { NumberTextComponent } from './components/number-text/number-text.component';
+import { ValueTextComponent } from './components/number-text/number-text.component';
+import { CreateAccountDialogComponent } from './components/dialogs/create-account-dialog/create-account-dialog.component';
 
 
 
@@ -39,7 +40,8 @@ import { NumberTextComponent } from './components/number-text/number-text.compon
     EllipsisPipe,
     ContentLoadingScreenComponent,
     SearchBarComponent,
-    NumberTextComponent
+    ValueTextComponent,
+    CreateAccountDialogComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,10 @@ import { NumberTextComponent } from './components/number-text/number-text.compon
     FormsModule,
     MatIconModule,
     MatSelectModule,
-    MatSortModule
+    MatSortModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -67,7 +72,10 @@ import { NumberTextComponent } from './components/number-text/number-text.compon
     SpinnerButtonComponent,
     EllipsisPipe,
     ContentLoadingScreenComponent,
-    NumberTextComponent
+    ValueTextComponent
+  ],
+  providers: [
+    TitleCasePipe
   ]
 })
 export class SharedModule { }
