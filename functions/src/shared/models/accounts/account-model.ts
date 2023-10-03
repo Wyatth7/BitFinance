@@ -11,4 +11,5 @@ export interface AccountModel {
     normalType: NormalType;
     statementType: StatementType;
     accountId: string;
+    createdOn: string;
 }

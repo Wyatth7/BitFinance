@@ -47,6 +47,7 @@ export const createAccount = onRequest(
 )
 
 const configureAccount = (createEditData: CreateEditAccountDto): AccountModel => {
+
     return {
         accountName: createEditData.general.accountName.trim(),
         accountNumber: createEditData.general.accountNumber.trim(),
@@ -55,6 +56,7 @@ const configureAccount = (createEditData: CreateEditAccountDto): AccountModel =>
         statementType: createEditData.types.statementType,
         accountType: createEditData.types.accountType,
         normalType: createEditData.types.normalType,
-        accountId: Guid.createGuid()
+        accountId: Guid.createGuid(),
+        createdOn: new Date().toISOString()
     }
 }
