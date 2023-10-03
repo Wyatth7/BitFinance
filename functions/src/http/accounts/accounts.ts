@@ -8,6 +8,7 @@ import { AccountsListItemModel } from "../../shared/models/accounts/accounts-lis
 import { BalanceTotalsModel } from "../../shared/models/accounts/responses/balance-totals-model";
 import { AccountType } from "../../shared/models/enums/account-type";
 import { AccountListResponseModel } from "../../shared/models/accounts/responses/account-list-response-model";
+import { AccountModel } from "../../shared/models/accounts/account-model";
 
 export const getAllAccounts = onRequest(
     {cors: true},
@@ -34,19 +35,31 @@ export const getAllAccounts = onRequest(
             // sort accounts by category
             const accounts = accountsSnapshot.docs
                 .map(accountDoc => {
-                    const account = accountDoc.data() as AccountsListItemModel
+                    const accountModel = accountDoc.data() as AccountModel
 
-                    switch(account.category) {
+                    switch(accountModel.accountType) {
                         case AccountType.asset:
-                            balances.asset += account.balance
+                            console.log(accountModel.balance);
+                            
+                            balances.asset += accountModel.balance
                             break;
                         case AccountType.liability:
-                            balances.liability += account.balance
+                            balances.liability += accountModel.balance
                             break;
                         case AccountType.equity:
-                            balances.equity += account.balance
+                            balances.equity += accountModel.balance
                             break;
                         default: break;
+                    }
+
+                    const account: AccountsListItemModel = {
+                        accountName: accountModel.accountName,
+                        accountNumber: accountModel.accountNumber,
+                        balance: accountModel.balance,
+                        category: accountModel.accountType,
+                        accountId: accountModel.accountId,
+                        // will be replaced with journal collection count.
+                        entries: 0
                     }
 
                     return account;

@@ -53,9 +53,9 @@ const configureAccount = (createEditData: CreateEditAccountDto): AccountModel =>
         accountNumber: createEditData.general.accountNumber.trim(),
         description: createEditData.general.description,
         balance: createEditData.general.balance,
-        statementType: createEditData.types.statementType,
-        accountType: createEditData.types.accountType,
-        normalType: createEditData.types.normalType,
+        statementType: +createEditData.types.statementType,
+        accountType: +createEditData.types.accountType,
+        normalType: +createEditData.types.normalType,
         accountId: Guid.createGuid(),
         createdOn: new Date().toISOString()
     }

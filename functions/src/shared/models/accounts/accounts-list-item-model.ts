@@ -1,7 +1,7 @@
 import { AccountType } from "../enums/account-type";
 
 export interface AccountsListItemModel {
-    uid: string;
+    accountId: string;
     accountName: string;
     accountNumber: string;
     balance: number;

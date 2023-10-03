@@ -3,5 +3,5 @@ import { BalanceTotalsModel } from "./balance-totals-model";
 
 export interface AccountListResponseModel {
     accounts: AccountsListItemModel[],
-    balanceTotals: BalanceTotalsModel;
+    balanceTotals: BalanceTotalsModel
 }
