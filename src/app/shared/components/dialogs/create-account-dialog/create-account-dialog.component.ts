@@ -24,20 +24,15 @@ export class CreateAccountDialogComponent implements OnInit {
         }),
         types: this.formBuilder.group({
           accountType: ['1', Validators.required],
-          normalSide: ['1', Validators.required],
+          normalType: ['1', Validators.required],
           statementType: ['1', Validators.required],
         })
       })
   }
 
   async executeAction() {
-    console.log(this.data);
-    
-    console.log(this.form);
     if (!this.data.action) return;
 
-    
-
-    await this.data.action();
+    await this.data.action(this.form.getRawValue());
   }
 }

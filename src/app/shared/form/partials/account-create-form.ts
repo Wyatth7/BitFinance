@@ -7,7 +7,7 @@ export interface CreateAccountForm {
     };
     types: {
         accountType: any;
-        normalSide: any;
+        normalType: any;
         statementType: any;
     }
 }

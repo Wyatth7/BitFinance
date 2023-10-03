@@ -4,7 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { AccountType } from 'src/app/shared/enums/accounts/account-type';
 import { Colors } from 'src/app/shared/enums/colors';
+import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
 import { AccountTableModel } from 'src/app/shared/models/accounts/account-table-model';
+import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
@@ -21,7 +23,7 @@ export class ViewComponent implements OnInit{
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private topNavService: TopNavService, private dialogService: DialogService) {}
+  constructor(private topNavService: TopNavService, private dialogService: DialogService, private accountService: AccountService) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.accountsData);
@@ -42,7 +44,10 @@ export class ViewComponent implements OnInit{
     })
   }
 
-  async executeCreate() {
+  async executeCreate(formData: CreateAccountForm) {
+    console.log(formData);
+    
+    await this.accountService.createAccount(formData);
     console.log('at create callback');
   }
 

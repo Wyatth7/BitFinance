@@ -1,5 +1,5 @@
 export interface DialogData {
     title: string;
     data: any;
-    action?: () => Promise<void>; 
+    action?: (...args: any) => Promise<void>; 
 }
