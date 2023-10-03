@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
+import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
@@ -19,14 +21,26 @@ export class SingleViewComponent implements OnInit{
 
   dateCreated = new Date();
 
-  constructor(public getEnum: GetEnumValueService, private topNavService: TopNavService) {}
+  constructor(public getEnum: GetEnumValueService, private topNavService: TopNavService,
+    private dialogService: DialogService) {}
 
   ngOnInit(): void {
       this.topNavService.setTopNavAction({
         tooltip: 'Add Transaction',
         icon: 'add_card',
-        action: () => {},
+        action: () => this.dialogService.open(
+          CreateAccountDialogComponent, 
+          {
+            title: 'Edit Account',
+            data: 'form data here',
+            action: this.executeEdit.bind(this)
+          }
+        ),
       })
+  }
+
+  async executeEdit() {
+    console.log('in edit callback');
   }
 
   displayedColumns = ['actions', 'description', 'transactionType', 'amount', 'createdBy','date']

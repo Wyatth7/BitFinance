@@ -19,11 +19,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { ValueTextComponent } from './components/number-text/number-text.component';
+import { CreateAccountDialogComponent } from './components/dialogs/create-account-dialog/create-account-dialog.component';
 
 
 
@@ -39,7 +40,8 @@ import { ValueTextComponent } from './components/number-text/number-text.compone
     EllipsisPipe,
     ContentLoadingScreenComponent,
     SearchBarComponent,
-    ValueTextComponent
+    ValueTextComponent,
+    CreateAccountDialogComponent
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,10 @@ import { ValueTextComponent } from './components/number-text/number-text.compone
     FormsModule,
     MatIconModule,
     MatSelectModule,
-    MatSortModule
+    MatSortModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   exports: [
     SecondaryTopNavComponent,

@@ -1,0 +1,63 @@
+<h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
+<mat-dialog-content>
+    <form class="create-form" [formGroup]="form">
+        <ng-container formGroupName="general">
+
+            <div class="two-column">
+                <mat-form-field appearance="outline">
+                    <mat-label>Account Name</mat-label>
+                    <input formControlName="accountName" matInput type="text" />
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Account #</mat-label>
+                    <input formControlName="accountNumber" matInput type="text" />
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea 
+                formControlName="description"
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="2"
+                ></textarea>
+            </mat-form-field>
+        </ng-container>
+        <div class="two-column">
+                <mat-form-field appearance="outline" formGroupName="general">
+                    <mat-label>Balance</mat-label>
+                    <input formControlName="balance" matInput type="number" />
+                </mat-form-field>
+              <mat-form-field appearance="outline" formGroupName="types">
+                <mat-label>Account Type</mat-label>
+                <mat-select value="1" formControlName="accountType">
+                  <mat-option value="1">Asset</mat-option>
+                  <mat-option value="2">Liability</mat-option>
+                  <mat-option value="4">Equity</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+        <div class="two-column" formGroupName="types">
+            <mat-form-field appearance="outline">
+                <mat-label>Normal Side</mat-label>
+                <mat-select value="1" formControlName="normalSide">
+                  <mat-option value="1">Debit</mat-option>
+                  <mat-option value="2">Credit</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Statement Type</mat-label>
+                <mat-select value="1" formControlName="statementType">
+                  <mat-option value="1">IS (Income Statement)</mat-option>
+                  <mat-option value="2">BS (Balance Sheet)</mat-option>
+                  <mat-option value="4">RE (Retained Earnings)</mat-option>
+                </mat-select>
+              </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-flat-button color="primary" (click)="executeAction()">Submit</button>
+</mat-dialog-actions>

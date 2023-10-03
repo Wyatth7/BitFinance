@@ -1,9 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { AccountType } from 'src/app/shared/enums/accounts/account-type';
 import { Colors } from 'src/app/shared/enums/colors';
 import { AccountTableModel } from 'src/app/shared/models/accounts/account-table-model';
+import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
+import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
 @Component({
   selector: 'app-view',
@@ -18,8 +21,29 @@ export class ViewComponent implements OnInit{
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  constructor(private topNavService: TopNavService, private dialogService: DialogService) {}
+
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.accountsData);
+
+    this.topNavService.setTopNavAction({
+        icon: 'post_add',
+        tooltip: 'Create An Account',
+        action: () => {
+          this.dialogService.open(
+            CreateAccountDialogComponent,
+             {
+              title: 'Create Account',
+              data: 'this is test data',
+              action: this.executeCreate.bind(this)
+            })
+        },
+        requiredRole: [1]
+    })
+  }
+
+  async executeCreate() {
+    console.log('at create callback');
   }
 
   searchEmitted(value: string | null) {
