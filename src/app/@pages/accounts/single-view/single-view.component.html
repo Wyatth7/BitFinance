@@ -89,5 +89,5 @@
     >
         Edit Account
     </button>
-    <button *ngIf="account?.balance === 0" mat-menu-item>Deactivate</button>
+    <button *ngIf="account?.balance === 0" mat-menu-item>{{ account?.isActive ? 'Deactivate' : 'Activate' }}</button>
 </mat-menu>
