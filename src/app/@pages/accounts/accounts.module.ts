@@ -8,6 +8,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { SingleViewComponent } from './single-view/single-view.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -23,7 +27,11 @@ import { SingleViewComponent } from './single-view/single-view.component';
     SharedModule,
     MatTableModule,
     MatSortModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule,
+    MatTooltipModule,
+    MatIconModule,
+    MatMenuModule
   ]
 })
 export class AccountsModule { }

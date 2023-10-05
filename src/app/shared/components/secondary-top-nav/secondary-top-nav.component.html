@@ -1,8 +1,8 @@
 <div class="secondary-top-nav">
     <div class="left-content">
         <h1>{{ title }}</h1>
-        <mat-divider class="vertical-divider" vertical></mat-divider>
-        <div class="content">
+        <mat-divider *ngIf="contentRef.children.length !== 0" class="vertical-divider" vertical></mat-divider>
+        <div class="content" #contentRef>
             <ng-content></ng-content>
         </div>
     </div>

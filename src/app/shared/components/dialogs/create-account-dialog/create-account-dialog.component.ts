@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
 import { DialogData } from 'src/app/shared/models/dialog/dialog-data';
 
 @Component({
@@ -9,30 +10,44 @@ import { DialogData } from 'src/app/shared/models/dialog/dialog-data';
   styleUrls: ['./create-account-dialog.component.scss']
 })
 export class CreateAccountDialogComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData,
-  private formBuilder: FormBuilder) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dialogRef: MatDialogRef<CreateAccountDialogComponent>,
+    private formBuilder: FormBuilder,
+    ) {}
 
   form!: FormGroup;
 
   ngOnInit(): void {
-      this.form = this.formBuilder.group({
-        general: this.formBuilder.group({
-          accountName: ['', Validators.required],
-          accountNumber: ['', Validators.required],
-          description: ['', Validators.required],
-          balance: ['', Validators.required],
-        }),
-        types: this.formBuilder.group({
-          accountType: ['1', Validators.required],
-          normalType: ['1', Validators.required],
-          statementType: ['1', Validators.required],
-        })
+    const formData = this.data.data as CreateAccountForm;
+    
+    this.form = this.formBuilder.group({
+      general: this.formBuilder.group({
+        accountName: [formData?.general?.accountName || '',
+         Validators.required],
+        accountNumber: [formData?.general?.accountNumber ||'',
+         Validators.required],
+        description: [formData?.general?.description || '',
+         Validators.required],
+        balance: [formData?.general?.balance || 0,
+         Validators.required],
+      }),
+      types: this.formBuilder.group({
+        accountType: [formData?.types?.accountType || 1,
+         Validators.required],
+        normalType: [formData?.types?.normalType || 1,
+         Validators.required],
+        statementType: [formData?.types?.statementType || 1,
+         Validators.required],
       })
+    })
   }
 
   async executeAction() {
     if (!this.data.action) return;
 
     await this.data.action(this.form.getRawValue());
+
+    this.dialogRef.close();
   }
 }

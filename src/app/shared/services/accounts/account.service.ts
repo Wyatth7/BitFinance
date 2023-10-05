@@ -6,6 +6,9 @@ import { Subject } from 'rxjs';
 import { CreateAccountForm } from '../../form/partials/account-create-form';
 import { CreateEditAccountDto } from '../../models/accounts/dto/create-edit-account-dto';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { AccountsModule } from 'src/app/@pages/accounts/accounts.module';
+import { AccountModel } from '../../models/accounts/account-model';
+import { EditAccountDto } from '../../models/accounts/dto/edit-account-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -27,17 +30,51 @@ export class AccountService {
     this.accounts$.next(accounts.data);
   }
 
+  /**
+   * Gets an account by ID
+   * @param accountId ID of an account
+   */
+  async getAccount(accountId: string): Promise<AccountModel> {
+    const getAccountFunction = httpsCallable<string, AccountModel>(this.functions, AccountFunctions.getAccount);
+
+    const account = await getAccountFunction(accountId);
+
+    return account.data;
+  }
+
+  /**
+   * Creates an account
+   * @param createAccountForm Form values for creating an account
+   */
   async createAccount(createAccountForm: CreateAccountForm) {
-    console.log(createAccountForm);
-    
     const createAccountFunction = httpsCallable<CreateEditAccountDto, any>(this.functions, AccountFunctions.createAccount);
 
-    const test: CreateEditAccountDto = {
+    const createReqest: CreateEditAccountDto = {
       ...createAccountForm,
       userId: this.authService.user!.uid
     }
 
-    await createAccountFunction(test);
+    await createAccountFunction(createReqest);
 
+  }
+
+  /**
+   * Edits an account
+   * @param editAccountForm Form data to send to server
+   */
+  async editAccount(editAccountForm: CreateAccountForm, accountId: string) {
+    console.log(editAccountForm);
+    
+    const editAccountFunction = httpsCallable<EditAccountDto, any>(this.functions, AccountFunctions.editAccount);
+  
+    const editRequest: EditAccountDto = {
+      ...editAccountForm,
+      userId: this.authService.user!.uid,
+      accountId
+    }
+  
+    console.log(editRequest);
+    
+    await editAccountFunction(editRequest);
   }
 }

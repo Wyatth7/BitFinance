@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
+import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
+import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
@@ -18,32 +22,64 @@ interface JournalEntry {
   styleUrls: ['./single-view.component.scss']
 })
 export class SingleViewComponent implements OnInit{
+  account?: AccountModel;
+
+  displayedColumns = ['actions', 'description', 'transactionType', 'amount', 'createdBy','date']
 
   dateCreated = new Date();
 
-  constructor(public getEnum: GetEnumValueService, private topNavService: TopNavService,
-    private dialogService: DialogService) {}
+  constructor(
+      private accountService: AccountService,
+      public getEnum: GetEnumValueService,
+      private topNavService: TopNavService,
+      private dialogService: DialogService,
+      private route: ActivatedRoute
+    ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
       this.topNavService.setTopNavAction({
         tooltip: 'Add Transaction',
         icon: 'add_card',
-        action: () => this.dialogService.open(
-          CreateAccountDialogComponent, 
-          {
-            title: 'Edit Account',
-            data: 'form data here',
-            action: this.executeEdit.bind(this)
-          }
-        ),
+        action: () => {}
       })
+
+      const accountId = this.route.snapshot.url[0].path;
+      this.account = await this.accountService.getAccount(accountId);
+      console.log(this.account);
+      
   }
 
-  async executeEdit() {
-    console.log('in edit callback');
+  async executeEdit(editAccountData: CreateAccountForm) {
+    await this.accountService.editAccount(editAccountData, this.account!.accountId)
+
+    this.account = await this.accountService.getAccount(this.account!.accountId);
   }
 
-  displayedColumns = ['actions', 'description', 'transactionType', 'amount', 'createdBy','date']
+  openEditModal(){
+    const formData: CreateAccountForm = {
+      general: {
+        accountName: this.account!.accountName,
+        accountNumber: this.account!.accountNumber,
+        balance: this.account!.balance,
+        description: this.account!.description
+      },
+      types: {
+        accountType: this.account!.accountType,
+        statementType: this.account!.statementType,
+        normalType: this.account!.normalType
+      }
+    }
+    
+    this.dialogService.open(
+      CreateAccountDialogComponent, 
+      {
+        title: 'Edit Account',
+        data: formData,
+        action: this.executeEdit.bind(this)
+      }
+    );
+  }
+
   journalEntries: JournalEntry[] = [
     {
       date: new Date('2023-10-01'),

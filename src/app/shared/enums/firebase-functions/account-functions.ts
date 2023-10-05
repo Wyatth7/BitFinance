@@ -1,4 +1,6 @@
 export enum AccountFunctions {
     getAllAccounts = 'accounts-getAllAccounts',
-    createAccount = 'accountOperations-createAccount'
+    getAccount = 'accounts-getAccount',
+    createAccount = 'accountOperations-createAccount',
+    editAccount = 'accountOperations-editAccount'
 }
