@@ -7,4 +7,5 @@ export interface AccountsListItemModel {
     balance: number;
     category: AccountType;
     entries: number;
+    isActive: boolean;
 }

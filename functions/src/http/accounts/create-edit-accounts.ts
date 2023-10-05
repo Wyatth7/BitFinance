@@ -8,7 +8,11 @@ import { AccountModel } from '../../shared/models/accounts/account-model';
 import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 import { Guid } from '../../shared/helpers/guids/generate-guid';
 import { EditAccountDto } from '../../shared/models/accounts/dto/edit-account-dto';
+import { ToggleActivationDto } from '../../shared/models/accounts/dto/toggle-activation-dto';
 
+/**
+ * Creates an account
+ */
 export const createAccount = onRequest(
     {cors: true},
     async (req, res) => {
@@ -16,7 +20,7 @@ export const createAccount = onRequest(
             return unauthorizedResponse(res);
         }
 
-        const dto = req.body.data as CreateEditAccountDto;
+        const dto: CreateEditAccountDto = req.body.data;
 
         const account = configureAccount(dto);
 
@@ -43,6 +47,9 @@ export const createAccount = onRequest(
     }
 )
 
+/**
+ * Edits an existing account
+ */
 export const editAccount = onRequest(
     {cors: true},
     async (req, res) => {
@@ -50,7 +57,7 @@ export const editAccount = onRequest(
             return unauthorizedResponse(res);
         }
 
-        const dto = req.body.data as EditAccountDto;
+        const dto: EditAccountDto  = req.body.data;
 
         try {
             const accountTitlesValid = await validateAccountNameNumber(dto.general.accountName, dto.general.accountNumber, dto.accountId);
@@ -87,6 +94,57 @@ export const editAccount = onRequest(
         } catch (error) {
             logger.error(error);
             return badRequestResponse('There was an error while updating the account.', res);
+        }
+    }
+);
+
+/**
+ * Toggles account activation status
+ */
+export const toggleActivation = onRequest(
+    {cors: true},
+    async (req, res) => {
+        if (!await verifyToken(req)) {
+            return unauthorizedResponse(res);
+        }
+
+        try {
+            // get account
+            const dto: ToggleActivationDto = req.body.data;        
+
+            if (!dto) {
+                return badRequestResponse('The toggle activation data is invalid.', res);
+            }
+
+            const accountRef = admin
+                .firestore()
+                .collection(FirestoreCollections.accounts)
+                .doc(dto.accountId);
+
+            const accountSnapshot = await accountRef.get();
+
+            if (!accountSnapshot.exists) {
+                return badRequestResponse('This account does not exist.', res);
+            }
+
+            const account = accountSnapshot.data() as AccountModel;
+            
+            // validate that balance is 0
+            if (account.balance !== 0) {
+                return badRequestResponse('Unable to toggle active status because the account balance is not 0.', res);
+            }
+
+            // toggle account activation status
+            await accountRef.update({
+                isActive: !account.isActive
+            });
+
+            // ========== UPDATE EVENT LOG HERE ==========
+
+            return okResponse({}, 200, res);
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse('Could not toggle account activation status.', res);
         }
     }
 );

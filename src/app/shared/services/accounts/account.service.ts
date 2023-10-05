@@ -9,6 +9,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 import { AccountsModule } from 'src/app/@pages/accounts/accounts.module';
 import { AccountModel } from '../../models/accounts/account-model';
 import { EditAccountDto } from '../../models/accounts/dto/edit-account-dto';
+import { ToggleActivationDto } from '../../models/accounts/dto/toggle-activation-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -63,8 +64,6 @@ export class AccountService {
    * @param editAccountForm Form data to send to server
    */
   async editAccount(editAccountForm: CreateAccountForm, accountId: string) {
-    console.log(editAccountForm);
-    
     const editAccountFunction = httpsCallable<EditAccountDto, any>(this.functions, AccountFunctions.editAccount);
   
     const editRequest: EditAccountDto = {
@@ -73,8 +72,24 @@ export class AccountService {
       accountId
     }
   
-    console.log(editRequest);
-    
     await editAccountFunction(editRequest);
+  }
+
+  async toggleActivation(accountId: string) {
+  
+    try {
+      const toggleAccountFunction = httpsCallable<ToggleActivationDto, any>(this.functions, AccountFunctions.toggleActivation);
+    
+      const dto: ToggleActivationDto = {
+        accountId,
+        userId: this.authService.user!.uid
+      };
+  
+      await toggleAccountFunction(dto);
+      
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
