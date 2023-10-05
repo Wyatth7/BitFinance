@@ -68,10 +68,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   async executeCreate(formData: CreateAccountForm) {
-    console.log(formData);
-    
     await this.accountService.createAccount(formData);
-    console.log('at create callback');
   }
 
   searchEmitted(value: string | null) {

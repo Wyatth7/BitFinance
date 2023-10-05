@@ -78,4 +78,39 @@ export const getAllAccounts = onRequest(
             return badRequestResponse("An error occurred while getting the chart of accounts. Try again later.", res);
         }
     }
-)
+);
+
+export const getAccount = onRequest(
+    {cors: true},
+    async (req, res) => {
+        if (!await verifyToken(req)) {
+            return unauthorizedResponse(res);
+        }
+
+        const accountId = req.body.data as string;
+
+        console.log(accountId);
+        
+
+        if (!accountId) return badRequestResponse('The account ID provided is invalid.', res);
+
+        try {
+            
+            // get account
+            const accountSnapshot = await admin
+            .firestore()
+            .collection(FirestoreCollections.accounts)
+            .doc(accountId)
+            .get();
+
+            if (!accountSnapshot.exists) return badRequestResponse(`Could not find an account with ID [${accountId}]`, res);
+
+            const account = accountSnapshot.data();
+
+            return okResponse(account, 200, res);
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse('An error occured while getting the account, and the account could not be send.', res);
+        }
+    }
+);

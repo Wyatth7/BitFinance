@@ -31,27 +31,27 @@
                 </mat-form-field>
               <mat-form-field appearance="outline" formGroupName="types">
                 <mat-label>Account Type</mat-label>
-                <mat-select value="1" formControlName="accountType">
-                  <mat-option value="1">Asset</mat-option>
-                  <mat-option value="2">Liability</mat-option>
-                  <mat-option value="4">Equity</mat-option>
+                <mat-select [value]="1" formControlName="accountType">
+                  <mat-option [value]="1">Asset</mat-option>
+                  <mat-option [value]="2">Liability</mat-option>
+                  <mat-option [value]="4">Equity</mat-option>
                 </mat-select>
               </mat-form-field>
         </div>
         <div class="two-column" formGroupName="types">
             <mat-form-field appearance="outline">
                 <mat-label>Normal Side</mat-label>
-                <mat-select value="1" formControlName="normalType">
-                  <mat-option value="1">Debit</mat-option>
-                  <mat-option value="2">Credit</mat-option>
+                <mat-select [value]="1" formControlName="normalType">
+                  <mat-option [value]="1">Debit</mat-option>
+                  <mat-option [value]="2">Credit</mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-form-field appearance="outline">
                 <mat-label>Statement Type</mat-label>
-                <mat-select value="1" formControlName="statementType">
-                  <mat-option value="1">IS (Income Statement)</mat-option>
-                  <mat-option value="2">BS (Balance Sheet)</mat-option>
-                  <mat-option value="4">RE (Retained Earnings)</mat-option>
+                <mat-select [value]="1" formControlName="statementType">
+                  <mat-option [value]="1">IS (Income Statement)</mat-option>
+                  <mat-option [value]="2">BS (Balance Sheet)</mat-option>
+                  <mat-option [value]="4">RE (Retained Earnings)</mat-option>
                 </mat-select>
               </mat-form-field>
         </div>

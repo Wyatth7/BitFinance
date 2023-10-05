@@ -8,6 +8,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { SingleViewComponent } from './single-view/single-view.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -23,7 +25,9 @@ import { SingleViewComponent } from './single-view/single-view.component';
     SharedModule,
     MatTableModule,
     MatSortModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule,
+    MatTooltipModule
   ]
 })
 export class AccountsModule { }
