@@ -25,13 +25,10 @@ export const createAccount = onRequest(
             const accountsRef = admin.firestore().collection(FirestoreCollections.accounts);
 
             // check if name and number are taken.
-            const snapshot = await accountsRef
-                .where('accountNumber', '==', account.accountNumber)
-                .where('accountName', '==', account.accountName)
-                .get();
+            const nameNumberValid = await validateAccountNameNumber(account.accountName, account.accountNumber);
 
             // if docs exist, throw 
-            if (!snapshot.empty) {
+            if (!nameNumberValid) {
                 return badRequestResponse('An account with this name or account number already exists.', res);
             }
 
@@ -119,7 +116,7 @@ const configureAccount = (createEditData: CreateEditAccountDto): AccountModel =>
  * @param accountId ID of current account
  * @returns true if valid, false if invalid
  */
-const validateAccountNameNumber = async (name: string, number: string, accountId: string): Promise<boolean> => { 
+const validateAccountNameNumber = async (name: string, number: string, accountId?: string): Promise<boolean> => { 
 
     const collectionRef = admin.firestore().collection(FirestoreCollections.accounts);
 
@@ -129,6 +126,8 @@ const validateAccountNameNumber = async (name: string, number: string, accountId
 
     // If number exists somewhere, validate some more
     if (!numberExists.empty) {
+        if (!accountId) return false;
+
         const account = numberExists.docs.find(accountDoc => (accountDoc.data() as AccountModel).accountNumber);
         if (!account && numberExists.docs.length > 0) return false;
 
@@ -142,6 +141,8 @@ const validateAccountNameNumber = async (name: string, number: string, accountId
     
     // If name exists somewhere, validate some more
     if (!nameExists.empty) {
+        if (!accountId) return false;
+
         const account = nameExists.docs.find(accountDoc => (accountDoc.data() as AccountModel).accountName);
         if (!account && nameExists.docs.length > 0) return false;
 
