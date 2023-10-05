@@ -151,9 +151,11 @@ export const toggleActivation = onRequest(
 
 const configureAccount = (createEditData: CreateEditAccountDto): AccountModel => {
 
+    const formattedAccountNumber = `${+createEditData.types.accountType}${createEditData.general.accountNumber}`
+
     return {
         accountName: createEditData.general.accountName.trim().toLowerCase(),
-        accountNumber: createEditData.general.accountNumber,
+        accountNumber:  +formattedAccountNumber,
         description: createEditData.general.description,
         balance: createEditData.general.balance,
         statementType: +createEditData.types.statementType,
