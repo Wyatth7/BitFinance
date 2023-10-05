@@ -24,8 +24,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   filter: string | undefined = '';
   accountsData?: AccountListResponseModel;
 
-  dataSource!: MatTableDataSource<AccountModel>;
-  displayedColumns = ['actions', 'accountName', 'balance','category', 'entries', 'accountNumber',  ]
+  displayedColumns = ['actions', 'accountName', 'balance','category', 'entries', 'accountNumber', 'status' ]
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -46,8 +45,6 @@ export class ViewComponent implements OnInit, OnDestroy {
       console.log(this.accountsData);
       
     })
-    
-    // this.dataSource = new MatTableDataSource(this.accountsData.accounts);
     
     this.topNavService.setTopNavAction({
       icon: 'post_add',

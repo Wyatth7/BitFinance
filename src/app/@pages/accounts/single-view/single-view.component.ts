@@ -55,6 +55,16 @@ export class SingleViewComponent implements OnInit{
     this.account = await this.accountService.getAccount(this.account!.accountId);
   }
 
+  async toggleActivation() { 
+    if (!this.account) return;
+    
+    const success = await this.accountService.toggleActivation(this.account.accountId);
+    
+    this.account.isActive = success 
+      ? !this.account.isActive 
+      : this.account.isActive 
+  }
+
   openEditModal(){
     const formData: CreateAccountForm = {
       general: {

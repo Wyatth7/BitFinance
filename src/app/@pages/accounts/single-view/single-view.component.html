@@ -72,8 +72,10 @@
                 
                 <ng-container matColumnDef="date" >
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
-                    <td mat-cell *matCellDef="let row"> {{row.date | date}} </td>
-                </ng-container>            
+                    <td mat-cell *matCellDef="let row"> {{row.date | date:'longDate'}} </td>
+                </ng-container>       
+                
+               
             </ng-container>
             
         </app-table>
@@ -89,5 +91,9 @@
     >
         Edit Account
     </button>
-    <button *ngIf="account?.balance === 0" mat-menu-item>Deactivate</button>
+    <button 
+        *ngIf="account?.balance === 0" 
+        mat-menu-item
+        (click)="toggleActivation()"
+        >{{ account?.isActive ? 'Deactivate' : 'Activate' }}</button>
 </mat-menu>

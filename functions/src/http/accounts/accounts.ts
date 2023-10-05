@@ -58,6 +58,7 @@ export const getAllAccounts = onRequest(
                         balance: accountModel.balance,
                         category: accountModel.accountType,
                         accountId: accountModel.accountId,
+                        isActive: accountModel.isActive,
                         // will be replaced with journal collection count.
                         entries: 0
                     }
