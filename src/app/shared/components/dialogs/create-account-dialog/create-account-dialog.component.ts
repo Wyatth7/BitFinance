@@ -19,8 +19,6 @@ export class CreateAccountDialogComponent implements OnInit {
   form!: FormGroup;
 
   ngOnInit(): void {
-    console.log(this.data.data);
-
     const formData = this.data.data as CreateAccountForm;
     
     this.form = this.formBuilder.group({
@@ -31,7 +29,7 @@ export class CreateAccountDialogComponent implements OnInit {
          Validators.required],
         description: [formData?.general?.description || '',
          Validators.required],
-        balance: [formData?.general?.balance || '',
+        balance: [formData?.general?.balance || 0,
          Validators.required],
       }),
       types: this.formBuilder.group({

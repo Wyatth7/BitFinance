@@ -41,7 +41,11 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
 
-    this._accountsSubscription = this.accountService.accounts$.subscribe(accountsResponse => this.accountsData = accountsResponse)
+    this._accountsSubscription = this.accountService.accounts$.subscribe(accountsResponse => {
+      this.accountsData = accountsResponse
+      console.log(this.accountsData);
+      
+    })
     
     // this.dataSource = new MatTableDataSource(this.accountsData.accounts);
     
@@ -69,6 +73,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   async executeCreate(formData: CreateAccountForm) {
     await this.accountService.createAccount(formData);
+
+    await this.accountService.getAccountList();
   }
 
   searchEmitted(value: string | null) {

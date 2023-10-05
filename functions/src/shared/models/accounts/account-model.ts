@@ -4,7 +4,7 @@ import { AccountType } from "../enums/account-type";
 
 export interface AccountModel {
     accountName: string;
-    accountNumber: string;
+    accountNumber: number;
     description: string;
     balance: number;
     accountType: AccountType;
@@ -12,4 +12,5 @@ export interface AccountModel {
     statementType: StatementType;
     accountId: string;
     createdOn: string;
+    isActive: boolean;
 }

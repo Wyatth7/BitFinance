@@ -5,7 +5,7 @@ import { AccountType } from "../../enums/account-type";
 export interface CreateEditAccountDto {
     general: {
         accountName: string;
-        accountNumber: string;
+        accountNumber: number;
         description: string;
         balance: number;
     },

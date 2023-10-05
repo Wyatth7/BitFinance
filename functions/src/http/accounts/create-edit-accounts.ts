@@ -52,8 +52,6 @@ export const editAccount = onRequest(
 
         const dto = req.body.data as EditAccountDto;
 
-        console.log(dto);
-        
         try {
             const accountTitlesValid = await validateAccountNameNumber(dto.general.accountName, dto.general.accountNumber, dto.accountId);
 
@@ -97,14 +95,15 @@ const configureAccount = (createEditData: CreateEditAccountDto): AccountModel =>
 
     return {
         accountName: createEditData.general.accountName.trim().toLowerCase(),
-        accountNumber: createEditData.general.accountNumber.trim(),
+        accountNumber: createEditData.general.accountNumber,
         description: createEditData.general.description,
         balance: createEditData.general.balance,
         statementType: +createEditData.types.statementType,
         accountType: +createEditData.types.accountType,
         normalType: +createEditData.types.normalType,
         accountId: Guid.createGuid(),
-        createdOn: new Date().toISOString()
+        createdOn: new Date().toISOString(),
+        isActive: true
     }
 }
 
@@ -116,7 +115,7 @@ const configureAccount = (createEditData: CreateEditAccountDto): AccountModel =>
  * @param accountId ID of current account
  * @returns true if valid, false if invalid
  */
-const validateAccountNameNumber = async (name: string, number: string, accountId?: string): Promise<boolean> => { 
+const validateAccountNameNumber = async (name: string, number: number, accountId?: string): Promise<boolean> => { 
 
     const collectionRef = admin.firestore().collection(FirestoreCollections.accounts);
 

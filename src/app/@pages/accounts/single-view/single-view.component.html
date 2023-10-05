@@ -1,34 +1,32 @@
 <div class="single-account-view">
-    <app-secondary-top-nav
-        [title]="account?.accountName || ''"
-        [showSearch]="false"
-        >
+    <app-info-page-header [title]="account?.accountName || ''">
         <div class="top-data">
             <div class="top-data--left">
-
                 <app-number-text
-                [value]="account?.balance"
-                text="Balance"
-                [valueType]="getEnum.valuTextType.currency"
-                [focusColor]="getEnum.color.green"
+                    [value]="account?.balance"
+                    text="Balance"
+                    [valueType]="getEnum.valuTextType.currency"
+                    [focusColor]="getEnum.color.green"
                 ></app-number-text> 
             </div>
-            
             <div class="top-data--right">
-                
                 <div class="right-content">
                     <h3>Account <span>#{{ account?.accountNumber }}</span></h3>
                     <h3>Created on <span>{{ account?.createdOn | date:'longDate' }}</span></h3>
-                    <button 
-                        mat-stroked-button 
-                        color="primary" 
-                        matTooltip="Edit Account"
-                        (click)="openEditModal()"
-                        >Edit</button>
+                    <button
+                        class="button-menu"
+                        mat-flat-button
+                        color="primary"
+                        matTooltip="More Options"
+                        [matMenuTriggerFor]="moreOptionsMenu">
+                        <p>Options</p>
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                   
                 </div>
             </div>
         </div>
-    </app-secondary-top-nav>
+    </app-info-page-header>
     <div class="single-account-view--info">
         <h3>{{account?.description || ''}}</h3>
     </div>
@@ -45,16 +43,10 @@
                     <ng-container matColumnDef="actions" >
                         <th mat-header-cell *matHeaderCellDef> Actions </th>
                         <td mat-cell *matCellDef="let row"> 
-                            <div class="buttons">
-                                <button
+                            <button
                                 mat-stroked-button
                                 color="primary"
-                                >View</button>
-                                <button
-                                mat-stroked-button
-                                color="primary"
-                                >Edit</button>
-                            </div>
+                            >View</button>
                         </td>
                 </ng-container>
                 
@@ -89,3 +81,14 @@
     </div>
 </div>
 </div>
+
+<mat-menu #moreOptionsMenu>
+    <button
+        mat-menu-item
+        color="primary"
+        (click)="openEditModal()"
+    >
+        Edit Account
+    </button>
+    <button *ngIf="account?.balance === 0" mat-menu-item>Deactivate</button>
+</mat-menu>

@@ -89,9 +89,6 @@ export const getAccount = onRequest(
 
         const accountId = req.body.data as string;
 
-        console.log(accountId);
-        
-
         if (!accountId) return badRequestResponse('The account ID provided is invalid.', res);
 
         try {

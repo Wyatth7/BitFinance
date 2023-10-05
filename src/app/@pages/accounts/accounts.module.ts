@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { SingleViewComponent } from './single-view/single-view.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 
@@ -27,7 +29,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSortModule,
     MatButtonModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatIconModule,
+    MatMenuModule
   ]
 })
 export class AccountsModule { }

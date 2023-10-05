@@ -1,7 +1,7 @@
 export interface CreateAccountForm {
     general: {
         accountName: string;
-        accountNumber: string;
+        accountNumber: number;
         description: string;
         balance: number;
     };

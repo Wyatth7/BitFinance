@@ -25,6 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { ValueTextComponent } from './components/number-text/number-text.component';
 import { CreateAccountDialogComponent } from './components/dialogs/create-account-dialog/create-account-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { InfoPageHeaderComponent } from './components/info-page-header/info-page-header.component';
 
 
 
@@ -41,7 +43,8 @@ import { CreateAccountDialogComponent } from './components/dialogs/create-accoun
     ContentLoadingScreenComponent,
     SearchBarComponent,
     ValueTextComponent,
-    CreateAccountDialogComponent
+    CreateAccountDialogComponent,
+    InfoPageHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -60,7 +63,8 @@ import { CreateAccountDialogComponent } from './components/dialogs/create-accoun
     MatSortModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatMenuModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -72,7 +76,8 @@ import { CreateAccountDialogComponent } from './components/dialogs/create-accoun
     SpinnerButtonComponent,
     EllipsisPipe,
     ContentLoadingScreenComponent,
-    ValueTextComponent
+    ValueTextComponent,
+    InfoPageHeaderComponent
   ],
   providers: [
     TitleCasePipe
