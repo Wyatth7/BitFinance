@@ -10,6 +10,8 @@ import { AccountsModule } from 'src/app/@pages/accounts/accounts.module';
 import { AccountModel } from '../../models/accounts/account-model';
 import { EditAccountDto } from '../../models/accounts/dto/edit-account-dto';
 import { ToggleActivationDto } from '../../models/accounts/dto/toggle-activation-dto';
+import { LoaderService } from '../component-services/loader.service';
+import { SnackBarService } from '../component-services/snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,18 +19,25 @@ import { ToggleActivationDto } from '../../models/accounts/dto/toggle-activation
 export class AccountService {
   accounts$ = new Subject<AccountListResponseModel>();
 
-  constructor(private functions: Functions, private authService: AuthenticationService) { }
+  constructor(
+    private functions: Functions,
+    private authService: AuthenticationService,
+    private loaderService: LoaderService,
+    private snackBarService: SnackBarService
+  ) { }
 
   /**
    * Gets list of accounts
    * THIS FUNCTION / CALL HAS NOT BEEN TESTED
    */
   async getAccountList() {
+    this.loaderService.showLoader('Chart of Accounts');
     const accountListFunction = httpsCallable<null, AccountListResponseModel>(this.functions, AccountFunctions.getAllAccounts);
 
     const accounts = await accountListFunction();
 
     this.accounts$.next(accounts.data);
+    this.loaderService.stopLoader();
   }
 
   /**
@@ -36,10 +45,12 @@ export class AccountService {
    * @param accountId ID of an account
    */
   async getAccount(accountId: string): Promise<AccountModel> {
+    this.loaderService.showLoader('Account');
     const getAccountFunction = httpsCallable<string, AccountModel>(this.functions, AccountFunctions.getAccount);
 
     const account = await getAccountFunction(accountId);
 
+    this.loaderService.stopLoader();
     return account.data;
   }
 
@@ -48,14 +59,19 @@ export class AccountService {
    * @param createAccountForm Form values for creating an account
    */
   async createAccount(createAccountForm: CreateAccountForm) {
-    const createAccountFunction = httpsCallable<CreateEditAccountDto, any>(this.functions, AccountFunctions.createAccount);
-
-    const createReqest: CreateEditAccountDto = {
-      ...createAccountForm,
-      userId: this.authService.user!.uid
+    try {
+      const createAccountFunction = httpsCallable<CreateEditAccountDto, any>(this.functions, AccountFunctions.createAccount);
+  
+      const createReqest: CreateEditAccountDto = {
+        ...createAccountForm,
+        userId: this.authService.user!.uid
+      }
+  
+      await createAccountFunction(createReqest);
+      this.snackBarService.showSuccess('Account created');
+    } catch (error) {
+      this.snackBarService.showError('Account creation failed');
     }
-
-    await createAccountFunction(createReqest);
 
   }
 
@@ -64,15 +80,21 @@ export class AccountService {
    * @param editAccountForm Form data to send to server
    */
   async editAccount(editAccountForm: CreateAccountForm, accountId: string) {
-    const editAccountFunction = httpsCallable<EditAccountDto, any>(this.functions, AccountFunctions.editAccount);
-  
-    const editRequest: EditAccountDto = {
-      ...editAccountForm,
-      userId: this.authService.user!.uid,
-      accountId
+    try {
+      const editAccountFunction = httpsCallable<EditAccountDto, any>(this.functions, AccountFunctions.editAccount);
+    
+      const editRequest: EditAccountDto = {
+        ...editAccountForm,
+        userId: this.authService.user!.uid,
+        accountId
+      }
+    
+      await editAccountFunction(editRequest);
+      
+      this.snackBarService.showSuccess('Account updated');
+    } catch (error) {
+      this.snackBarService.showError('Account update failed');
     }
-  
-    await editAccountFunction(editRequest);
   }
 
   async toggleActivation(accountId: string) {
@@ -87,8 +109,11 @@ export class AccountService {
   
       await toggleAccountFunction(dto);
       
+      this.snackBarService.showSuccess('Actiation status updated');
+
       return true;
     } catch (error) {
+      this.snackBarService.showError('Activation toggle failed');
       return false;
     }
   }

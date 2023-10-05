@@ -59,5 +59,10 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close color="warn">Cancel</button>
-    <button mat-flat-button color="primary" (click)="executeAction()" [disabled]="form.invalid">Submit</button>
+    <app-spinner-button 
+      [spin]="loading" 
+      text="Submit" 
+      (click)="executeAction()" 
+      [disabled]="form.invalid"
+    ></app-spinner-button>
 </mat-dialog-actions>

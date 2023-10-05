@@ -10,13 +10,15 @@ import { DialogData } from 'src/app/shared/models/dialog/dialog-data';
   styleUrls: ['./create-account-dialog.component.scss']
 })
 export class CreateAccountDialogComponent implements OnInit {
+  form!: FormGroup;
+  loading = false;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<CreateAccountDialogComponent>,
     private formBuilder: FormBuilder,
     ) {}
 
-  form!: FormGroup;
 
   ngOnInit(): void {
     const formData = this.data.data as CreateAccountForm;
@@ -46,8 +48,12 @@ export class CreateAccountDialogComponent implements OnInit {
   async executeAction() {
     if (!this.data.action) return;
 
+    this.loading = true;
+
     await this.data.action(this.form.getRawValue());
 
     this.dialogRef.close();
+
+    this.loading = false;
   }
 }

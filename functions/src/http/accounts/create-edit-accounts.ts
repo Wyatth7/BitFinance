@@ -85,7 +85,8 @@ export const editAccount = onRequest(
                 description: dto.general.description,
                 accountType: dto.types.accountType,
                 statementType: dto.types.statementType,
-                normalType: dto.types.normalType
+                normalType: dto.types.normalType,
+                balance: dto.general.balance
             })
 
             // call event log once it gets built.
