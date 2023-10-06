@@ -23,7 +23,7 @@ export const getAllAccounts = onRequest(
                 .get()
         
             if (accountsSnapshot.empty) {
-                return badRequestResponse("No accounts were found.", res);
+                return okResponse([], 200, res);
             }
 
             const balances: BalanceTotalsModel = {

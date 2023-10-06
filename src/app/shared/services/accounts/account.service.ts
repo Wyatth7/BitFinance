@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
 import { CreateAccountForm } from '../../form/partials/account-create-form';
 import { CreateEditAccountDto } from '../../models/accounts/dto/create-edit-account-dto';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { AccountsModule } from 'src/app/@pages/accounts/accounts.module';
 import { AccountModel } from '../../models/accounts/account-model';
 import { EditAccountDto } from '../../models/accounts/dto/edit-account-dto';
 import { ToggleActivationDto } from '../../models/accounts/dto/toggle-activation-dto';
@@ -36,8 +35,8 @@ export class AccountService {
 
     const accounts = await accountListFunction();
 
-    this.accounts$.next(accounts.data);
     this.loaderService.stopLoader();
+    this.accounts$.next(accounts.data);
   }
 
   /**
