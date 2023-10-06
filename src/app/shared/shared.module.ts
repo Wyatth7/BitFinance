@@ -27,6 +27,7 @@ import { ValueTextComponent } from './components/number-text/number-text.compone
 import { CreateAccountDialogComponent } from './components/dialogs/create-account-dialog/create-account-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { InfoPageHeaderComponent } from './components/info-page-header/info-page-header.component';
+import { EmptyTableInfoComponent } from './components/tables/empty-table-info/empty-table-info.component';
 
 
 
@@ -45,6 +46,7 @@ import { InfoPageHeaderComponent } from './components/info-page-header/info-page
     ValueTextComponent,
     CreateAccountDialogComponent,
     InfoPageHeaderComponent,
+    EmptyTableInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -77,7 +79,8 @@ import { InfoPageHeaderComponent } from './components/info-page-header/info-page
     EllipsisPipe,
     ContentLoadingScreenComponent,
     ValueTextComponent,
-    InfoPageHeaderComponent
+    InfoPageHeaderComponent,
+    EmptyTableInfoComponent
   ],
   providers: [
     TitleCasePipe

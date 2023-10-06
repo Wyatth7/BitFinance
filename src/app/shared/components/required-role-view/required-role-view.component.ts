@@ -15,7 +15,8 @@ export class RequiredRoleViewComponent implements OnInit {
   constructor(private authService: AuthenticationService) {}
 
   ngOnInit(): void {
-      if (this.roles.includes(this.authService.userRole)) {
+      if (this.roles.includes(this.authService.userRole) 
+        || this.roles.length === 0) {
         this.renderContent = true;
         return;
       }

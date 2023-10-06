@@ -40,24 +40,13 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
 
-    this._accountsSubscription = this.accountService.accounts$.subscribe(accountsResponse => {
-      this.accountsData = accountsResponse
-      console.log(this.accountsData);
-      
-    })
+    this._accountsSubscription = this.accountService.accounts$
+      .subscribe(accountsResponse => this.accountsData = accountsResponse)
     
     this.topNavService.setTopNavAction({
       icon: 'post_add',
       tooltip: 'Create An Account',
-      action: () => {
-        this.dialogService.open(
-          CreateAccountDialogComponent,
-          {
-            title: 'Create Account',
-            data: 'this is test data',
-            action: this.executeCreate.bind(this)
-          })
-        },
+      action: this.openCreateDialog.bind(this),
         requiredRole: [1]
       });
 
@@ -67,6 +56,18 @@ export class ViewComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       this._accountsSubscription.unsubscribe();
   }
+
+  openCreateDialog() {
+    this.dialogService.open(
+      CreateAccountDialogComponent,
+      {
+        title: 'Create Account',
+        data: 'this is test data',
+        action: this.executeCreate.bind(this)
+      })
+    
+  }
+  openCreateDialogFn = this.openCreateDialog.bind(this);
 
   async executeCreate(formData: CreateAccountForm) {
     await this.accountService.createAccount(formData);

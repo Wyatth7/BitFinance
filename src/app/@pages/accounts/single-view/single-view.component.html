@@ -33,9 +33,8 @@
     <mat-divider class="account-tansaction-divider"></mat-divider>
     <div class="journal-entries">
 
-        <app-secondary-top-nav title="Transactions">
-        </app-secondary-top-nav>
-        <div class="journal-table">
+        <app-secondary-top-nav title="Transactions"></app-secondary-top-nav>
+        <div class="journal-table" *ngIf="journalEntries; else noTransactions">
             <app-table [tableData]="journalEntries" [displayedColumns]="displayedColumns">
                 
                 <ng-container matSort>
@@ -97,3 +96,12 @@
         (click)="toggleActivation()"
         >{{ account?.isActive ? 'Deactivate' : 'Activate' }}</button>
 </mat-menu>
+
+<ng-template #noTransactions>
+    <app-empty-table-info
+        headerText="transactions"
+        buttonText="Create Transaction"
+        [requiredActionRoles]="[1]"
+        [action]="openEditModalFn"
+    ></app-empty-table-info>
+</ng-template>
