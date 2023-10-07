@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Colors } from 'src/app/shared/enums/colors';
+import { PageIcon } from 'src/app/shared/enums/page-icon';
 import { OverviewDataModel } from 'src/app/shared/models/overview/overview-data';
 import { OverviewService } from 'src/app/shared/services/overview/overview.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
@@ -16,11 +17,9 @@ export class OverviewComponent implements OnInit {
   constructor(private topNavService: TopNavService, private overviewService: OverviewService) { }
 
   async ngOnInit(): Promise<void> {
-      this.topNavService.setTopNavAction({
-        show: false,
-        icon: '',
-        tooltip: '',
-        action: () => {}
+      this.topNavService.setTopNav({
+        topNavHeader: 'Overview',
+        topNavIcon: PageIcon.overview.toString()
       })
 
       this.overviewData = await this.overviewService.getOverviewData();

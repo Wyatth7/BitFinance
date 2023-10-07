@@ -1,3 +1,25 @@
 <div class="secondary-top-nav">
-    <ng-content></ng-content>
+    <div class="left-content">
+        <h1>{{ title }}</h1>
+        <mat-divider *ngIf="contentRef.children.length !== 0" class="vertical-divider" vertical></mat-divider>
+        <div class="content" #contentRef>
+            <ng-content></ng-content>
+        </div>
+    </div>
+
+    <div class="filtering" *ngIf="showSearch">
+        <mat-form-field 
+            appearance="outline" 
+            class="search-bar" 
+            subscriptSizing="dynamic"
+            >
+            <input 
+                matInput    
+                type="text"
+                [(ngModel)]="searchValue"
+                [placeholder]="searchPlaceholder"
+             />
+             <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
 </div>
