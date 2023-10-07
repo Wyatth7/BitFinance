@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
           icon: 'person_add',
           tooltip: 'Create A User',
           action: () => this.navigateToCreate()
-        }
+        },
       })
 
       // redirect to view if /users is called

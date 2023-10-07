@@ -28,7 +28,8 @@ import { CreateAccountDialogComponent } from './components/dialogs/create-accoun
 import { MatMenuModule } from '@angular/material/menu';
 import { InfoPageHeaderComponent } from './components/info-page-header/info-page-header.component';
 import { EmptyTableInfoComponent } from './components/tables/empty-table-info/empty-table-info.component';
-
+import { EmailUserComponent } from './components/dialogs/email-user/email-user.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { EmptyTableInfoComponent } from './components/tables/empty-table-info/em
     CreateAccountDialogComponent,
     InfoPageHeaderComponent,
     EmptyTableInfoComponent,
+    EmailUserComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +68,8 @@ import { EmptyTableInfoComponent } from './components/tables/empty-table-info/em
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -80,7 +83,8 @@ import { EmptyTableInfoComponent } from './components/tables/empty-table-info/em
     ContentLoadingScreenComponent,
     ValueTextComponent,
     InfoPageHeaderComponent,
-    EmptyTableInfoComponent
+    EmptyTableInfoComponent,
+    EmailUserComponent
   ],
   providers: [
     TitleCasePipe
