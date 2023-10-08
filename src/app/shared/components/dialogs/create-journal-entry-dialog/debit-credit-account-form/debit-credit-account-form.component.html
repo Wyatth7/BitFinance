@@ -1,0 +1,18 @@
+<div class="debit-credit-account">
+    <div class="header">
+        <div class="balance-total">
+            <p class="balance" [ngClass]="balance < 0 ? 'red' : 'green'">{{balance | currency}}</p>
+            <p class="text">Balace</p>
+        </div>
+        <div class="actions">
+            <mat-icon matTooltip="Add Attachment" class="attach-button">attachment</mat-icon>
+            <button matTooltip="Add Debit or Credit" class="add-button" mat-flat-button color="primary">
+                <mat-icon>add</mat-icon>
+                Add
+            </button>
+        </div>
+    </div>
+    <div class="add-debit-credit">
+        <p>blah</p>
+    </div>
+</div>

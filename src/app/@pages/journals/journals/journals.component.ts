@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { PageIcon } from 'src/app/shared/enums/page-icon';
+import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
 })
 export class JournalsComponent implements OnInit {
 
-  constructor(private topNavService: TopNavService) {}
+  constructor(private topNavService: TopNavService, private dialogService: DialogService) {}
 
   ngOnInit(): void {
       
@@ -19,7 +21,12 @@ export class JournalsComponent implements OnInit {
       topNavAction: {
         icon: PageIcon.card.toString(),
         tooltip: 'Create An Entry',
-        action: () => {},
+        action: () => {
+          this.dialogService.open(CreateJournalEntryDialogComponent, {
+            title: 'Create An Entry',
+            data: ''
+          })
+        },
       },
     })
   }
