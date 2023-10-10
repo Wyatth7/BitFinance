@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NumberGroupComponent } from './components/number-group/number-group.component';
 
 
 
@@ -17,7 +18,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     OverviewComponent,
     CardComponent,
-    MultiCardComponent
+    MultiCardComponent,
+    NumberGroupComponent
   ],
   imports: [
     CommonModule,

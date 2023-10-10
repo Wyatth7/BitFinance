@@ -18,11 +18,15 @@ export const getOverview = onRequest(
                 .where('requested', '==', true)
                 .count().get();
 
+            const accountsSnapshot = await admin.firestore().collection(FirestoreCollections.accounts)
+                .count().get();
+
             const overviewData: OverviewModel = {
                 users: {
                     requested: requestedSnapshot.data().count,
-                    accepted: usersSnapshot.data().count
-                }
+                    accepted: usersSnapshot.data().count,
+                },
+                accounts: accountsSnapshot.data().count
             }
 
             return okResponse(overviewData, 200, res);
