@@ -4,7 +4,7 @@ import * as admin from 'firebase-admin';
 import { FirestoreCollections } from "../../enums/firestore-collections";
 import { UserRoleType } from "../../models/enums/user-role-type";
 import { UserWithIdModel } from "../../models/users/user-with-id-model";
-import { environment } from "../../../environment/environment";
+import { environment } from "../../../enviornment/enviornment";
 
 export class Emailer {
     
