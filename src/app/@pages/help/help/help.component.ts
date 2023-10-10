@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageIcon } from 'src/app/shared/enums/page-icon';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import { MatChipsModule} from '@angular/material/chips';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-help',
@@ -9,6 +11,7 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
 })
 export class HelpComponent implements OnInit {
 
+
   constructor(private topNavService: TopNavService) {}
 
   ngOnInit(): void {
@@ -16,5 +19,7 @@ export class HelpComponent implements OnInit {
       topNavHeader: 'Help',
       topNavIcon: PageIcon.help.toString()
     });
+    
+    
   }
 }
