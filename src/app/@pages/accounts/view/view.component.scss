@@ -1,0 +1,18 @@
+.accounts-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    bottom: 0;
+    height: 100%;
+    overflow: hidden;
+
+    &--list {
+        overflow-y: auto;
+
+        .buttons {
+            display: flex;
+            gap: .5rem;
+        }
+    }
+
+}

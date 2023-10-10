@@ -5,9 +5,11 @@ import * as logger from 'firebase-functions/logger'
 import { UserRecord } from 'firebase-admin/auth';
 import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 import { UserModel } from '../../shared/models/users/user-model';
-import { badRequestResponse, okResponse } from '../../shared/responses/responses';
+import { badRequestResponse, okResponse, unauthorizedResponse } from '../../shared/responses/responses';
 import { Encryptor } from '../../shared/helpers/encryption/encryptor';
 import { AcceptDenyModel } from '../../shared/models/auth/accept-deny-model';
+import { verifyToken } from '../../shared/helpers/auth/verify-token';
+import { Emailer } from '../../shared/helpers/messaging/emailer';
 
 /**
  * Creates a user.
@@ -15,6 +17,11 @@ import { AcceptDenyModel } from '../../shared/models/auth/accept-deny-model';
 export const createUser = onRequest(
     {cors: true},
     async (req, res) => {
+        if (!await verifyToken(req)) {
+            return unauthorizedResponse(res);
+        }
+
+        const password = req.body.data.password as string;
         const user = configureCreatedUser(req.body.data as CreateUserModel);
         
         if (!user) {
@@ -22,9 +29,7 @@ export const createUser = onRequest(
         }
 
         try {
-            const uid = await createFirebaseUser(user);
-
-            user.passwords[0].password = Encryptor.base64Encryption(user.passwords[0].password)
+            const uid = await createFirebaseUser(user, password);
 
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(uid).create({
@@ -56,14 +61,20 @@ export const userSignUp = onRequest(
             const user = configureCreatedUser(createUser);
             user.requested = true;
 
-            const uid = await createFirebaseUser(user, true);
+            const uid = await createFirebaseUser(user, createUser.password, true);
             
             await admin.firestore().collection(FirestoreCollections.users.toString())
                 .doc(uid).create({uid, ...user});
 
+            // send email to admin users
+            await Emailer.sendEmailToAdmin(
+                'New Requested User',
+                `${user.firstName} ${user.lastName} has requested to join BitFinance.\n\nLogin to accept or decline the user.\n\nhttps://accounting-app-test.web.app/users/view`
+                )
+
             return okResponse({}, 200, res);
 
-        } catch (error) {
+        } catch (error: any) {
             logger.error(error);
             return badRequestResponse("An error occurred during the request and the user could not be created.", res);
         }
@@ -76,7 +87,10 @@ export const userSignUp = onRequest(
 export const acceptDenyUser = onRequest(
     {cors: true},
     async (req, res) => {
-
+        if (!await verifyToken(req)) {
+            return unauthorizedResponse(res);
+        }
+        
         const acceptDenyData = req.body.data as AcceptDenyModel
 
         if (!acceptDenyData) return badRequestResponse("The user request data provided was invalid.", res);
@@ -113,6 +127,8 @@ export const acceptDenyUser = onRequest(
                 .update({
                     requested: false
             });
+
+            await Emailer.sendSingleFromAdmin(user.email, 'User Request Accepted', 'Your user request has been accepted to BitFiannce.\n\nClick the link below to login.\n\nhttps://accounting-app-test.web.app/auth/login')
             
             return okResponse({}, 200, res);
         } catch (error) {
@@ -128,10 +144,10 @@ export const acceptDenyUser = onRequest(
  * @param createUserModel Model data of user to be created
  * @returns A new user id
  */
-const createFirebaseUser = async (createUserModel: UserModel, disable = false): Promise<string> => {
+const createFirebaseUser = async (createUserModel: UserModel, password: string, disable = false): Promise<string> => {
     const createdUser: UserRecord = await admin.auth().createUser({
         email: createUserModel.email,
-        password: createUserModel.passwords[0].password,
+        password,
         displayName: createUserModel.userName,
         emailVerified: true,
         disabled: disable

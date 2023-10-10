@@ -3,5 +3,7 @@ export enum PageIcon {
     users = 'group',
     schedule = 'event',
     equipment = 'fitness_center',
-    payments = 'payments'
+    payments = 'payments',
+    accounts = 'article',
+    help = 'question_mark'
 }

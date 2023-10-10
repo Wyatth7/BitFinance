@@ -1,0 +1,78 @@
+.single-account-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+    .top-data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        gap: 1rem;
+
+        &--left {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        &--right {
+
+            .right-content {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 1rem;
+                
+                h3 {
+                    font-size: 1.2rem;
+                    color: var(--letter-grey);
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    
+                    span {
+                        color: var(--blue);
+                        font-weight: 500;
+                    }
+                }
+
+
+                .button-menu {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    &--info {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--letter-grey);
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    }
+
+    .journal-entries {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        margin-top: 1rem;
+
+        .journal-table {
+            overflow-y: auto;
+            
+            .buttons {
+                display: flex;
+                gap: .5rem;
+            }
+        }
+    }
+}

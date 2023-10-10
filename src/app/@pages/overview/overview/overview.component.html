@@ -1,20 +1,41 @@
 <div class="overview" >
     <app-card 
+        route="/accounts/view"
+        icon="article" 
+        title="Chart of Accounts" 
+        subTitle="Active Accounts on BitFinance" 
+        buttonTitle="View Accounts"
+        [requiredButtonRoles]="[]">
+        
+    <div class="overview-card-wrapper">
+        <app-number-group
+            [color]="color.blue"
+            [number]="overviewData?.accounts || 0"
+            text="Active Accounts"
+        ></app-number-group>
+    </div>
+
+    </app-card>
+    <app-card 
         route="/users/view"
         icon="group" 
         title="Users" 
-        subTitle="This Months Users" 
+        subTitle="BitFinance User Information" 
         buttonTitle="View Users"
         [requiredButtonRoles]="[1]">
-        <div class="member-card">
-            <div class="members-group">
-                <h1 [style.color]="color.green" class="members-group--number">{{overviewData?.users?.accepted || 0 | number}}</h1>
-                <p class="members-group--text">Active Users</p>
-            </div>
-            <div class="members-group">
-                <h1 [style.color]="color.red" class="members-group--number members-group--number-right">{{ overviewData?.users?.requested || 0 | number}}</h1>
-                <p class="members-group--text">Suspended/Leave</p>
-            </div>
+        <div class="overview-card-wrapper">
+
+            <app-number-group
+                [color]="color.green"
+                [number]="overviewData?.users?.accepted || 0"
+                text="Active Users"
+            ></app-number-group>
+            <app-number-group
+                [color]="color.red"
+                [number]="overviewData?.users?.requested || 0"
+                text="Requested Users"
+            ></app-number-group>
+            
         </div>
     </app-card>
 </div>

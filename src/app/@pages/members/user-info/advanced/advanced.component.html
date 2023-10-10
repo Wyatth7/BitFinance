@@ -10,7 +10,7 @@
                 <mat-list class="questions">
                     <mat-list-item >
                         <p class="question">What is your date of birth?</p>
-                        <p class="answer">{{ user.securityQuestionAnswer | date }}</p>
+                        <p class="answer">{{ user.securityQuestionAnswer | date:'longDate' }}</p>
                     </mat-list-item>
                 </mat-list>
             </mat-expansion-panel>

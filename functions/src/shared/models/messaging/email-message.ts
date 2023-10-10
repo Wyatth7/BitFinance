@@ -1,5 +1,5 @@
 export interface EmailMessage {
-    to: string;
+    to: string | string[];
     from: string;
     subject: string;
     text: string;

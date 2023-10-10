@@ -11,11 +11,20 @@
 // https://firebase.google.com/docs/functions/typescript
 
 import {initializeApp} from "firebase-admin/app";
+import * as sgMail from "@sendgrid/mail";
+import { environment } from "./environment/environment";
 
 initializeApp();
 
+// Init Send Grid
+sgMail.setApiKey(environment.sendGridAPIKey);
+
+export * as scheduler from './schedule/scheduler';
+export * as overview from './http/overviews/overview';
 export * as auth from './http/auth/user-creation-edit';
 export * as users from './http/users/users';
+export * as accounts from './http/accounts/accounts'
+export * as accountOperations from './http/accounts/create-edit-accounts'
 export * as email from './messaging/emailer';
 export { forgotPassword } from './http/auth/forgotPassword';
 export * as overview from './http/overviews/overview';

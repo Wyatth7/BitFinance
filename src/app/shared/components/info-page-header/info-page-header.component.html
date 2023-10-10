@@ -1,0 +1,10 @@
+<div class="info-page-header">
+    <div class="header">
+        <h1>{{ title | titlecase }}</h1>
+        <mat-divider *ngIf="contentRef.children.length !== 0" class="vertical-divider" vertical></mat-divider>
+    </div>
+
+    <div class="content" #contentRef>
+        <ng-content ></ng-content>
+    </div>
+</div>

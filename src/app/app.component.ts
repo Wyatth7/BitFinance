@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthenticationService } from './shared/services/authentication/authentication.service';
-import {Observable, Subscription} from 'rxjs'
+import {Subscription} from 'rxjs'
 import { Functions } from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
-import { CreateUserModel } from './shared/models/users/create-user-model';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-root',

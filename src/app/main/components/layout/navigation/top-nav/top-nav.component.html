@@ -1,24 +1,28 @@
 <div class="top-nav">
    <div class="page-header">
-      <mat-icon class="page-header--icon">{{ headerIcon }}</mat-icon>
-      <h2 class="page-header--text">{{ routeHeader | titlecase }}</h2>
+      <mat-icon class="page-header--icon">{{ topNavData.topNavIcon }}</mat-icon>
+      <h2 class="page-header--text">{{  topNavData.topNavHeader | titlecase }}</h2>
    </div>
    <div class="top-nav-actions">
       <!-- This tooltip needs to be dynamically updated based on the page -->
-      <button *ngIf="actionButtonData.show"
-         mat-mini-fab 
-         [matTooltip]="actionButtonData.tooltip"
-         (click)="actionButtonData.action()" >
-         <mat-icon>{{ actionButtonData.icon }}</mat-icon>
-      </button> 
+      <app-required-role-view 
+         *ngIf="topNavData.topNavAction"
+         [roles]="topNavData.topNavAction.requiredRole || [1,2,4]">
+         <button 
+            mat-mini-fab 
+            [matTooltip]="topNavData.topNavAction.tooltip"
+            (click)="topNavData.topNavAction.action()" >
+            <mat-icon>{{ topNavData.topNavAction.icon }}</mat-icon>
+         </button> 
+      </app-required-role-view>
       <button 
          mat-mini-fab 
          class="top-nav-button"
-         [matMenuTriggerFor]="notificationsMenu"
-         matTooltip="My Notifications">
-         <mat-icon>notifications</mat-icon>
+         matTooltip="Get Help"
+         (click)="navigateToHelp()">
+         <mat-icon>question_mark</mat-icon>
       </button>
-      <mat-menu #notificationsMenu="matMenu">
+      <!-- <mat-menu #notificationsMenu="matMenu">
          <div class="notifications-menu">
             <div class="notifications-empty">
                <p class="notifications-empty--text">You have no new notifications.</p>
@@ -31,6 +35,6 @@
                </button>
             </div>
          </div>
-      </mat-menu>
+      </mat-menu> -->
    </div>
 </div>

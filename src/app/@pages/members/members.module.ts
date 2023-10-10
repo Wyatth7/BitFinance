@@ -32,6 +32,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatListModule} from '@angular/material/list';
 import { MessageComponent } from './user-info/message/message.component';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { MessageComponent } from './user-info/message/message.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatListModule,
+    MatSortModule
   ],
   providers: [
     MatDatepickerModule

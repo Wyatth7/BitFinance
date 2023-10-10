@@ -1,0 +1,13 @@
+.no-users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: hidden;
+
+    &--header {
+        color: var(--letter-grey);
+        cursor: default;
+    }
+}
