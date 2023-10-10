@@ -33,6 +33,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CreateJournalEntryDialogComponent } from './components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { DebitCreditAccountFormComponent } from './components/dialogs/create-journal-entry-dialog/debit-credit-account-form/debit-credit-account-form.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UploadComponent } from './components/upload/upload.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -54,6 +56,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     EmailUserComponent,
     CreateJournalEntryDialogComponent,
     DebitCreditAccountFormComponent,
+    UploadComponent,
   ],
   imports: [
     CommonModule,
@@ -75,7 +78,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatMenuModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatListModule
   ],
   exports: [
     SecondaryTopNavComponent,

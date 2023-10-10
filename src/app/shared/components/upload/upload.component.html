@@ -1,0 +1,33 @@
+<div class="file-upload">
+
+    <div class="upload-button">
+        <button 
+            (click)="fileInput.click()" 
+            matTooltip="Upload File" 
+            class="upload-button" 
+            mat-stroked-button 
+            color="primary"
+        >
+        <mat-icon>attachment</mat-icon>
+        Upload File
+        </button>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+    </div>
+
+    <div *ngIf="selectedFiles.length > 0" class="uploaded-files">
+        <mat-list>
+            <mat-list-item *ngFor="let file of selectedFiles">
+                <mat-icon matListItemIcon>folder</mat-icon>
+                <div [matTooltip]="file.name" matListItemTitle>{{ file.name }}</div>
+                <button 
+                    matTooltip="Remove File" 
+                    mat-icon-button 
+                    matListItemMeta color="warn"
+                    (click)="removeFile(file.name)"
+                >
+                    <mat-icon color="warn">delete</mat-icon>
+                </button>
+            </mat-list-item>
+        </mat-list>
+    </div>
+</div>

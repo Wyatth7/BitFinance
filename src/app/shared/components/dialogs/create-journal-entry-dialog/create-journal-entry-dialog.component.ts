@@ -11,6 +11,8 @@ import { DialogData } from 'src/app/shared/models/dialog/dialog-data';
 export class CreateJournalEntryDialogComponent {
   loading = false;
 
+  selectedFile: any = null;
+
   form = this.formBuilder.group({
     general: this.formBuilder.group({
       entryName: new FormControl('', [Validators.required]),
@@ -30,4 +32,6 @@ export class CreateJournalEntryDialogComponent {
   resetForm() {
     this.form.reset();
   }
+
+
 }

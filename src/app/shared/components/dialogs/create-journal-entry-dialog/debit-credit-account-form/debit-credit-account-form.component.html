@@ -6,12 +6,6 @@
                 <p class="balance" [ngClass]="setBalanceClass()">{{balance | currency}}</p>
                 <p class="text">Balace</p>
             </div>
-            <div class="actions">
-                <button matTooltip="Upload File" class="add-button" mat-stroked-button color="primary">
-                    <mat-icon>attachment</mat-icon>
-                    Upload File
-                </button>
-            </div>
         </div>
         <div class="entry-inputs" [formGroup]="form">
             <mat-form-field class="entry-inputs--field" appearance="outline">
