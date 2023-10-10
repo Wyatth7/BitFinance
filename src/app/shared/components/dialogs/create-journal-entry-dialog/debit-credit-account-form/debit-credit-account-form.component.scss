@@ -7,63 +7,85 @@
         width: 100%;
         border-bottom: 2px solid var(--bk-grey);
         display: flex;
+        flex-direction: column;
         justify-content: space-between;
         padding: .5rem;
+        gap: .5rem;
 
-        .balance-total {
+        .top-actions {
             display: flex;
-            align-items: center;
-            gap: .2rem;
+            justify-content: space-between;
 
-            .balance {
+            .balance-total {
+                display: flex;
+                align-items: center;
+                gap: .2rem;
+                    
+                .balance {
                 font-weight: 500;
                 font-size: 1.2rem;
             }
-
+                
             .text {
                 color: var(--letter-grey);
                 font-size: .8rem;
                 font-weight: 500;
                 vertical-align: bottom;
             }
-
+                
             .red {
                 color: var(--red);
             }
-
+                
             .green {
                 color: var(--green);
             }
-        }
 
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: .5rem;
-
-            .attach-button {
-                height: 80%;
-                vertical-align: middle;
-                background-color: transparent;
-                transition: all .1s;
-                border: none;
-                cursor: pointer;
-                color: var(--letter-grey);
-                border-radius: 5px;
-
-                &:hover {
-                    background-color: var(--bk-grey);
-                    border: none;
-                }
+            .blue {
+                color: var(--blue);
             }
 
-            .add-button {
-                height: 2rem;
+            }
+            
+            .actions {
+                display: flex;
+                align-items: center;
+                
+                .add-button {
+                    height: 2.5rem;
+                }
+            }
+        }
+
+        .entry-inputs {
+            display: flex;
+            gap: .5rem;
+            align-items: center;
+
+            &--field {
+                margin-bottom: -1.25rem !important;
+            }
+
+            .delete-button {
+                display: none;
+                transition: all .2s;
+
+                &:hover {
+                    display: block;
+                }
             }
         }
     }
-
+    
     .add-debit-credit {
         padding: .5rem;
+        gap: .5rem;
+        display: flex;
+        flex-direction: column;
+        max-height: 15rem;
+        min-height: 15rem;
+        overflow-y: auto;
+
+        
     }
 }

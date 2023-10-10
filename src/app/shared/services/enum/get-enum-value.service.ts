@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Colors } from '../../enums/colors';
 import { AccountType } from '../../enums/accounts/account-type';
 import { ValueTextType } from '../../enums/value-text-types.ts/value-text-type';
+import { NormalType } from '../../enums/accounts/normal-type';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,13 @@ export class GetEnumValueService {
 
   get valuTextType(): typeof ValueTextType {
     return ValueTextType;
+  }
+
+  get normalType(): typeof NormalType {
+    return NormalType;
+  }
+
+  normalTypeString(normalType: NormalType) {
+    return NormalType[normalType];
   }
 }
