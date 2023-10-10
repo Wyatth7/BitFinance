@@ -1,15 +1,8 @@
 .overview {
     padding: 1rem;
-
-    .member-card {
-        margin-top: 1rem;
-        display: flex;
-        gap: 1rem;
-        width: 15rem;
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 
         .members-group {
             display: flex;
@@ -30,5 +23,14 @@
                 color: var(--letter-grey);
             }
         }
-    }
+        
+        .overview-card-wrapper {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            width: 15rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
 }
