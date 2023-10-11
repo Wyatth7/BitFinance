@@ -9,6 +9,8 @@ import { FirestoreCollections } from '../../shared/enums/firestore-collections';
 import { Guid } from '../../shared/helpers/guids/generate-guid';
 import { EditAccountDto } from '../../shared/models/accounts/dto/edit-account-dto';
 import { ToggleActivationDto } from '../../shared/models/accounts/dto/toggle-activation-dto';
+import { EventLogger } from '../../shared/helpers/log/event-logger';
+import { LogActionType } from '../../shared/models/enums/log-action-type';
 
 /**
  * Creates an account
@@ -21,6 +23,8 @@ export const createAccount = onRequest(
         }
 
         const dto: CreateEditAccountDto = req.body.data;
+        console.log(dto);
+        
 
         const account = configureAccount(dto);
 
@@ -38,6 +42,9 @@ export const createAccount = onRequest(
 
             // create account
             await accountsRef.doc(account.accountId).set(account);
+
+            // Create event log
+            await createAccountEventLog(account, dto.userId);
 
             return okResponse({}, 201, res);
         } catch (error) {
@@ -90,6 +97,21 @@ export const editAccount = onRequest(
             })
 
             // call event log once it gets built.
+            const before = account.data() as AccountModel;
+            const after: AccountModel =  {
+                accountName: dto.general.accountName,
+                accountNumber: dto.general.accountNumber,
+                description: dto.general.description,
+                accountType: dto.types.accountType,
+                statementType: dto.types.statementType,
+                normalType: dto.types.normalType,
+                balance: dto.general.balance,
+                isActive: before.isActive,
+                createdOn: before.createdOn,
+                accountId: before.accountId
+            }
+
+            await createAccountEventLog(after, dto.userId, before)
 
             return okResponse({}, 200, res); 
         } catch (error) {
@@ -140,7 +162,11 @@ export const toggleActivation = onRequest(
                 isActive: !account.isActive
             });
 
-            // ========== UPDATE EVENT LOG HERE ==========
+            // update event log
+            const updatedAccount = {...account};
+            updatedAccount.isActive = !updatedAccount.isActive;
+
+            await createAccountEventLog(updatedAccount, dto.userId, account)
 
             return okResponse({}, 200, res);
         } catch (error) {
@@ -211,4 +237,17 @@ const validateAccountNameNumber = async (name: string, number: number, accountId
     }
 
     return true;
+}
+
+const createAccountEventLog = async (after: AccountModel, createdById: string, before?: AccountModel) => {
+
+    await EventLogger.createEventLog({
+        beforeChange: before || null,
+        afterChange: after,
+        collection: FirestoreCollections.accounts,
+        userId: createdById,
+        hostId: after.accountId,
+        logAction: before ? LogActionType.update : LogActionType.create,
+        dateChanged: ''
+    });
 }
