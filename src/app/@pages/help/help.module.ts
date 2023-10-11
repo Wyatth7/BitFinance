@@ -6,7 +6,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { UsersHelpPageComponent } from './subpages/users-help-page/users-help-page.component';
 import { AccountsHelpPageComponent } from './subpages/accounts-help-page/accounts-help-page.component';
-
+import {CdkAccordionModule} from '@angular/cdk/accordion';
 
 
 
@@ -20,7 +20,8 @@ import { AccountsHelpPageComponent } from './subpages/accounts-help-page/account
     CommonModule,
     HelpRoutingModule,
     MatTabsModule,
-    MatDividerModule
+    MatDividerModule,
+    CdkAccordionModule
   ]
 })
 export class HelpModule { }

@@ -11,6 +11,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 })
 export class HelpComponent implements OnInit {
 
+  items = ['Adding Users', 'Editing Users', 'Deactivating Users', 'Item 4', 'Item 5'];
+  expandedIndex = 0;
 
   constructor(private topNavService: TopNavService) {}
 
@@ -21,5 +23,11 @@ export class HelpComponent implements OnInit {
     });
     
     
+  }
+
+  postDescript(): string{
+
+  
+    return "Bruh Im chanign this form this function in TS"
   }
 }
