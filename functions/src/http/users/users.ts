@@ -148,8 +148,6 @@ export const toggleActivation = onRequest(
             const user = userDoc.data() as UserModel;
 
             const newActivationStatus = !user.isActive;
-            console.log(newActivationStatus);
-            
 
             await admin.auth().updateUser(userId, {disabled: !newActivationStatus})
 
@@ -174,7 +172,6 @@ export const editUser = onRequest(
 
         if (!user) return badRequestResponse("The user data provided is invalid.", res);
 
-        console.log(user)
         try {
             
             // udpate user in auth

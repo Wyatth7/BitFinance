@@ -1,3 +1,4 @@
+
 export enum UserFunctions {
     createUser = 'auth-createUser',
     acceptDenyUser = 'auth-acceptDenyUser',
@@ -7,5 +8,6 @@ export enum UserFunctions {
     getUsers = 'users-getUsers',
     suspendUser = 'users-suspendUser',
     removeSuspension = 'users-removeSuspension',
-    toggleActivation = 'users-toggleActivation'
+    toggleActivation = 'users-toggleActivation',
+    forgotPassword = 'auth-forgotPassword',
 }

@@ -24,8 +24,6 @@ export class CardComponent {
   }
 
   hasRoleEvent(hasRole: boolean) {
-    console.log(hasRole);
-    
     this.hasRequiredRole = !hasRole;
   }
 

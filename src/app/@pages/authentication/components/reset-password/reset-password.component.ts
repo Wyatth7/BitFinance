@@ -20,6 +20,5 @@ export class ResetPasswordComponent {
   }
 
   async resetPasswordAction(): Promise<void> {
-    console.log('Your password has been reset');
   }
 }
