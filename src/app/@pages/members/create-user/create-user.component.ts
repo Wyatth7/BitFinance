@@ -38,8 +38,6 @@ export class CreateUserComponent {
         this._snackBar.showSuccess('User Created Successfully');
         
       } catch (error) {
-        console.log(error);
-        
         this.dialog.open(ErrorComponent, {
           title: 'User Creation Failed',
           data: 'There was an error when attempting to create a user. This may have occurred due to attempting to create a user that already exists.'
@@ -49,7 +47,6 @@ export class CreateUserComponent {
     createUserFn = this.createUser.bind(this);
     
     updateForm(form: Partial<CreateEditUserForm>) {
-      console.log(form);
       this.formData = form;
     }
   }

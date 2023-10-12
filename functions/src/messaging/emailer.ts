@@ -21,7 +21,6 @@ export const emailCustomMessage = onRequest(
 
             return okResponse({}, 200, res);
         } catch (error: any) {
-            console.log(error.response.body)
             logger.error(error);
             return badRequestResponse("Could not send email to the user.", res);
         }

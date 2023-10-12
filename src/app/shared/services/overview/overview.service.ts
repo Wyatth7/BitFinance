@@ -26,7 +26,6 @@ export class OverviewService {
       return data;
 
     } catch (error) {
-        console.log(error);
         this.dialogService.openErrorDialog({
           title: 'Overview Load Failed', 
           data: 'There was an issue retrieving overview data from the server. Please refresh the page or try again later.'
