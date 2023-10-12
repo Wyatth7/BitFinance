@@ -10,6 +10,8 @@ import { Encryptor } from '../../shared/helpers/encryption/encryptor';
 import { AcceptDenyModel } from '../../shared/models/auth/accept-deny-model';
 import { verifyToken } from '../../shared/helpers/auth/verify-token';
 import { Emailer } from '../../shared/helpers/messaging/emailer';
+import { ForgotPasswordModel } from '../../shared/models/auth/forgot-password-model';
+import { UserWithIdModel } from '../../shared/models/users/user-with-id-model';
 
 /**
  * Creates a user.
@@ -134,6 +136,66 @@ export const acceptDenyUser = onRequest(
         } catch (error) {
             logger.error(error);
             return badRequestResponse("An error occurred and the user requested status could not be changed.", res);
+        }
+
+    }
+);
+
+export const forgotPassword = onRequest(
+    {cors: true},
+    async (req, res) => {
+
+        const dto = req.body.data as ForgotPasswordModel;
+
+        try {
+
+            const userRef = admin.firestore()
+                .collection(FirestoreCollections.users.toString());
+            
+            const firestoreUserSnapshot = await userRef
+                .where('email', '==', dto.email)
+                .get();
+
+            if (firestoreUserSnapshot.empty) {
+                return badRequestResponse('Invalid user information.', res);
+            }
+
+            const user = firestoreUserSnapshot.docs[0].data() as UserWithIdModel;
+
+            const emailCompare = user.email.toLowerCase().trim() === dto.email.toLowerCase().trim();
+            const usernameCompare = user.userName.toLowerCase() === dto.username.toLowerCase().trim();
+            const dobCompare = new Date(user.securityQuestionAnswer).toISOString().split('T')[0] === dto.dateOfBirth.split('T')[0];
+            
+            if ( emailCompare && usernameCompare && dobCompare ) {
+
+                await admin.auth().updateUser(user.uid, {
+                    password: dto.password
+                })
+
+                const encryptedPass = Encryptor.base64Encryption(dto.password);
+
+                const userPasswords = user.passwords;
+                userPasswords[user.passwords.length - 1].isActive = false;
+                userPasswords.push({
+                    isActive: true,
+                    password: encryptedPass
+                });
+
+                await userRef
+                    .doc(user.uid)
+                    .update({
+                        passwords: userPasswords
+                    })
+
+            
+                return okResponse({}, 200, res);
+            }
+
+            return badRequestResponse('Invalid user information.', res);
+
+        } catch (error) {
+            logger.error(error);
+            return badRequestResponse("Forgot password validation failed.", res);
         }
 
     }

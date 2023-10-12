@@ -44,8 +44,6 @@ export class Emailer {
         const adminEmails = usersSnapshot.docs
         .map(user => (user.data() as UserWithIdModel).email);
         
-         console.log(adminEmails);
-     
          // send message to each user.
      
          const mailData: EmailMessage = {

@@ -19,7 +19,6 @@ export class RequestedMemberTableComponent {
   }
 
   async declineUser(userId: string) {
-    console.log('user rejected');
     await this.userService.acceptDenyUser(userId);
   }
 }

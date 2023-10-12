@@ -23,8 +23,6 @@ export const createAccount = onRequest(
         }
 
         const dto: CreateEditAccountDto = req.body.data;
-        console.log(dto);
-        
 
         const account = configureAccount(dto);
 
