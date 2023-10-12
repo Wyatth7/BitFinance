@@ -14,5 +14,5 @@ export interface CreateEditAccountDto {
         statementType: StatementType,
         normalType: NormalType
     },
-    createdById: string;
+    userId: string;
 }
