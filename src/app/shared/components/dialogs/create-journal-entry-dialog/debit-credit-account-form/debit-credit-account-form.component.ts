@@ -5,7 +5,7 @@ import { NormalType } from 'functions/src/shared/enums/accounts/normal-type';
 import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
 import { Subject, Subscription } from 'rxjs';
 import { AccountListItemModel } from 'src/app/shared/models/accounts/account-list/account-list-item-model';
-import { TransactionEntryListItem } from 'src/app/shared/models/journal/transaction-entry-list-item-model';
+import { TransactionEntryListItem } from 'src/app/shared/models/journal/journal-entry-model';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 
@@ -34,7 +34,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
 
   transactionColumns = ['account', 'normalType', 'amount', 'delete']
 
-  @Output() transactionChange = new EventEmitter<TransactionEntryListItem[]>();
+  @Output() transactionChange = new EventEmitter<{transactions: TransactionEntryListItem[], isBalanced: boolean}>();
 
 
   constructor(private accountService: AccountService,
@@ -83,7 +83,9 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
     this.calculateBalance();
    
     if (this.balance === 0) {
-      this.transactionChange.emit(this.transactionList);
+      this.transactionChange.emit({transactions: this.transactionList, isBalanced: true});
+    }else {
+      this.transactionChange.emit({transactions:[], isBalanced: false})
     }
 
     this.dataSource.data = this.transactionList;
@@ -103,7 +105,9 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
     this.calculateBalance();
 
     if (this.balance === 0) {
-      this.transactionChange.emit(this.transactionList);
+      this.transactionChange.emit({transactions: this.transactionList, isBalanced: true});
+    }else {
+      this.transactionChange.emit({transactions:[], isBalanced: false})
     }
   }
 
@@ -132,7 +136,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
       account: null,
       normalType: NormalType.debit,
       amount: 1
-    })
+    });
   }
 
   /**

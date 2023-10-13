@@ -1,14 +1,14 @@
 <h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
 <mat-dialog-content>
     <form class="entry-create-form" [formGroup]="form">
-        <div class="form-col-2" formGroupName="general">
+        <div class="form-col-2" >
             <mat-form-field appearance="outline">
                 <mat-label>Entry Name</mat-label>
                 <input matInput formControlName="entryName" type="text" />
             </mat-form-field>
             <mat-form-field appearance="outline" hideRequiredMarker>
                 <mat-label>Description (optional)</mat-label>
-                <input matInput formControlName="entryName" type="text" />
+                <input matInput formControlName="entryDescription" type="text" />
             </mat-form-field>
         </div>
 
@@ -28,6 +28,6 @@
       [spin]="loading" 
       text="Submit" 
       (click)="executeAction()" 
-      [disabled]="form.invalid"
+      [disabled]="form.invalid || !transactionsValid"
     ></app-spinner-button>
 </mat-dialog-actions>
