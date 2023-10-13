@@ -1,9 +1,9 @@
-import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { NormalType } from 'functions/src/shared/enums/accounts/normal-type';
 import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { AccountListItemModel } from 'src/app/shared/models/accounts/account-list/account-list-item-model';
 import { TransactionEntryListItem } from 'src/app/shared/models/journal/transaction-entry-list-item-model';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
@@ -16,6 +16,9 @@ import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value
 })
 export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
   private _accountsSubscription!: Subscription;
+
+  @Input() shouldReset$!: Subject<boolean>;
+  private _resetSubscription!: Subscription;
 
   form = new FormGroup({
     account: new FormControl('', Validators.required),
@@ -44,10 +47,18 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
     if (!this.accountList) {
       await this.accountService.getAccountList();
     }
+
+    this._resetSubscription = this.shouldReset$.subscribe(reset => {
+      if (!reset) return;
+      this.transactionList = []
+      this.dataSource.data = []
+      this.resetForm();
+    })
   }
 
   ngOnDestroy(): void {
     this._accountsSubscription.unsubscribe();
+    this._resetSubscription.unsubscribe();
   }
 
   /**
@@ -66,14 +77,18 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
       normalType: this.form.value.normalType!
     }
 
-    // add transaction to list, emit the entire list
+    // add transaction to list, emit the entire list if balance is 0
     this.transactionList.push(transaction)
-    this.transactionChange.emit(this.transactionList);
+
+    this.calculateBalance();
+   
+    if (this.balance === 0) {
+      this.transactionChange.emit(this.transactionList);
+    }
 
     this.dataSource.data = this.transactionList;
     
     this.resetForm();
-    this.calculateBalance();
   }
   
   /**
@@ -84,9 +99,12 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
 
     this.transactionList.splice(index, 1);
     this.dataSource.data = this.transactionList;
-    this.transactionChange.emit(this.transactionList);
-
+    
     this.calculateBalance();
+
+    if (this.balance === 0) {
+      this.transactionChange.emit(this.transactionList);
+    }
   }
 
   /**

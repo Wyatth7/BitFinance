@@ -13,11 +13,11 @@
         </div>
 
         <h2>Double Entry</h2>
-        <app-debit-credit-account-form></app-debit-credit-account-form>
+        <app-debit-credit-account-form [shouldReset$]="shouldReset$" (transactionChange)="transactions = $event"></app-debit-credit-account-form>
     </form>
 
     <div class="upload-button">
-        <app-upload ></app-upload>
+        <app-upload [shouldReset$]="shouldReset$" (selectedFilesChange)="files = $event"></app-upload>
     </div>
 
 </mat-dialog-content>
