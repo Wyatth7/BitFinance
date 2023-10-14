@@ -9,6 +9,7 @@ import { JournalApprovalType } from 'src/app/shared/enums/journals/journal-entry
 import { EntryListResponseDto } from 'src/app/shared/models/journal/dto/entry-list-response-dto';
 import { JournalEntryModel } from 'src/app/shared/models/journal/journal-entry-model';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
+import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { JournalService } from 'src/app/shared/services/journal/journal.service';
 
 @Component({
@@ -17,11 +18,12 @@ import { JournalService } from 'src/app/shared/services/journal/journal.service'
   styleUrls: ['./view.component.scss']
 })
 export class ViewComponent implements OnInit, OnDestroy {
-  filter: string | undefined = '';
   journalStatus: JournalApprovalType = JournalApprovalType.approved;
   title = 'Approved';
+  
+  filter: string | undefined = '';
   journalReponse?: EntryListResponseDto;
-  journalList?: JournalEntryModel[];
+  journalList?: JournalEntryModel[] = [];
 
   displayedColumns = ['actions', 'entryName', 'entryDescription', 'debit', 'credit', 'balance', 'date']
 
@@ -29,6 +31,7 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   constructor(
     private journalService: JournalService,
+    public enumValues: GetEnumValueService,
     private dialogService: DialogService,
     private router: Router,
     private route: ActivatedRoute

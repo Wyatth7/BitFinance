@@ -30,7 +30,9 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
   @ContentChildren(MatSort) sort!: QueryList<MatSort>;
 
   ngOnInit(): void {
-      this.displayedColumns.unshift('select')
+      // this.displayedColumns.unshift('select')
+      console.log(this.displayedColumns);
+      
       this.dataSource = new MatTableDataSource(this.tableData);
   }
 
@@ -59,9 +61,11 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
     this.sort.forEach(sort => {
       this.dataSource.sort = sort
     })
+    console.log(this.columnDefs);
 
     this.columnDefs
       .forEach(columnDef => {
+        
         this.table.addColumnDef(columnDef)
       });
   }

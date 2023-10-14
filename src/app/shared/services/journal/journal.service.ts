@@ -8,6 +8,8 @@ import { FileMetaDataModel } from '../../models/files/file-meta-data-model';
 import { JournalEntryModel } from '../../models/journal/journal-entry-model';
 import { Subject } from 'rxjs';
 import { EntryListResponseDto } from '../../models/journal/dto/entry-list-response-dto';
+import { LoaderService } from '../component-services/loader.service';
+import { DialogService } from '../dialogs/dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,12 @@ export class JournalService {
 
   constructor(
     private functions: Functions,
-    private snackBarService: SnackBarService
+    private loaderService: LoaderService,
+    private snackBarService: SnackBarService,
+    private dialogService: DialogService
   ) { }
 
   async createJournalEntry(journalEntry: JournalEntryBaseModel) {
-
     const createJournalFunction = httpsCallable(this.functions, JournalFunctions.createJournalEntry);
 
     try {
@@ -59,9 +62,12 @@ export class JournalService {
       this.snackBarService.showError('Journal entry creation failed.');
     }
 
+    await this.getJournals();
   }
 
   async getJournals() { 
+    this.loaderService.showLoader('Journal Entries');
+
     const getJournalListFunctions = httpsCallable<null, EntryListResponseDto>(this.functions, JournalFunctions.getJournalList);
 
     try {
@@ -70,8 +76,14 @@ export class JournalService {
       this.jounals$.next(journalList.data);
     } catch (error) {
       console.log(error);
-      
+      this.dialogService.openErrorDialog({
+        title: 'Journal Entry Load Failed',
+        data: 'There was an issue loading journal entries from the server. Refresh the page or try again later if the problem continues.'
+      })
     }
+
+    this.loaderService.stopLoader();
+
   }
 
 }

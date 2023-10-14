@@ -12,24 +12,39 @@
     <ng-container *ngIf="journalList">
 
         <app-table 
-        *ngIf="journalList; else noJournals"
+        *ngIf="journalList.length !== 0; else noJournals"
         [tableData]="journalList" 
         [displayedColumns]="displayedColumns" 
         [filters]="filter"
-        class="accounts-view--list">
+        class="journals-view--list">
             <ng-container matSort>
             
                 <ng-container matColumnDef="actions" >
-                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <th mat-header-cell *matHeaderCellDef>  </th>
                     <td mat-cell *matCellDef="let row"> 
-                        <button
-                        mat-stroked-button
-                        color="primary"
-                        (click)="navigateToView(row.journalId)"
-                        >View</button>
+                        <div class="buttons">
+
+                            <button
+                            *ngIf="journalStatus === enumValues.journalApprovalType.requested"
+                            mat-stroked-button
+                            color="primary"
+                            (click)="navigateToView(row.journalId)"
+                            >Approve</button>
+                            <button
+                            *ngIf="journalStatus === enumValues.journalApprovalType.requested"
+                            mat-stroked-button
+                            color="primary"
+                            (click)="navigateToView(row.journalId)"
+                            >Decline</button>
+                            <button
+                            mat-stroked-button
+                            color="primary"
+                            (click)="navigateToView(row.journalId)"
+                            >View</button>
+                        </div>
                     </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="entryName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                     <td mat-cell *matCellDef="let row"> {{row.entryName | titlecase}} </td>
@@ -66,9 +81,8 @@
 
 <ng-template #noJournals>
     <app-empty-table-info
-        headerText="accounts"
-        buttonText="Create Account"
+        [headerText]="enumValues.journalApprovalTypeString(journalStatus) + ' journal entries'"
+        buttonText="Create Entry"
         [action]="createEntryDialogFn"
-        [requiredActionRoles]="[1]"
     ></app-empty-table-info>
 </ng-template>
