@@ -1,8 +1,8 @@
-import { TransactionEntryListItem } from "./journal-entry-model";
+import { NormalType } from "../../enums/accounts/normal-type";
 
-export interface JournalEntryModel {
-    name: string;
-    description?: string;
-    transactions: TransactionEntryListItem[];
-    files?: File[]
+export interface TransactionEntryListItem {
+    accountName: string;
+    accountId: string;
+    normalType: NormalType;
+    amount: number;
 }

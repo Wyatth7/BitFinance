@@ -5,7 +5,7 @@ import { NormalType } from 'functions/src/shared/enums/accounts/normal-type';
 import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
 import { Subject, Subscription } from 'rxjs';
 import { AccountListItemModel } from 'src/app/shared/models/accounts/account-list/account-list-item-model';
-import { TransactionEntryListItem } from 'src/app/shared/models/journal/journal-entry-model';
+import { TransactionEntryListItem } from 'src/app/shared/models/journal/transaction-entry-model';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 
