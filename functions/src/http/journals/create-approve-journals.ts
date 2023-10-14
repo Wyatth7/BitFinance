@@ -1,7 +1,7 @@
 import { onRequest } from "firebase-functions/v2/https";
 import { verifyToken } from "../../shared/helpers/auth/verify-token";
 import { badRequestResponse, okResponse, unauthorizedResponse } from "../../shared/responses/responses";
-import { CreateJournalEntryDto } from "../../shared/models/journals/create-journal-entry-dto";
+import { CreateJournalEntryDto } from "../../shared/models/journals/dto/create-journal-entry-dto";
 import * as logger from 'firebase-functions/logger';
 import { Transaction } from "../../shared/models/journals/transaction";
 import { JournalEntry } from "../../shared/models/journals/journal-entry";

@@ -1,3 +1,4 @@
 export enum JournalFunctions {
-    createJournalEntry = 'journalOperations-createJournalEntry'
+    createJournalEntry = 'journalOperations-createJournalEntry',
+    getJournalList = 'journals-getJournalList'
 }

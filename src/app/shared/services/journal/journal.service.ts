@@ -3,13 +3,18 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 import { JournalEntryBaseModel } from '../../models/journal/journal-entry-base-model';
 import { SnackBarService } from '../component-services/snack-bar.service';
 import { JournalFunctions } from '../../enums/firebase-functions/journal-functions';
-import { CreateJournalEntryDto } from '../../models/journal/create-journal-entry-dto';
+import { CreateJournalEntryDto } from '../../models/journal/dto/create-journal-entry-dto';
 import { FileMetaDataModel } from '../../models/files/file-meta-data-model';
+import { JournalEntryModel } from '../../models/journal/journal-entry-model';
+import { Subject } from 'rxjs';
+import { EntryListResponseDto } from '../../models/journal/dto/entry-list-response-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JournalService {
+
+  jounals$ = new Subject<EntryListResponseDto>()
 
   constructor(
     private functions: Functions,
@@ -39,8 +44,6 @@ export class JournalService {
         }
       }
 
-      console.log(files);
-      
       const createDto: CreateJournalEntryDto = {
         name: journalEntry.name,
         description: journalEntry.description,
@@ -56,6 +59,19 @@ export class JournalService {
       this.snackBarService.showError('Journal entry creation failed.');
     }
 
+  }
+
+  async getJournals() { 
+    const getJournalListFunctions = httpsCallable<null, EntryListResponseDto>(this.functions, JournalFunctions.getJournalList);
+
+    try {
+      const journalList = await getJournalListFunctions();
+
+      this.jounals$.next(journalList.data);
+    } catch (error) {
+      console.log(error);
+      
+    }
   }
 
 }
