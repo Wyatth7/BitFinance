@@ -1,8 +1,9 @@
+<!--Displays help tabs-->
 <mat-tab-group #tabGroup>
-    <mat-tab label="FAQ">
+    <mat-tab *ngFor="let individualTab of helpTabs" [label]="individualTab.tabLabel">
         <cdk-accordion class="example-accordion">
             <cdk-accordion-item
-              *ngFor="let item of items; let index = index;"
+              *ngFor="let item of individualTab.items; let index = index;"
               #accordionItem="cdkAccordionItem"
               class="example-accordion-item"
               role="button"
@@ -10,30 +11,36 @@
               [attr.id]="'accordion-header-' + index"
               [attr.aria-expanded]="accordionItem.expanded"
               [attr.aria-controls]="'accordion-body-' + index">
-              <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                {{ item }}
-                <span class="example-accordion-item-description">
-                  Click to {{ accordionItem.expanded ? 'close' : 'open' }}
-                </span>
+                    <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                      <!--Displays tab header label-->
+                      {{item.label }}
+                      <span class="example-accordion-item-description">
+                        Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+                      </span>
               </div>
-              <div
-                class="example-accordion-item-body"
-                role="region"
-                [style.display]="accordionItem.expanded ? '' : 'none'"
-                [attr.id]="'accordion-body-' + index"
-                [attr.aria-labelledby]="'accordion-header-' + index">
-                {{postDescript()}}
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
-                excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
-                veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
-              </div>
+                    <div
+                      class="example-accordion-item-body"
+                      role="region"
+                      [style.display]="accordionItem.expanded ? '' : 'none'"
+                      [attr.id]="'accordion-body-' + index"
+                      [attr.aria-labelledby]="'accordion-header-' + index">
+                      <!--Next line displays actual dropdown content/instructions/the nitty-gritty details-->
+                              <li *ngFor="let step of item.content">{{ step }}</li>
+                    </div>
             </cdk-accordion-item>
           </cdk-accordion>
     </mat-tab>
+  </mat-tab-group>
+
+  <!--Practice below here-->
+<!--Practice above here-->
+
+<!--DONT DELETE THIS CODE YET. WORKING ON GETTING ROLE GUARDING IN PLACE FOR THE CODE ABOVE BUT NOT SURE IT WILL WORK
+
     <mat-tab label="User Help">
          <cdk-accordion class="example-accordion">
             <cdk-accordion-item
-              *ngFor="let item of items; let index = index;"
+              *ngFor="let item of userHelpItems; let index = index;"
               #accordionItem="cdkAccordionItem"
               class="example-accordion-item"
               role="button"
@@ -42,7 +49,7 @@
               [attr.aria-expanded]="accordionItem.expanded"
               [attr.aria-controls]="'accordion-body-' + index">
               <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                {{ item }}
+                {{ item.label }}
                 <span class="example-accordion-item-description">
                   Click to {{ accordionItem.expanded ? 'close' : 'open' }}
                 </span>
@@ -53,17 +60,17 @@
                 [style.display]="accordionItem.expanded ? '' : 'none'"
                 [attr.id]="'accordion-body-' + index"
                 [attr.aria-labelledby]="'accordion-header-' + index">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perferendis
-                excepturi incidunt ipsum deleniti labore, tempore non nam doloribus blanditiis
-                veritatis illo autem iure aliquid ullam rem tenetur deserunt velit culpa?
+This is USER HELP text, but it changes
               </div>
             </cdk-accordion-item>
           </cdk-accordion>
     </mat-tab>
+
+
     <mat-tab label="Accounts Help">
         <cdk-accordion class="example-accordion">
             <cdk-accordion-item
-              *ngFor="let item of items; let index = index;"
+              *ngFor="let item of accountsHelpItems; let index = index;"
               #accordionItem="cdkAccordionItem"
               class="example-accordion-item"
               role="button"
@@ -72,7 +79,7 @@
               [attr.aria-expanded]="accordionItem.expanded"
               [attr.aria-controls]="'accordion-body-' + index">
               <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
-                {{ item }}
+                {{ item.label }}
                 <span class="example-accordion-item-description">
                   Click to {{ accordionItem.expanded ? 'close' : 'open' }}
                 </span>
@@ -91,4 +98,4 @@
           </cdk-accordion>
     </mat-tab>
 </mat-tab-group>
-  
+-->
