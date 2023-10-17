@@ -46,8 +46,6 @@ export class SingleViewComponent implements OnInit{
 
       const accountId = this.route.snapshot.url[0].path;
       this.account = await this.accountService.getAccount(accountId);
-      console.log(this.account);
-      
   }
 
   async executeEdit(editAccountData: CreateAccountForm) {

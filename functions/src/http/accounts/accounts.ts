@@ -39,8 +39,6 @@ export const getAllAccounts = onRequest(
 
                     switch(accountModel.accountType) {
                         case AccountType.asset:
-                            console.log(accountModel.balance);
-                            
                             balances.asset += accountModel.balance
                             break;
                         case AccountType.liability:

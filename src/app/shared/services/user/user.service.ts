@@ -10,6 +10,7 @@ import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
 import { SnackBarService } from '../component-services/snack-bar.service';
 import { Subject } from 'rxjs';
+import { ForgotPasswordForm } from '../../models/users/forgot-password-form';
 
 @Injectable({
   providedIn: 'root'
@@ -131,7 +132,6 @@ export class UserService {
       this.users$.next(this._users);
       
     } catch (error) {
-      console.log(error);
       this.dialogService.openErrorDialog({title: 'User Load Failed', data: 'There was an issue retrieving users from the server. Please refresh the page or try again later.'})
       this.loaderService.stopLoader();
     }
@@ -160,8 +160,6 @@ export class UserService {
   updateUserStoreSuspension(userId: string, start?: Date, end?: Date) {
     const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
 
-    console.log(userIndex);
-    
     if (!userIndex || !this._users) return;
 
     
@@ -186,8 +184,6 @@ export class UserService {
   updateUserActivationStore(userId: string) {
     const userIndex = this._users?.acceptedUsers.findIndex(user => user.uid === userId);
 
-    console.log(userIndex);
-    
     if (userIndex! < 0 || !this._users) {
       return;
     }
@@ -216,8 +212,6 @@ export class UserService {
       return true;
       
     } catch (error) {
-      console.log(error);
-
       this.renderSnackBar('User suspension failed', false);
 
       return false;
@@ -244,8 +238,6 @@ export class UserService {
       return true;
 
     } catch(error) {
-      console.log(error);
-
       this.renderSnackBar('User unsuspension failed', false);
 
       return false;
@@ -270,13 +262,12 @@ export class UserService {
 
       return true;
     } catch (error) {
-      console.log(error);
-
       this.renderSnackBar('User activation toggle failed', false);
 
       return false;
     }
   }
+
 
   /**
    * Checks if user is currently suspended
