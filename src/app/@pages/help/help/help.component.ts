@@ -3,6 +3,9 @@ import { PageIcon } from 'src/app/shared/enums/page-icon';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 import { MatChipsModule} from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatExpansionPanel } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-help',
@@ -86,7 +89,7 @@ export class HelpComponent implements OnInit {
 
   expandedIndex = 0;
 
-  constructor(private topNavService: TopNavService) {}
+  constructor(private topNavService: TopNavService, public authService: AuthenticationService) {}
 
   ngOnInit(): void {
     this.topNavService.setTopNav({
