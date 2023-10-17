@@ -1,45 +1,55 @@
-<mat-tab-group>
-    <mat-tab *ngFor="let individualTab of helpTabs" [label]="individualTab.tabLabel">
-        <mat-accordion>
-            <mat-expansion-panel *ngFor="let item of individualTab.items;">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        {{item.label}}
-                    </mat-panel-title>
-                    <mat-panel-description>
+<div class="help">
+
+    <mat-tab-group class="tabs">
+        <mat-tab *ngFor="let individualTab of helpTabs" [label]="individualTab.tabLabel">
+            <mat-card>
+                <mat-card-content>
+                    
+                    <mat-accordion>
+                        <mat-expansion-panel *ngFor="let item of individualTab.items; first as isFirst" [expanded]="isFirst">
+                            <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{item.label}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-card class="help-steps" *ngFor="let content of item.content">
+                            <mat-card-header></mat-card-header>
+                            <mat-card-content>{{content}}</mat-card-content>
+                        </mat-card>
                         
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <mat-card class="help-steps" *ngFor="let content of item.content">
-                    <mat-card-header></mat-card-header>
-                    <mat-card-content>{{content}}</mat-card-content>
-                </mat-card>
-
-            </mat-expansion-panel>
-        </mat-accordion>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </mat-card-content>
+        </mat-card>
     </mat-tab>
-
-    <mat-tab label="User Help" *ngIf="authService.user!.role === 1">
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Adding Users
-                    </mat-panel-title>
-                    <mat-panel-description>
     
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <mat-card class="help-steps">
-                    <mat-card-header></mat-card-header>
-                    <mat-card-content>Step 1: Click the "View Users" button under the "Users" section of the home page</mat-card-content>
-                </mat-card>
-                <mat-card class="help-steps">
-                    <mat-card-header></mat-card-header>
-                    <mat-card-content>Step 2: Click the pink “Add User” icon at the top of the page</mat-card-content>
-                </mat-card>
-                <mat-card class="help-steps">
-                    <mat-card-header></mat-card-header>
+    <mat-tab label="User Help" *ngIf="authService.user!.role === 1">
+        <mat-card>
+            <mat-card-content>
+                
+                <mat-accordion>
+                    <mat-expansion-panel expanded>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Adding Users
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <mat-card class="help-steps">
+                            <mat-card-header></mat-card-header>
+                            <mat-card-content>Step 1: Click the "View Users" button under the "Users" section of the home page</mat-card-content>
+                        </mat-card>
+                        <mat-card class="help-steps">
+                            <mat-card-header></mat-card-header>
+                            <mat-card-content>Step 2: Click the pink “Add User” icon at the top of the page</mat-card-content>
+                        </mat-card>
+                        <mat-card class="help-steps">
+                            <mat-card-header></mat-card-header>
                     <mat-card-content>Step 3: Fill out the “Create User” form</mat-card-content>
                 </mat-card>
                 <mat-card class="help-steps">
@@ -47,14 +57,14 @@
                     <mat-card-content>Step 4: Click “Create” at the bottom of the page</mat-card-content>
                 </mat-card>
             </mat-expansion-panel>
-
+            
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Editing Users
                     </mat-panel-title>
                     <mat-panel-description>
-    
+                        
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-card class="help-steps">
@@ -74,14 +84,14 @@
                     <mat-card-content>Step 4: Click "Update" to apply changes</mat-card-content>
                 </mat-card>
             </mat-expansion-panel>
-
+            
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         Activate or Deactivate Users
                     </mat-panel-title>
                     <mat-panel-description>
-    
+                        
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-card class="help-steps">
@@ -102,6 +112,10 @@
                 </mat-card>
             </mat-expansion-panel>
         </mat-accordion>
-    </mat-tab>
+    </mat-card-content>
+</mat-card>
+</mat-tab>
 
 </mat-tab-group>
+
+</div>
