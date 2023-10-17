@@ -6,6 +6,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { MatAccordion } from '@angular/material/expansion';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { MatTree } from '@angular/material/tree';
 
 @Component({
   selector: 'app-help',
@@ -30,7 +31,49 @@ export class HelpComponent implements OnInit {
                     ] },
                 ]
     },
+    //Accounts help info
+    {
+      tabLabel: 'Accounts Help',
+      items: [
+        { label: 'Creating a New Account', 
+          content: [
+            'Step 1: Click the "View Accounts" button under the "Chart of Accounts" section of the home page',
+            'Step 2: Click "Create Account"',
+            'Step 3: Fill out the "Create Account" form',
+            'Step 4: Click "Create Account"',
+            'The new account will be displayed in the "Chart of Accounts" page.'
+          ] },
+        { label: 'Editing an Account', 
+          content: [
+            'Step 1: Click the "View Accounts" button under the "Chart of Accounts" section of the home page',
+            'Step 2: Click the "View" button next to the name of the account you"d like to edit',
+            'Step 3: Click the "Options" button at the top of the page, then click "Edit"',
+            'Step 4: The "Edit Account" form will appear. Make any desired changes, then click "Submit"',
+            'Any changes made will be viewable from the "Chart of Accounts" page'
+          ] },
+      ]
+    }
+  ];
+
+  expandedIndex = 0;
+
+  constructor(private topNavService: TopNavService, public authService: AuthenticationService) {}
+
+  ngOnInit(): void {
+    this.topNavService.setTopNav({
+      topNavHeader: 'Help',
+      topNavIcon: PageIcon.help.toString()
+    });
+  }
+
+  postDescript(): string{
+    return "Bruh Im chanign this form this function in TS"
+  }
+}
+
     //User help info
+    //Commented this out and hardcoded it into the html
+    /*
     {
       tabLabel: 'User Help',
       items: [
@@ -61,44 +104,4 @@ export class HelpComponent implements OnInit {
         ] },
       ]
     },
-    //Accounts help info
-    {
-      tabLabel: 'Accounts Help',
-      items: [
-        { label: 'Creating a New Account', 
-          content: [
-            'Step 1: Click the "View Accounts" button under the "Chart of Accounts" section of the home page',
-            'Step 2: Click "Create Account"',
-            'Step 3: Fill out the "Create Account" form',
-            'Step 4: Click "Create Account"',
-            '',
-            'The new account will be displayed in the "Chart of Accounts" page.'
-          ] },
-        { label: 'Editing an Account', 
-          content: [
-            'Step 1: Click the "View Accounts" button under the "Chart of Accounts" section of the home page',
-            'Step 2: Click the "View" button next to the name of the account you"d like to edit',
-            'Step 3: Click the "Options" button at the top of the page, then click "Edit"',
-            'Step 4: The "Edit Account" form will appear. Make any desired changes, then click "Submit"',
-            '',
-            'Any changes made will be viewable from the "Chart of Accounts" page'
-          ] },
-      ]
-    }
-  ];
-
-  expandedIndex = 0;
-
-  constructor(private topNavService: TopNavService, public authService: AuthenticationService) {}
-
-  ngOnInit(): void {
-    this.topNavService.setTopNav({
-      topNavHeader: 'Help',
-      topNavIcon: PageIcon.help.toString()
-    });
-  }
-
-  postDescript(): string{
-    return "Bruh Im chanign this form this function in TS"
-  }
-}
+    */

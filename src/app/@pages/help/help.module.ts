@@ -9,7 +9,8 @@ import { AccountsHelpPageComponent } from './subpages/accounts-help-page/account
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatTree, MatTreeModule } from '@angular/material/tree'
 
 
 
@@ -26,7 +27,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatDividerModule,
     CdkAccordionModule,
     SharedModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCardModule,
+    MatTreeModule
   ]
 })
 export class HelpModule { }
