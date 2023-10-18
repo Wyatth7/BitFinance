@@ -7,10 +7,12 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Account Name</mat-label>
                     <input formControlName="accountName" matInput type="text" />
+                    <mat-error>Account name required</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Account #</mat-label>
                     <input formControlName="accountNumber" matInput type="number" />
+                    <mat-error>Account number required</mat-error>
                 </mat-form-field>
             </div>
             <mat-form-field appearance="outline">
@@ -22,12 +24,14 @@
                 cdkAutosizeMinRows="1"
                 cdkAutosizeMaxRows="2"
                 ></textarea>
+                <mat-error>Account description required</mat-error>
             </mat-form-field>
         </ng-container>
         <div class="two-column">
                 <mat-form-field appearance="outline" formGroupName="general">
                     <mat-label>Balance</mat-label>
                     <input formControlName="balance" matInput type="number" />
+                    <mat-error>Account balance required</mat-error>
                 </mat-form-field>
               <mat-form-field appearance="outline" formGroupName="types">
                 <mat-label>Account Type</mat-label>

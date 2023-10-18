@@ -33,7 +33,7 @@
     <mat-divider class="account-tansaction-divider"></mat-divider>
     <div class="journal-entries">
 
-        <app-secondary-top-nav title="Transactions"></app-secondary-top-nav>
+        <app-secondary-top-nav title="Journal Entries"></app-secondary-top-nav>
         <div class="journal-table" *ngIf="journalEntries; else noTransactions">
             <app-table [tableData]="journalEntries" [displayedColumns]="displayedColumns">
                 
@@ -99,8 +99,8 @@
 
 <ng-template #noTransactions>
     <app-empty-table-info
-        headerText="transactions"
-        buttonText="Create Transaction"
+        headerText="journal entries"
+        buttonText="Create Entry"
         [requiredActionRoles]="[1]"
         [action]="openEditModalFn"
     ></app-empty-table-info>
