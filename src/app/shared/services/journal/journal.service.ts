@@ -86,6 +86,18 @@ export class JournalService {
 
   }
 
+  /**
+   * Approves or declines journal entry
+   * @param journalId Id of journal entry
+   * @param shouldAccept Should entry be approved or declined
+   */
+  async acceptDenyJournal(journalId: string, shouldAccept: boolean) {
+
+    const approveDeclineRef = httpsCallable(this.functions, JournalFunctions.approveDeclineJournal);
+
+    await approveDeclineRef({journalId, shouldAccept});
+  }
+
 }
 
 const toBase64 = (file: File) => new Promise((resolve, reject) => {

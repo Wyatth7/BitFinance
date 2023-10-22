@@ -58,6 +58,10 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
   createEntryDialogFn = this.createEntryDialog.bind(this);
 
+  async approveEntry(journalId: string, shouldAccept: boolean) {
+    await this.journalService.acceptDenyJournal(journalId, shouldAccept);
+  }
+
   searchEmitted(value: string | null) {
     this.filter = value || '';
   }

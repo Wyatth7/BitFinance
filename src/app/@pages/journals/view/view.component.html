@@ -28,13 +28,13 @@
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
                             mat-stroked-button
                             color="primary"
-                            (click)="navigateToView(row.journalId)"
+                            (click)="approveEntry(row.journalId, true)"
                             >Approve</button>
                             <button
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
                             mat-stroked-button
                             color="primary"
-                            (click)="navigateToView(row.journalId)"
+                            (click)="approveEntry(row.journalId, false)"
                             >Decline</button>
                             <button
                             mat-stroked-button
