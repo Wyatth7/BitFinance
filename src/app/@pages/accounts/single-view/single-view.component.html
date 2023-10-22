@@ -13,15 +13,18 @@
                 <div class="right-content">
                     <h3>Account <span>#{{ account?.accountNumber }}</span></h3>
                     <h3>Created on <span>{{ account?.createdOn | date:'longDate' }}</span></h3>
-                    <button
-                        class="button-menu"
-                        mat-flat-button
-                        color="primary"
-                        matTooltip="More Options"
-                        [matMenuTriggerFor]="moreOptionsMenu">
-                        <p>Options</p>
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
+                    <app-required-role-view [roles]="[1]">
+
+                        <button
+                            class="button-menu"
+                            mat-flat-button
+                            color="primary"
+                            matTooltip="More Options"
+                            [matMenuTriggerFor]="moreOptionsMenu">
+                            <p>Options</p>
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </app-required-role-view>
                    
                 </div>
             </div>
@@ -33,7 +36,7 @@
     <mat-divider class="account-tansaction-divider"></mat-divider>
     <div class="journal-entries">
 
-        <app-secondary-top-nav title="Transactions"></app-secondary-top-nav>
+        <app-secondary-top-nav title="Journal Entries"></app-secondary-top-nav>
         <div class="journal-table" *ngIf="journalEntries; else noTransactions">
             <app-table [tableData]="journalEntries" [displayedColumns]="displayedColumns">
                 
@@ -99,8 +102,8 @@
 
 <ng-template #noTransactions>
     <app-empty-table-info
-        headerText="transactions"
-        buttonText="Create Transaction"
+        headerText="journal entries"
+        buttonText="Create Entry"
         [requiredActionRoles]="[1]"
         [action]="openCreateEntryModalFn"
     ></app-empty-table-info>
