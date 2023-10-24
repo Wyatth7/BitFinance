@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
+import { AccountModel } from 'src/app/shared/models/accounts/account-model';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';

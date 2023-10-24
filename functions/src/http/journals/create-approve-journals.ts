@@ -130,12 +130,13 @@ const updateAccounts = async (journalEntry: JournalEntry) => {
         
         // update balances for account
         const newBalance = await calculateAccountBalance(account, amounts);
+        const entryCount = account.entries + 1;
 
         batch.update(
             admin.firestore()
                 .collection(FirestoreCollections.accounts)
                 .doc(account.accountId),
-            {balance: newBalance}
+            {balance: newBalance, entries: entryCount}
         )
 
         // create account level journal data

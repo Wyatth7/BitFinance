@@ -13,4 +13,5 @@ export interface AccountModel {
     accountId: string;
     createdOn: string;
     isActive: boolean;
+    entries: number;
 }

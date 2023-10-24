@@ -56,7 +56,7 @@
             
             <ng-container matColumnDef="entries">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Entries </th>
-                <td mat-cell *matCellDef="let row"> {{0 | number}} </td>
+                <td mat-cell *matCellDef="let row"> {{row.entries | number}} </td>
             </ng-container>
             
             <ng-container matColumnDef="accountNumber" >
