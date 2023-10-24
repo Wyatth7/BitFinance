@@ -8,13 +8,15 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { SingleViewComponent } from './single-view/single-view.component';
 
 
 
 @NgModule({
   declarations: [
     JournalsComponent,
-    ViewComponent
+    ViewComponent,
+    SingleViewComponent
   ],
   imports: [
     CommonModule,
