@@ -44,15 +44,46 @@ export class Emailer {
         const adminEmails = usersSnapshot.docs
         .map(user => (user.data() as UserWithIdModel).email);
         
-         // send message to each user.
-     
-         const mailData: EmailMessage = {
-             to: adminEmails,
-             from: environment.systemEmail,
-             subject,
-             text: message
-         };
-     
-         await sgMail.send(mailData, true);
+         // send message to each admin user.
+        await this.sendEmailToList(adminEmails, subject, message);
+    }
+
+    /**
+     * Sends an email to admins and managers
+     * @param subject Subject of email 
+     * @param message Message to send
+     */
+    static async sendEmailToAdminManager(subject: string, message: string) {
+        // get all emails of managers and admins
+        const userSnapshot = await admin.firestore()
+            .collection(FirestoreCollections.users.toString())
+            .where('role', 'in', [UserRoleType.administrator, UserRoleType.manager])
+            .get();
+
+        if (userSnapshot.empty) return;
+
+        const emails = userSnapshot.docs
+            .map(user => (user.data() as UserWithIdModel).email);
+
+        await this.sendEmailToList(emails, subject, message);
+    }
+
+    /**
+     * Emails a list of users
+     * @param toList List of users to email
+     * @param subject Subject of email
+     * @param message Message to email
+     */
+    private static async sendEmailToList(toList: string[], subject: string, message: string) {
+
+        const maildata: EmailMessage = {
+            to: toList,
+            from: environment.systemEmail,
+            subject,
+            text: message
+        };
+
+        await sgMail.send(maildata, true);
+
     }
 }
