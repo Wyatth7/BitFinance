@@ -9,6 +9,8 @@ import { BalanceTotalsModel } from "../../shared/models/accounts/responses/balan
 import { AccountType } from "../../shared/models/enums/account-type";
 import { AccountListResponseModel } from "../../shared/models/accounts/responses/account-list-response-model";
 import { AccountModel } from "../../shared/models/accounts/account-model";
+import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
+import { AccountEntry } from "../../shared/models/journals/account-journal";
 
 export const getAllAccounts = onRequest(
     {cors: true},
@@ -92,18 +94,23 @@ export const getAccount = onRequest(
 
         try {
             
+            const accountRef = admin
+                .firestore()
+                .collection(FirestoreCollections.accounts)
+                .doc(accountId);
+
             // get account
-            const accountSnapshot = await admin
-            .firestore()
-            .collection(FirestoreCollections.accounts)
-            .doc(accountId)
-            .get();
+            const accountSnapshot = await accountRef.get();
+            const accountEntrySnapshot = await accountRef
+                .collection(FirebaseSubCollections.accountJournal)
+                .get();
 
             if (!accountSnapshot.exists) return badRequestResponse(`Could not find an account with ID [${accountId}]`, res);
 
-            const account = accountSnapshot.data();
+            const account = accountSnapshot.data() as AccountModel;
+            const entries = accountEntrySnapshot.docs.map(entry => entry.data() as AccountEntry)
 
-            return okResponse(account, 200, res);
+            return okResponse({...account, entryList: entries}, 200, res);
         } catch (error) {
             logger.error(error);
             return badRequestResponse('An error occured while getting the account, and the account could not be send.', res);

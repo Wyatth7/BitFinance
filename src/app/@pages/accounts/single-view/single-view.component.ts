@@ -24,9 +24,8 @@ interface JournalEntry {
 })
 export class SingleViewComponent implements OnInit{
   account?: AccountModel;
-  journalEntries?: JournalEntry[];
 
-  displayedColumns = ['actions', 'description', 'transactionType', 'amount', 'createdBy','date']
+  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date']
 
   dateCreated = new Date();
 
