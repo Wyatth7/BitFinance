@@ -13,6 +13,7 @@ import { EntryActionDto } from "../../shared/models/journals/dto/entry-action-dt
 import { AccountEntry } from "../../shared/models/journals/account-journal";
 import { NormalType } from "../../shared/enums/accounts/normal-type";
 import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
+import { AccountModel } from "../../shared/models/accounts/account-model";
 
 export const createJournalEntry = onRequest(
     {cors: true},
@@ -33,7 +34,8 @@ export const createJournalEntry = onRequest(
             const transactions: Transaction[] = dto.transactions.map(transaction => (
                 {
                     amount: transaction.amount,
-                    normalType: transaction.normalType
+                    normalType: transaction.normalType,
+                    accountId: transaction.accountId
                 }
             ));
             
@@ -112,6 +114,8 @@ const addJournalToAccounts = async (journalEntry: JournalEntry) => {
         debit: 0,
         balance: 0
     };
+
+
     journalEntry.transactions.forEach(transaction => {
         if (transaction.normalType === NormalType.credit){
             amounts.credit += transaction.amount;
@@ -124,6 +128,78 @@ const addJournalToAccounts = async (journalEntry: JournalEntry) => {
         amounts.debit += transaction.amount;
     });
 
+    const batch = admin.firestore().batch();
+
+    // update balances for account
+    await updateAccountBalances(journalEntry.transactions, journalEntry.accounts, batch);
+
+    // Adds entry to accounts
+    await updateAccounts(journalEntry, amounts, batch);
+
+    await batch.commit();
+
+}
+
+/**
+ * 
+ * @param transactions Array of transactions in entry
+ * @param batch firestore batch
+ */
+const updateAccountBalances = async (transactions: Transaction[], accounts: string[], batch: admin.firestore.WriteBatch) => {
+    for (const accountId of accounts) {
+        
+        const accountRef = admin.firestore()
+        .collection(FirestoreCollections.accounts)
+        .doc(accountId);
+
+        const accountSnapshot = await accountRef.get();
+
+        if (!accountSnapshot.exists) throw new Error('Account does not exist.');
+
+        const account = accountSnapshot.data() as AccountModel;
+
+        // get transactions related to account
+        const transactionsForAccount = transactions
+            .filter(transaction => transaction.accountId === accountId)
+
+        // sum all debits and credits
+        const amounts = {
+            debit: 0,
+            credit: 0
+        };
+
+        transactionsForAccount.forEach(transaction => {
+            if (transaction.normalType === NormalType.credit){
+                amounts.credit += transaction.amount;
+    
+                return;
+            }
+    
+            amounts.debit += transaction.amount;
+        })
+
+        // if account normal side is debit, add debits, subtract credits from balance
+        // else, subtract debits, add credits from balance
+        if (account.normalType === NormalType.debit) {
+            account.balance -= amounts.credit;
+            account.balance += amounts.debit;
+        } else {
+            account.balance += amounts.credit;
+            account.balance -= amounts.debit;
+        }
+
+        // update account balance
+        batch.update(accountRef, {balance: account.balance})
+
+    }
+}
+
+/**
+ * Adds journal to accounts
+ * @param journalEntry Journal entry 
+ * @param amounts Total journal balance, debits and credits
+ */
+const updateAccounts = async (journalEntry: JournalEntry, amounts: {balance: number, debit: number, credit: number}, batch: admin.firestore.WriteBatch) => {
     // create account level journal data
     const accountJournal: AccountEntry = {
         journalId: journalEntry.journalId,
@@ -134,24 +210,19 @@ const addJournalToAccounts = async (journalEntry: JournalEntry) => {
         credit: amounts.credit,
         creationDate: journalEntry.creationDate
     }
-
-    // add journal to sub-collection
-
-    const batch = admin.firestore().batch();
-
-    journalEntry.accounts
-        .forEach(accountId => {
-            const guid = Guid.createGuid();
-            batch.create(
-                admin.firestore()
-                    .collection(FirestoreCollections.accounts)
-                    .doc(accountId)
-                    .collection(FirebaseSubCollections.accountJournal)
-                    .doc(guid),
-            accountJournal
-            );
-    });
-
-    await batch.commit();
     
+    // add journal to sub-collection
+    for (const accountId of journalEntry.accounts) {
+        // add entry to linked accounts
+        const guid = Guid.createGuid();
+        batch.create(
+            admin.firestore()
+                .collection(FirestoreCollections.accounts)
+                .doc(accountId)
+                .collection(FirebaseSubCollections.accountJournal)
+                .doc(guid),
+        accountJournal
+        );
+    }
+
 }
