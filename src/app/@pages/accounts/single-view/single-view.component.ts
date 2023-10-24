@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
+import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
@@ -39,9 +40,9 @@ export class SingleViewComponent implements OnInit{
 
   async ngOnInit(): Promise<void> {
       this.topNavService.setTopNavAction({
-        tooltip: 'Add Transaction',
+        tooltip: 'Create an Entry',
         icon: 'add_card',
-        action: () => {}
+        action: () => this.openCreateEntryModalFn()
       })
 
       const accountId = this.route.snapshot.url[0].path;
@@ -89,6 +90,14 @@ export class SingleViewComponent implements OnInit{
     );
   }
   openEditModalFn = this.openEditModal.bind(this);
+
+  openCreateEntryModal() {
+    this.dialogService.open(CreateJournalEntryDialogComponent, {
+      title: 'Create An Entry',
+      data: ''
+    })
+  }
+  openCreateEntryModalFn = this.openCreateEntryModal.bind(this);
 
   // journalEntries: JournalEntry[] = [
   //   {

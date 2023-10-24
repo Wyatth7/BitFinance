@@ -1,0 +1,33 @@
+<h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
+<mat-dialog-content>
+    <form class="entry-create-form" [formGroup]="form">
+        <div class="form-col-2" >
+            <mat-form-field appearance="outline">
+                <mat-label>Entry Name</mat-label>
+                <input matInput formControlName="entryName" type="text" />
+            </mat-form-field>
+            <mat-form-field appearance="outline" hideRequiredMarker>
+                <mat-label>Description (optional)</mat-label>
+                <input matInput formControlName="entryDescription" type="text" />
+            </mat-form-field>
+        </div>
+
+        <h2>Double Entry</h2>
+        <app-debit-credit-account-form [shouldReset$]="shouldReset$" (transactionChange)="transactions = $event"></app-debit-credit-account-form>
+    </form>
+
+    <div class="upload-button">
+        <app-upload [shouldReset$]="shouldReset$" (selectedFilesChange)="files = $event"></app-upload>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button color="warn" (click)="resetForm()">Reset</button>
+    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <app-spinner-button 
+      [spin]="loading" 
+      text="Submit" 
+      (click)="executeAction()" 
+      [disabled]="form.invalid || !transactionsValid"
+    ></app-spinner-button>
+</mat-dialog-actions>

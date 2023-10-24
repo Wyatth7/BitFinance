@@ -23,6 +23,12 @@ const routes: Routes = [
       canActivate: [authGuardChild]
   },
   {
+    path: 'journal',
+    loadChildren: () => import('./@pages/journals/journals.module')
+      .then(j => j.JournalsModule),
+      canActivate: [authGuardChild]
+  },
+  {
     path: 'help',
     loadChildren: () => import('./@pages/help/help.module')
       .then(h => h.HelpModule),

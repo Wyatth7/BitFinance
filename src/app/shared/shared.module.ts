@@ -28,7 +28,13 @@ import { CreateAccountDialogComponent } from './components/dialogs/create-accoun
 import { MatMenuModule } from '@angular/material/menu';
 import { InfoPageHeaderComponent } from './components/info-page-header/info-page-header.component';
 import { EmptyTableInfoComponent } from './components/tables/empty-table-info/empty-table-info.component';
-
+import { EmailUserComponent } from './components/dialogs/email-user/email-user.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { CreateJournalEntryDialogComponent } from './components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
+import { DebitCreditAccountFormComponent } from './components/dialogs/create-journal-entry-dialog/debit-credit-account-form/debit-credit-account-form.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { UploadComponent } from './components/upload/upload.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -47,6 +53,10 @@ import { EmptyTableInfoComponent } from './components/tables/empty-table-info/em
     CreateAccountDialogComponent,
     InfoPageHeaderComponent,
     EmptyTableInfoComponent,
+    EmailUserComponent,
+    CreateJournalEntryDialogComponent,
+    DebitCreditAccountFormComponent,
+    UploadComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +76,10 @@ import { EmptyTableInfoComponent } from './components/tables/empty-table-info/em
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule
+    MatMenuModule,
+    MatAutocompleteModule,
+    MatTooltipModule,
+    MatListModule
   ],
   exports: [
     SecondaryTopNavComponent,
@@ -80,7 +93,8 @@ import { EmptyTableInfoComponent } from './components/tables/empty-table-info/em
     ContentLoadingScreenComponent,
     ValueTextComponent,
     InfoPageHeaderComponent,
-    EmptyTableInfoComponent
+    EmptyTableInfoComponent,
+    EmailUserComponent
   ],
   providers: [
     TitleCasePipe
