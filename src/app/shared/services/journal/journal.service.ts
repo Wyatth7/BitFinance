@@ -96,6 +96,8 @@ export class JournalService {
     const approveDeclineRef = httpsCallable(this.functions, JournalFunctions.approveDeclineJournal);
 
     await approveDeclineRef({journalId, shouldAccept});
+
+    await this.getJournals();
   }
 
 }

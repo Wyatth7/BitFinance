@@ -14,7 +14,7 @@
                     <mat-option 
                         *ngFor="let account of accountList"
                         [value]="account.accountId"
-                    >{{ account.accountName }}</mat-option>
+                    >{{ account.accountName }} {{ account.balance | currency }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="entry-inputs--field" appearance="outline">

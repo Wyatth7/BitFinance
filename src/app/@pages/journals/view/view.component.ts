@@ -41,7 +41,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.journalListSubscription = this.journalService.jounals$
       .subscribe(entries => {
         this.journalReponse = entries;
-        this.setEntryTableData(JournalApprovalType.approved);
+        this.setEntryTableData(this.journalStatus);
       });
 
       await this.journalService.getJournals();
