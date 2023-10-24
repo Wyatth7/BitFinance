@@ -9,6 +9,12 @@
                     [focusColor]="getEnum.color.green"
                 ></app-number-text> 
             </div>
+            <div class="chips">
+                <mat-chip-listbox #chipList (change)="change($event)">
+                    <mat-chip-option [value]="true" matTooltip="View Entry List">View Entry list</mat-chip-option>
+                    <mat-chip-option [value]="false" matTooltip="View Event Log">View Event Log</mat-chip-option>
+                </mat-chip-listbox>
+            </div>
             <div class="top-data--right">
                 <div class="right-content">
                     <h3>Account <span>#{{ account?.accountNumber }}</span></h3>
@@ -36,8 +42,8 @@
     <mat-divider class="account-tansaction-divider"></mat-divider>
     <div class="journal-entries">
 
-        <app-secondary-top-nav title="Journal Entries"></app-secondary-top-nav>
-        <ng-container *ngIf="account" >
+        <app-secondary-top-nav title={{tableTitle}}></app-secondary-top-nav>
+        <ng-container *ngIf="account && renderEntryList"  >
 
             <div class="journal-table" *ngIf="account.entryList.length > 0; else noTransactions">
                 <app-table [tableData]="account.entryList" [displayedColumns]="displayedColumns">

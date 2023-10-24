@@ -8,6 +8,8 @@ import { AccountService } from 'src/app/shared/services/accounts/account.service
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
+
 
 interface JournalEntry {
   date: Date;
@@ -28,6 +30,9 @@ export class SingleViewComponent implements OnInit{
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date']
 
   dateCreated = new Date();
+
+  renderEntryList:boolean = true;
+  tableTitle = 'Journal Entries'
 
   constructor(
       private accountService: AccountService,
@@ -63,6 +68,27 @@ export class SingleViewComponent implements OnInit{
       ? !this.account.isActive 
       : this.account.isActive 
   }
+
+  /* Current Work */
+  change($event: MatChipListboxChange): void {
+    console.log('Here');
+    if($event.value === undefined){
+      this.renderEntryList = true;
+      this.tableTitle = "Journal Entries"
+    }
+
+    this.renderEntryList = $event.value;
+
+    if(this.renderEntryList){
+      this.tableTitle = 'Journal Entries';
+      return;
+    }
+
+    this.tableTitle = 'Event Log';
+
+
+    }
+  /*^^^^ Current Work ^^^^*/
 
   openEditModal(){
     const formData: CreateAccountForm = {
