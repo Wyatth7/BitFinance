@@ -94,7 +94,7 @@ export const approveRejectDeny = onRequest(
 
             const journal = (await journalRef.get()).data() as JournalEntry;
 
-            await addJournalToAccounts(journal);
+            await updateAccounts(journal);
             
             return okResponse({}, 200, res);
         } catch (error) {
@@ -108,76 +108,70 @@ export const approveRejectDeny = onRequest(
  * Adds journal entry data to each account 
  * @param journalEntry Journal entry data 
  */
-const addJournalToAccounts = async (journalEntry: JournalEntry) => {
-    const amounts = {
-        credit: 0,
-        debit: 0,
-        balance: 0
-    };
+const updateAccounts = async (journalEntry: JournalEntry) => {
+    const accountSnapshot = await admin.firestore()
+        .collection(FirestoreCollections.accounts)
+        .where('accountId', 'in', journalEntry.accounts)
+        .get();
 
+    if (accountSnapshot.empty) throw new Error('Account list empty.');
 
-    journalEntry.transactions.forEach(transaction => {
-        if (transaction.normalType === NormalType.credit){
-            amounts.credit += transaction.amount;
-            amounts.balance -= transaction.amount
-
-            return;
-        }
-
-        amounts.balance += transaction.amount;
-        amounts.debit += transaction.amount;
-    });
+    const accounts = accountSnapshot.docs.map(account => account.data() as AccountModel);
 
     const batch = admin.firestore().batch();
 
-    // update balances for account
-    await updateAccountBalances(journalEntry.transactions, journalEntry.accounts, batch);
+    for (const account of accounts) {
+        // get transactions related to account
+        const transactionsForAccount = journalEntry.transactions
+            .filter(transaction => transaction.accountId === account.accountId)
+    
+        // sum all debits and credits
+        const amounts = getTransactionAmounts(transactionsForAccount);
+        
+        // update balances for account
+        const newBalance = await calculateAccountBalance(account, amounts);
 
-    // Adds entry to accounts
-    await updateAccounts(journalEntry, amounts, batch);
+        batch.update(
+            admin.firestore()
+                .collection(FirestoreCollections.accounts)
+                .doc(account.accountId),
+            {balance: newBalance}
+        )
+
+        // create account level journal data
+        const accountJournal: AccountEntry = {
+            journalId: journalEntry.journalId,
+            entryName: journalEntry.entryName,
+            debit: amounts.debit,
+            credit: amounts.credit,
+            creationDate: journalEntry.creationDate
+        }
+
+        // add entry to account
+        const guid = Guid.createGuid();
+        batch.create(
+            admin.firestore()
+                .collection(FirestoreCollections.accounts)
+                .doc(account.accountId)
+                .collection(FirebaseSubCollections.accountJournal)
+                .doc(guid),
+        accountJournal
+        );
+    }
 
     await batch.commit();
-
 }
 
 /**
- * 
- * @param transactions Array of transactions in entry
- * @param batch firestore batch
+ * Calcuates the total of an account
+ * @param account Account model
+ * @param amounts credit and debit amounts
+ * @returns balance of an account
  */
-const updateAccountBalances = async (transactions: Transaction[], accounts: string[], batch: admin.firestore.WriteBatch) => {
-    for (const accountId of accounts) {
-        
-        const accountRef = admin.firestore()
-        .collection(FirestoreCollections.accounts)
-        .doc(accountId);
-
-        const accountSnapshot = await accountRef.get();
-
-        if (!accountSnapshot.exists) throw new Error('Account does not exist.');
-
-        const account = accountSnapshot.data() as AccountModel;
-
-        // get transactions related to account
-        const transactionsForAccount = transactions
-            .filter(transaction => transaction.accountId === accountId)
-
-        // sum all debits and credits
-        const amounts = {
-            debit: 0,
-            credit: 0
-        };
-
-        transactionsForAccount.forEach(transaction => {
-            if (transaction.normalType === NormalType.credit){
-                amounts.credit += transaction.amount;
-    
-                return;
-            }
-    
-            amounts.debit += transaction.amount;
-        })
-
+const calculateAccountBalance = async (
+    account: AccountModel,
+    amounts: {credit: number, debit: number}
+    ): Promise<number> => {
         // if account normal side is debit, add debits, subtract credits from balance
         // else, subtract debits, add credits from balance
         if (account.normalType === NormalType.debit) {
@@ -189,40 +183,30 @@ const updateAccountBalances = async (transactions: Transaction[], accounts: stri
         }
 
         // update account balance
-        batch.update(accountRef, {balance: account.balance})
-
-    }
+        return account.balance;
 }
 
 /**
- * Adds journal to accounts
- * @param journalEntry Journal entry 
- * @param amounts Total journal balance, debits and credits
+ * Totals the credit and debit amounts of a list of transactions
+ * @param transactions Array of transactions
+ * @returns Amounts object
  */
-const updateAccounts = async (journalEntry: JournalEntry, amounts: {balance: number, debit: number, credit: number}, batch: admin.firestore.WriteBatch) => {
-    // create account level journal data
-    const accountJournal: AccountEntry = {
-        journalId: journalEntry.journalId,
-        entryName: journalEntry.entryName,
-        description: journalEntry.entryDescription,
-        balance: amounts.balance,
-        debit: amounts.debit,
-        credit: amounts.credit,
-        creationDate: journalEntry.creationDate
-    }
-    
-    // add journal to sub-collection
-    for (const accountId of journalEntry.accounts) {
-        // add entry to linked accounts
-        const guid = Guid.createGuid();
-        batch.create(
-            admin.firestore()
-                .collection(FirestoreCollections.accounts)
-                .doc(accountId)
-                .collection(FirebaseSubCollections.accountJournal)
-                .doc(guid),
-        accountJournal
-        );
-    }
+const getTransactionAmounts = (transactions: Transaction[]) => {
+    // sum all debits and credits
+    const amounts = {
+        debit: 0,
+        credit: 0
+    };
 
-}
+    transactions.forEach(transaction => {
+        if (transaction.normalType === NormalType.credit){
+            amounts.credit += transaction.amount;
+
+            return;
+        }
+
+        amounts.debit += transaction.amount;
+    });
+
+    return amounts;
+};
