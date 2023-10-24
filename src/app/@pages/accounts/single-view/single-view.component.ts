@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
@@ -75,6 +75,7 @@ export class SingleViewComponent implements OnInit{
     if($event.value === undefined){
       this.renderEntryList = true;
       this.tableTitle = "Journal Entries"
+      return;
     }
 
     this.renderEntryList = $event.value;
@@ -83,9 +84,9 @@ export class SingleViewComponent implements OnInit{
       this.tableTitle = 'Journal Entries';
       return;
     }
-
-    this.tableTitle = 'Event Log';
-
+    else{
+      this.tableTitle = 'Event Log';
+    }
 
     }
   /*^^^^ Current Work ^^^^*/

@@ -11,7 +11,7 @@
             </div>
             <div class="chips">
                 <mat-chip-listbox #chipList (change)="change($event)">
-                    <mat-chip-option [value]="true" matTooltip="View Entry List">View Entry list</mat-chip-option>
+                    <mat-chip-option [value]="true" matTooltip="View Entry List" selected>View Entry list</mat-chip-option>
                     <mat-chip-option [value]="false" matTooltip="View Event Log">View Event Log</mat-chip-option>
                 </mat-chip-listbox>
             </div>
