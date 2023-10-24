@@ -2,7 +2,7 @@
 
     <app-secondary-top-nav [title]="title + ' Journal Entries'" (searchString)="searchEmitted($event)" searchPlaceholder="Search Accounts">
         <div class="chips">
-            <mat-chip-listbox #chipList (change)="change($event)">
+            <mat-chip-listbox [value]="1"(change)="change($event)">
                 <mat-chip-option [value]="1" matTooltip="View Approved Journals" selected>Approved ({{journalReponse?.approved?.length || 0}})</mat-chip-option>
                 <mat-chip-option [value]="2" matTooltip="View Requested Journals">Requested ({{journalReponse?.requested?.length || 0}})</mat-chip-option>
                 <mat-chip-option [value]="4" matTooltip="View Declined Journals">Declined ({{journalReponse?.declined?.length || 0}})</mat-chip-option>
@@ -10,9 +10,8 @@
         </div>
     </app-secondary-top-nav>
     <ng-container *ngIf="journalList">
-
         <app-table 
-        *ngIf="journalList.length !== 0; else noJournals"
+        *ngIf="journalList.length > 0; else noJournals"
         [tableData]="journalList" 
         [displayedColumns]="displayedColumns" 
         [filters]="filter"

@@ -40,7 +40,8 @@ export class ViewComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.journalListSubscription = this.journalService.jounals$
       .subscribe(entries => {
-        this.journalReponse = entries
+        this.journalReponse = entries;
+        this.setEntryTableData(JournalApprovalType.approved);
       });
 
       await this.journalService.getJournals();
@@ -77,24 +78,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       return;
     }
 
-    switch ($event.value) {
-      case JournalApprovalType.approved:
-        this.journalStatus = JournalApprovalType.approved;
-        this.title = 'Approved';
-        this.journalList = this.journalReponse?.approved || [];
-        break;
-      case JournalApprovalType.requested:
-        this.journalStatus = JournalApprovalType.requested;
-        this.title = 'Requested';
-        this.journalList = this.journalReponse?.requested || [];
-        break;
-      case JournalApprovalType.declined:
-        this.journalStatus = JournalApprovalType.declined;
-        this.title = 'Declined';
-        this.journalList = this.journalReponse?.declined || [];
-        break;
-      default: break;
-    }
+    this.setEntryTableData($event.value);
   }
 
   /**
@@ -130,5 +114,26 @@ export class ViewComponent implements OnInit, OnDestroy {
         : null);
 
     return amount;
+  }
+
+  private setEntryTableData(approvalType: JournalApprovalType){ 
+    switch (approvalType) {
+      case JournalApprovalType.approved:
+        this.journalStatus = JournalApprovalType.approved;
+        this.title = 'Approved';
+        this.journalList = this.journalReponse?.approved || [];
+        break;
+      case JournalApprovalType.requested:
+        this.journalStatus = JournalApprovalType.requested;
+        this.title = 'Requested';
+        this.journalList = this.journalReponse?.requested || [];
+        break;
+      case JournalApprovalType.declined:
+        this.journalStatus = JournalApprovalType.declined;
+        this.title = 'Declined';
+        this.journalList = this.journalReponse?.declined || [];
+        break;
+      default: break;
+    }
   }
 }
