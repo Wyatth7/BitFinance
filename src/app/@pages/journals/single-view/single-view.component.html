@@ -1,1 +1,96 @@
-<p>single-view works!</p>
+<div class="single-view">
+
+    <app-info-page-header title="Initial Investment">
+        <div class="top-data">
+            <div class="top-data--left">
+                <app-number-text
+                    [value]="500"
+                    text="Debits"
+                    [valueType]="getEnum.valuTextType.currency"
+                    [focusColor]="getEnum.color.green"
+                ></app-number-text> 
+                <app-number-text
+                    [value]="500"
+                    text="Credits"
+                    [valueType]="getEnum.valuTextType.currency"
+                    [focusColor]="getEnum.color.red"
+                ></app-number-text> 
+            </div>
+            <div class="top-data--right">
+                <div class="right-content">
+                    <h3>Created on <span>{{ date | date:'longDate' }}</span></h3>
+
+                    <!-- Only show button if entry is requested -->
+                    <!-- <button
+                        class="button-menu"
+                        mat-flat-button
+                        color="primary"
+                        matTooltip="More Options"
+                        [matMenuTriggerFor]="moreOptionsMenu">
+                        <p>Options</p>
+                        <mat-icon>more_vert</mat-icon>
+                    </button> -->
+                   
+                </div>
+            </div>
+        </div>
+
+    </app-info-page-header>
+
+    <div class="single-view--description">
+        <h3>This is an entry description</h3>
+    </div>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <div class="transactions">
+
+        <app-secondary-top-nav [title]="tableViewTitle" [showSearch]="false">
+            <div class="chips" *ngIf="files.length > 0">
+                <mat-chip-listbox [value]="true" (change)="change($event)">
+                    <mat-chip-option matTooltip="View Entry Transactions" [value]="true" selected>Transactions</mat-chip-option>
+                    <mat-chip-option matTooltip="View or Download Files" [value]="false">Attached Files ({{files.length}})</mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+        </app-secondary-top-nav>
+
+        <div class="tables">
+            <app-table [tableData]="entries" [displayedColumns]="displayedColumns">
+                    
+                <ng-container matSort>
+                    
+                    <ng-container matColumnDef="account">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Account </th>
+                        <td mat-cell *matCellDef="let row"> {{row.accountName}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="debit">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Debited </th>
+                        <td mat-cell *matCellDef="let row"> {{row.debit | currency}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="credit">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
+                        <td mat-cell *matCellDef="let row"> {{row.credit | currency }} </td>
+                    </ng-container>
+                    
+                </ng-container>
+                
+            </app-table>
+        </div>
+
+    </div>
+
+</div>
+
+<mat-menu #moreOptionsMenu>
+    <button
+        mat-menu-item
+        color="primary"
+    >
+        Approve
+    </button>
+    <button 
+        mat-menu-item
+        >Decline</button>
+</mat-menu>
