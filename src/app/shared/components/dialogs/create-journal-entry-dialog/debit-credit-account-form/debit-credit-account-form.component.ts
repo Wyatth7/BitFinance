@@ -52,6 +52,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
       if (!reset) return;
       this.transactionList = []
       this.dataSource.data = []
+      this.balance = 0;
       this.resetForm();
     })
   }
