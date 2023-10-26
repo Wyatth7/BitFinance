@@ -1,16 +1,16 @@
-<div class="single-view">
+<div class="single-view" *ngIf="journalEntry">
 
-    <app-info-page-header title="Initial Investment">
+    <app-info-page-header [title]="journalEntry.entryName">
         <div class="top-data">
             <div class="top-data--left">
                 <app-number-text
-                    [value]="500"
+                    [value]="journalEntry.totalDebits"
                     text="Debits"
                     [valueType]="getEnum.valuTextType.currency"
                     [focusColor]="getEnum.color.green"
                 ></app-number-text> 
                 <app-number-text
-                    [value]="500"
+                    [value]="journalEntry.totalCredits"
                     text="Credits"
                     [valueType]="getEnum.valuTextType.currency"
                     [focusColor]="getEnum.color.red"
@@ -18,7 +18,7 @@
             </div>
             <div class="top-data--right">
                 <div class="right-content">
-                    <h3>Created on <span>{{ date | date:'longDate' }}</span></h3>
+                    <h3>Created on <span>{{ journalEntry.createdOn| date:'longDate' }}</span></h3>
 
                     <!-- Only show button if entry is requested -->
                     <!-- <button
@@ -37,28 +37,36 @@
 
     </app-info-page-header>
 
-    <div class="single-view--description">
-        <h3>This is an entry description</h3>
+    <div class="single-view--description" *ngIf="journalEntry.description">
+        <h3>{{journalEntry.description}}</h3>
     </div>
 
     <mat-divider class="divider"></mat-divider>
 
-    <div class="transactions">
+    <div class="tables">
 
-        <app-secondary-top-nav [title]="tableViewTitle" [showSearch]="false">
-            <div class="chips" *ngIf="files.length > 0">
-                <mat-chip-listbox [value]="true" (change)="change($event)">
-                    <mat-chip-option matTooltip="View Entry Transactions" [value]="true" selected>Transactions</mat-chip-option>
-                    <mat-chip-option matTooltip="View or Download Files" [value]="false">Attached Files ({{files.length}})</mat-chip-option>
-                </mat-chip-listbox>
-            </div>
-        </app-secondary-top-nav>
-
-        <div class="tables">
-            <app-table [tableData]="entries" [displayedColumns]="displayedColumns">
+        
+        <div class="transaction-table">
+            <app-secondary-top-nav [title]="tableViewTitle" [showSearch]="false" *ngIf="journalEntry.files">
+                
+            </app-secondary-top-nav>
+            
+            <app-table [tableData]="journalEntry.accountEntries" [displayedColumns]="transactionColumns">
                     
                 <ng-container matSort>
                     
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button
+                                mat-stroked-button 
+                                color="primary"
+                                matTooltip="View Account"
+                                (click)="navigateToAccount(row.accountId)"
+                                >View</button>
+                        </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="account">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Account </th>
                         <td mat-cell *matCellDef="let row"> {{row.accountName}} </td>
@@ -66,16 +74,54 @@
                     
                     <ng-container matColumnDef="debit">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Debited </th>
-                        <td mat-cell *matCellDef="let row"> {{row.debit | currency}} </td>
+                        <td mat-cell *matCellDef="let row"> {{row.totalDebits | currency}} </td>
                     </ng-container>
                     
                     <ng-container matColumnDef="credit">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
-                        <td mat-cell *matCellDef="let row"> {{row.credit | currency }} </td>
+                        <td mat-cell *matCellDef="let row"> {{row.totalCredits | currency }} </td>
                     </ng-container>
                     
                 </ng-container>
                 
+            </app-table>
+        </div>
+
+        <div class="file-table">
+            <app-secondary-top-nav title="Attached Files" [showSearch]="false"></app-secondary-top-nav>
+        
+            <app-table *ngIf="journalEntry.files" [tableData]="journalEntry.files" [displayedColumns]="fileColumns">
+                <ng-container matSort>
+                    
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef> Actions </th>
+                        <td mat-cell *matCellDef="let row">
+                            <button
+                                mat-stroked-button 
+                                color="primary"
+                                matTooltip="View Account"
+                                (click)="downloadFile(row.base64File, row.friendlyName)"
+                                >Download
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fileName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> File Name </th>
+                        <td mat-cell *matCellDef="let row" [matTooltip]="row.friendlyName"> {{row.friendlyName | ellipsis:20 }} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="size">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> File Size </th>
+                        <td mat-cell *matCellDef="let row"> {{row.size | filesize}} </td>
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> File Type </th>
+                        <td mat-cell *matCellDef="let row"> {{row.contentType.split('/')[1] || 'Unknown' | uppercase  }} </td>
+                    </ng-container>
+                    
+                </ng-container>
             </app-table>
         </div>
 

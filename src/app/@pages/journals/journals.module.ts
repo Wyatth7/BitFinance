@@ -15,6 +15,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TransactionTableComponent } from './components/tables/transaction-table/transaction-table.component';
 import { FileTableComponent } from './components/tables/file-table/file-table.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxFilesizeModule } from 'ngx-filesize';
 
 
 
@@ -38,7 +39,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatMenuModule,
     MatIconModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxFilesizeModule
   ]
 })
 export class JournalsModule { }

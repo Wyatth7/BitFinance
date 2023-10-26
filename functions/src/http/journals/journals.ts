@@ -7,6 +7,10 @@ import { FirestoreCollections } from "../../shared/enums/firestore-collections";
 import { JournalEntry } from "../../shared/models/journals/journal-entry";
 import { EntryListResponseDto } from "../../shared/models/journals/dto/entry-list-response-dto";
 import { JournalApprovalType } from "../../shared/models/enums/journal-approval-type";
+import { JournalEntryDto } from "../../shared/models/journals/dto/journal-entry-dto";
+import { EntryCalculations } from "../../shared/helpers/calculations/entry-calculations";
+import { AccountModel } from "../../shared/models/accounts/account-model";
+import { AccountEntryDto } from "../../shared/models/journals/dto/account-entry-dto";
 
 export const getJournalList = onRequest(
     {cors: true},
@@ -36,6 +40,87 @@ export const getJournalList = onRequest(
     }
 );
 
+export const getJournalEntry = onRequest(
+    {cors: true},
+    async (req, res) => {
+        if (!await verifyToken(req)) {
+            return unauthorizedResponse(res);
+        }
+
+        const journalId: string = req.body.data;
+
+        try {
+
+            // get journal
+            const entrySnapshot = await admin.firestore()
+                .collection(FirestoreCollections.journals)
+                .doc(journalId)
+                .get();
+
+            if (!entrySnapshot.exists) {
+                return badRequestResponse('The journal entry requested does not exist.', res);
+            }
+
+            const entry = entrySnapshot.data() as JournalEntry;
+
+            // get accounts associated with entry
+            const accountSnapshot = await admin.firestore()
+                .collection(FirestoreCollections.accounts)
+                .where('accountId', 'in', entry.accounts)
+                .get();
+
+            if (accountSnapshot.empty) {
+                return badRequestResponse('Accounts could not be found for the entry.', res);
+            }
+
+
+            const accounts = accountSnapshot.docs.map(account => account.data() as AccountModel);
+
+            const accountEntries: AccountEntryDto[] = [];
+
+            // create account entries
+            // loop over each account ID 
+            for (const accountId of entry.accounts) {
+                // get transactions by account ID
+                const transactions = entry.transactions
+                    .filter(transaction => transaction.accountId === accountId);
+
+                // sum totals for the account
+                const accountLevelAmount = EntryCalculations.calculateEntryTotals(transactions);
+
+                // create/add the account entry
+                const accountName = accounts.find(account => account.accountId === accountId)!.accountName;
+
+                const accountEntry: AccountEntryDto = {
+                    accountId,
+                    accountName,
+                    totalCredits: accountLevelAmount.credit,
+                    totalDebits: accountLevelAmount.debit
+                }
+
+                accountEntries.push(accountEntry);
+            }
+
+            const transactionTotals = EntryCalculations.calculateEntryTotals(entry.transactions);
+
+            const entryDto: JournalEntryDto = {
+                entryName: entry.entryName,
+                description: entry.entryDescription,
+                totalCredits: transactionTotals.credit,
+                totalDebits: transactionTotals.debit,
+                files: entry.fileData,
+                accountEntries,
+                createdOn: entry.creationDate
+            }
+
+            return okResponse(entryDto, 200, res);
+            
+        } catch (error) {
+            logger.error(error);
+            return okResponse('Could not get journal', 200, res);
+        }
+    }
+);
 
 const createEntryListResponse = (entries: JournalEntry[]): EntryListResponseDto => {
     const entriesResponse: EntryListResponseDto = {

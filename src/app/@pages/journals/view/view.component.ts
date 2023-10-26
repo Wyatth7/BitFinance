@@ -11,6 +11,7 @@ import { JournalEntryModel } from 'src/app/shared/models/journal/journal-entry-m
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { JournalService } from 'src/app/shared/services/journal/journal.service';
+import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
 @Component({
   selector: 'app-view',
@@ -34,10 +35,13 @@ export class ViewComponent implements OnInit, OnDestroy {
     public enumValues: GetEnumValueService,
     private dialogService: DialogService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private topNavService: TopNavService
   ) {}
 
   async ngOnInit() {
+    this.topNavService.setTopNavHeader('Journal');
+
     this.journalListSubscription = this.journalService.jounals$
       .subscribe(entries => {
         this.journalReponse = entries;
