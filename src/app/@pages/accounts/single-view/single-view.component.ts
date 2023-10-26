@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
@@ -34,7 +34,8 @@ export class SingleViewComponent implements OnInit{
       public getEnum: GetEnumValueService,
       private topNavService: TopNavService,
       private dialogService: DialogService,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private router: Router
     ) {}
 
   async ngOnInit(): Promise<void> {
@@ -98,112 +99,7 @@ export class SingleViewComponent implements OnInit{
   }
   openCreateEntryModalFn = this.openCreateEntryModal.bind(this);
 
-  // journalEntries: JournalEntry[] = [
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   // Add more journal entries as needed
-  // ];
+  navigateToEntry(journalId: string) {
+    this.router.navigateByUrl(`/journal/${journalId}`)
+  }
 }

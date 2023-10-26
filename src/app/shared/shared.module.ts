@@ -94,7 +94,7 @@ import { MatListModule } from '@angular/material/list';
     ValueTextComponent,
     InfoPageHeaderComponent,
     EmptyTableInfoComponent,
-    EmailUserComponent
+    EmailUserComponent,
   ],
   providers: [
     TitleCasePipe

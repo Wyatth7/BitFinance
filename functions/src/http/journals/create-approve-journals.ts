@@ -11,9 +11,10 @@ import * as admin from 'firebase-admin';
 import { FirestoreCollections } from "../../shared/enums/firestore-collections";
 import { EntryActionDto } from "../../shared/models/journals/dto/entry-action-dto";
 import { AccountEntry } from "../../shared/models/journals/account-journal";
-import { NormalType } from "../../shared/enums/accounts/normal-type";
+// import { NormalType } from "../../shared/enums/accounts/normal-type";
 import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
 import { AccountModel } from "../../shared/models/accounts/account-model";
+import { EntryCalculations } from "../../shared/helpers/calculations/entry-calculations";
 // import { Emailer } from "../../shared/helpers/messaging/emailer";
 
 export const createJournalEntry = onRequest(
@@ -132,10 +133,10 @@ const updateAccounts = async (journalEntry: JournalEntry) => {
             .filter(transaction => transaction.accountId === account.accountId)
     
         // sum all debits and credits
-        const amounts = getTransactionAmounts(transactionsForAccount);
+        const amounts = EntryCalculations.calculateEntryTotals(transactionsForAccount);
         
         // update balances for account
-        const newBalance = await calculateAccountBalance(account, amounts);
+        const newBalance = EntryCalculations.calculateAccountBalance(account, amounts);
         const entryCount = account.entries + 1;
 
         batch.update(
@@ -169,51 +170,51 @@ const updateAccounts = async (journalEntry: JournalEntry) => {
     await batch.commit();
 }
 
-/**
- * Calcuates the total of an account
- * @param account Account model
- * @param amounts credit and debit amounts
- * @returns balance of an account
- */
-const calculateAccountBalance = async (
-    account: AccountModel,
-    amounts: {credit: number, debit: number}
-    ): Promise<number> => {
-        // if account normal side is debit, add debits, subtract credits from balance
-        // else, subtract debits, add credits from balance
-        if (account.normalType === NormalType.debit) {
-            account.balance -= amounts.credit;
-            account.balance += amounts.debit;
-        } else {
-            account.balance += amounts.credit;
-            account.balance -= amounts.debit;
-        }
+// /**
+//  * Calcuates the total of an account
+//  * @param account Account model
+//  * @param amounts credit and debit amounts
+//  * @returns balance of an account
+//  */
+// const calculateAccountBalance = async (
+//     account: AccountModel,
+//     amounts: {credit: number, debit: number}
+//     ): Promise<number> => {
+//         // if account normal side is debit, add debits, subtract credits from balance
+//         // else, subtract debits, add credits from balance
+//         if (account.normalType === NormalType.debit) {
+//             account.balance -= amounts.credit;
+//             account.balance += amounts.debit;
+//         } else {
+//             account.balance += amounts.credit;
+//             account.balance -= amounts.debit;
+//         }
 
-        // update account balance
-        return account.balance;
-}
+//         // update account balance
+//         return account.balance;
+// }
 
-/**
- * Totals the credit and debit amounts of a list of transactions
- * @param transactions Array of transactions
- * @returns Amounts object
- */
-const getTransactionAmounts = (transactions: Transaction[]) => {
-    // sum all debits and credits
-    const amounts = {
-        debit: 0,
-        credit: 0
-    };
+// /**
+//  * Totals the credit and debit amounts of a list of transactions
+//  * @param transactions Array of transactions
+//  * @returns Amounts object
+//  */
+// const getTransactionAmounts = (transactions: Transaction[]) => {
+//     // sum all debits and credits
+//     const amounts = {
+//         debit: 0,
+//         credit: 0
+//     };
 
-    transactions.forEach(transaction => {
-        if (transaction.normalType === NormalType.credit){
-            amounts.credit += transaction.amount;
+//     transactions.forEach(transaction => {
+//         if (transaction.normalType === NormalType.credit){
+//             amounts.credit += transaction.amount;
 
-            return;
-        }
+//             return;
+//         }
 
-        amounts.debit += transaction.amount;
-    });
+//         amounts.debit += transaction.amount;
+//     });
 
-    return amounts;
-};
+//     return amounts;
+// };

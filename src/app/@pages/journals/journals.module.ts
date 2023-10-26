@@ -8,13 +8,24 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { SingleViewComponent } from './single-view/single-view.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { TransactionTableComponent } from './components/tables/transaction-table/transaction-table.component';
+import { FileTableComponent } from './components/tables/file-table/file-table.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NgxFilesizeModule } from 'ngx-filesize';
 
 
 
 @NgModule({
   declarations: [
     JournalsComponent,
-    ViewComponent
+    ViewComponent,
+    SingleViewComponent,
+    TransactionTableComponent,
+    FileTableComponent
   ],
   imports: [
     CommonModule,
@@ -25,6 +36,11 @@ import { MatButtonModule } from '@angular/material/button';
     // Needed for using the app-table component
     MatSortModule,
     MatTableModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+    MatTooltipModule,
+    NgxFilesizeModule
   ]
 })
 export class JournalsModule { }
