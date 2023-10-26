@@ -1,5 +1,4 @@
 <div class="single-view" *ngIf="journalEntry">
-
     <app-info-page-header [title]="journalEntry.entryName">
         <div class="top-data">
             <div class="top-data--left">
@@ -21,18 +20,21 @@
                 <div class="right-content">
                     <h3>Created on <span>{{ journalEntry.createdOn| date:'longDate' }}</span></h3>
                     
-                    <mat-chip-listbox *ngIf="journalEntry.approvalType != getEnum.journalApprovalType.requested">
+                    <mat-chip-listbox >
 
                         <mat-chip
                             highlighted
                             matChipTrailingIcon
-                            [color]="journalEntry.approvalType === getEnum.journalApprovalType.approved ? 'primary' : 'warn' "
+                            [color]="journalEntry.approvalType === getEnum.journalApprovalType.approved
+                            || journalEntry.approvalType === getEnum.journalApprovalType.requested  ? 'primary' : 'warn' "
                         >
                             {{ getEnum.journalApprovalTypeString(journalEntry.approvalType) | titlecase }}
                         </mat-chip>
                     </mat-chip-listbox>
                     <!-- Only show button if entry is requested -->
-                    <button
+                    <app-required-role-view [roles]="[1,2]">
+
+                        <button
                         *ngIf="journalEntry.approvalType === getEnum.journalApprovalType.requested"
                         class="button-menu"
                         mat-flat-button
@@ -42,6 +44,7 @@
                         <p>Approval</p>
                         <mat-icon>more_vert</mat-icon>
                     </button>
+                </app-required-role-view>
                    
                 </div>
             </div>
