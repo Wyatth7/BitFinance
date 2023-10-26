@@ -64,6 +64,10 @@ export class SingleViewComponent implements OnInit {
     a.click(); //Downloaded file
   }
 
+  async journalApproval(shouldApprove: boolean) {
+    await this.journalService.acceptDenyJournal(this.journalEntry!.journalId, shouldApprove)
+  }
+
   // files = [
     //   {
     //     accountName: 'Cash',

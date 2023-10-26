@@ -104,13 +104,15 @@ export const getJournalEntry = onRequest(
             const transactionTotals = EntryCalculations.calculateEntryTotals(entry.transactions);
 
             const entryDto: JournalEntryDto = {
+                journalId: entry.journalId,
                 entryName: entry.entryName,
                 description: entry.entryDescription,
                 totalCredits: transactionTotals.credit,
                 totalDebits: transactionTotals.debit,
                 files: entry.fileData,
                 accountEntries,
-                createdOn: entry.creationDate
+                createdOn: entry.creationDate,
+                approvalType: entry.approvalType
             }
 
             return okResponse(entryDto, 200, res);
