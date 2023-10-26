@@ -124,10 +124,16 @@ export class JournalService {
   async acceptDenyJournal(journalId: string, shouldAccept: boolean) {
 
     const approveDeclineRef = httpsCallable(this.functions, JournalFunctions.approveDeclineJournal);
+    try {
+      await approveDeclineRef({journalId, shouldAccept});
+  
+      await this.getJournals();
+      
+      this.snackBarService.showSuccess(shouldAccept ? 'Entry Approval Successful' : 'Entry Decline Succesful')
+    } catch (error) {
+      this.snackBarService.showError('Entry approval action failed')
+    }
 
-    await approveDeclineRef({journalId, shouldAccept});
-
-    await this.getJournals();
   }
 
 }

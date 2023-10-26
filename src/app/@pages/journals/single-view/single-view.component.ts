@@ -66,6 +66,8 @@ export class SingleViewComponent implements OnInit {
 
   async journalApproval(shouldApprove: boolean) {
     await this.journalService.acceptDenyJournal(this.journalEntry!.journalId, shouldApprove)
+  
+    this.journalEntry = await this.journalService.getJournalEntryPageData(this.journalEntry!.journalId)
   }
 
   // files = [

@@ -4,22 +4,33 @@
         <div class="top-data">
             <div class="top-data--left">
                 <app-number-text
-                    [value]="journalEntry.totalDebits"
-                    text="Debits"
-                    [valueType]="getEnum.valuTextType.currency"
-                    [focusColor]="getEnum.color.green"
+                [value]="journalEntry.totalDebits"
+                text="Debits"
+                [valueType]="getEnum.valuTextType.currency"
+                [focusColor]="getEnum.color.green"
                 ></app-number-text> 
                 <app-number-text
-                    [value]="journalEntry.totalCredits"
-                    text="Credits"
-                    [valueType]="getEnum.valuTextType.currency"
-                    [focusColor]="getEnum.color.red"
+                [value]="journalEntry.totalCredits"
+                text="Credits"
+                [valueType]="getEnum.valuTextType.currency"
+                [focusColor]="getEnum.color.red"
                 ></app-number-text> 
+                
             </div>
             <div class="top-data--right">
                 <div class="right-content">
                     <h3>Created on <span>{{ journalEntry.createdOn| date:'longDate' }}</span></h3>
+                    
+                    <mat-chip-listbox *ngIf="journalEntry.approvalType != getEnum.journalApprovalType.requested">
 
+                        <mat-chip
+                            highlighted
+                            matChipTrailingIcon
+                            [color]="journalEntry.approvalType === getEnum.journalApprovalType.approved ? 'primary' : 'warn' "
+                        >
+                            {{ getEnum.journalApprovalTypeString(journalEntry.approvalType) | titlecase }}
+                        </mat-chip>
+                    </mat-chip-listbox>
                     <!-- Only show button if entry is requested -->
                     <button
                         *ngIf="journalEntry.approvalType === getEnum.journalApprovalType.requested"
@@ -28,7 +39,7 @@
                         color="primary"
                         matTooltip="More Options"
                         [matMenuTriggerFor]="moreOptionsMenu">
-                        <p>Options</p>
+                        <p>Approval</p>
                         <mat-icon>more_vert</mat-icon>
                     </button>
                    
