@@ -69,24 +69,4 @@ export class SingleViewComponent implements OnInit {
   
     this.journalEntry = await this.journalService.getJournalEntryPageData(this.journalEntry!.journalId)
   }
-
-  // files = [
-    //   {
-    //     accountName: 'Cash',
-    //     debit: 500,
-    //     credit: 500
-    //   }
-    // ]
-    // entries = [
-    //   {
-    //     accountName: 'Cash',
-    //     debit: 500,
-    //     credit: 0
-    //   },
-    //   {
-    //     accountName: 'Owner Equity',
-    //     debit: 0,
-    //     credit: 500
-    //   }
-    // ]
 }
