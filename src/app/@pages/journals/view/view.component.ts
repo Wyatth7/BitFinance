@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionEntryListItem } from 'functions/src/shared/models/journals/transaction-entry';
 import { Subscription } from 'rxjs';
 import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { NormalType } from 'src/app/shared/enums/accounts/normal-type';
 import { JournalApprovalType } from 'src/app/shared/enums/journals/journal-entry-approval-type';
+import { EntryListItemResponseDto } from 'src/app/shared/models/journal/dto/entry-list-item-response-dto';
 import { EntryListResponseDto } from 'src/app/shared/models/journal/dto/entry-list-response-dto';
 import { JournalEntryModel } from 'src/app/shared/models/journal/journal-entry-model';
+import { TransactionEntryListItem } from 'src/app/shared/models/journal/transaction-entry-model';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { JournalService } from 'src/app/shared/services/journal/journal.service';
@@ -24,9 +25,9 @@ export class ViewComponent implements OnInit, OnDestroy {
   
   filter: string | undefined = '';
   journalReponse?: EntryListResponseDto;
-  journalList?: JournalEntryModel[] = [];
+  journalList?: EntryListItemResponseDto[] = [];
 
-  displayedColumns = ['actions', 'entryName', 'entryDescription', 'debit', 'credit', 'balance', 'date']
+  displayedColumns = ['actions', 'entryName', 'entryDescription', 'totalDebit', 'totalCredit', 'balance', 'creationDate']
 
   journalListSubscription!: Subscription;
 

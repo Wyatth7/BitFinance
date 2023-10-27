@@ -15,7 +15,7 @@ export class SingleViewComponent implements OnInit {
   journalEntry?: JournalEntryPageModel;
   showTransactions = true;
 
-  transactionColumns = ['actions', 'account', 'debit', 'credit'];
+  transactionColumns = ['actions', 'accountName', 'totalDebits', 'totalCredits'];
   fileColumns = ['actions', 'fileName', 'size', 'type'];
 
 

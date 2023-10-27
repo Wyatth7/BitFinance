@@ -11,6 +11,7 @@ import { JournalEntryDto } from "../../shared/models/journals/dto/journal-entry-
 import { EntryCalculations } from "../../shared/helpers/calculations/entry-calculations";
 import { AccountModel } from "../../shared/models/accounts/account-model";
 import { AccountEntryDto } from "../../shared/models/journals/dto/account-entry-dto";
+import { EntryListItemResponseDto } from "../../shared/models/journals/dto/entry-list-item-reponse-dto";
 
 export const getJournalList = onRequest(
     {cors: true},
@@ -133,15 +134,29 @@ const createEntryListResponse = (entries: JournalEntry[]): EntryListResponseDto 
 
 
     entries.forEach(entry => {
+
+        const amounts = EntryCalculations.calculateEntryTotals(entry.transactions);
+
+        const dto: EntryListItemResponseDto = {
+            journalId: entry.journalId,
+            entryName: entry.entryName,
+            entryDescription: entry.entryDescription,
+            approvalType: entry.approvalType,
+            creationDate: entry.creationDate,
+            totalCredit: amounts.credit,
+            totalDebit: amounts.debit,
+            balance: amounts.balance
+        }
+
         switch(entry.approvalType) {
             case JournalApprovalType.approved:
-                entriesResponse.approved.push(entry);
+                entriesResponse.approved.push(dto);
                 break;
             case JournalApprovalType.requested:
-                    entriesResponse.requested.push(entry);
+                    entriesResponse.requested.push(dto);
                     break;
             case JournalApprovalType.declined:
-                entriesResponse.declined.push(entry);
+                entriesResponse.declined.push(dto);
                 break;
             default: break;
         }

@@ -82,17 +82,17 @@
                         </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="account">
+                    <ng-container matColumnDef="accountName">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Account </th>
                         <td mat-cell *matCellDef="let row"> {{row.accountName}} </td>
                     </ng-container>
                     
-                    <ng-container matColumnDef="debit">
+                    <ng-container matColumnDef="totalDebits">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Debited </th>
                         <td mat-cell *matCellDef="let row"> {{row.totalDebits | currency}} </td>
                     </ng-container>
                     
-                    <ng-container matColumnDef="credit">
+                    <ng-container matColumnDef="totalCredits">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
                         <td mat-cell *matCellDef="let row"> {{row.totalCredits | currency }} </td>
                     </ng-container>

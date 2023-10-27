@@ -54,22 +54,22 @@
                     <td mat-cell *matCellDef="let row"> {{row.entryDescription || 'Empty'}} </td>
                 </ng-container>
                 
-                <ng-container matColumnDef="debit">
+                <ng-container matColumnDef="totalDebit">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
-                    <td mat-cell *matCellDef="let row"> {{getSingleCreditDebitAmount(row) | currency}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.totalDebit | currency}} </td>
                 </ng-container>
                 
-                <ng-container matColumnDef="credit" >
+                <ng-container matColumnDef="totalCredit" >
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
-                    <td mat-cell *matCellDef="let row"> {{getSingleCreditDebitAmount(row, false) | currency}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.totalCredit | currency}} </td>
                 </ng-container>
                 
                 <ng-container matColumnDef="balance" >
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance </th>
-                    <td mat-cell *matCellDef="let row"> {{getEntryBalance(row.transactions) | currency}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.balance | currency}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="date">
+                <ng-container matColumnDef="creationDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>
                     <td mat-cell *matCellDef="let row"> {{ row.creationDate | date:'longDate' }} </td>
                 </ng-container>
