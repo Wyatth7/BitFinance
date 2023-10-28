@@ -20,11 +20,19 @@ export const getOverview = onRequest(
 
             const accountsSnapshot = await admin.firestore().collection(FirestoreCollections.accounts)
                 .count().get();
+            
+            // Declined users are deleted, need a way to get the count   
+            const declinedSnapshot = await admin.firestore().collection(FirestoreCollections.users.toString())
+                .where('requested', '==', true)
+                .count().get();
+
 
             const overviewData: OverviewModel = {
                 users: {
                     requested: requestedSnapshot.data().count,
                     accepted: usersSnapshot.data().count,
+                    approved: usersSnapshot.data().count,
+                    declined: declinedSnapshot.data().count,
                 },
                 accounts: accountsSnapshot.data().count
             }
