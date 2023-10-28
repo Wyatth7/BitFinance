@@ -9,14 +9,6 @@ import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
-interface JournalEntry {
-  date: Date;
-  description: string;
-  transactionType: string;
-  amount: number;
-  createdBy: string;
-}
-
 @Component({
   selector: 'app-single-view',
   templateUrl: './single-view.component.html',
@@ -25,7 +17,7 @@ interface JournalEntry {
 export class SingleViewComponent implements OnInit{
   account?: AccountModel;
 
-  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date']
+  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'date']
 
   dateCreated = new Date();
 

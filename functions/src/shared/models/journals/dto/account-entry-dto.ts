@@ -3,4 +3,5 @@ export interface AccountEntryDto {
     accountName: string;
     totalCredits: number;
     totalDebits: number;
+    balance: number;
 }

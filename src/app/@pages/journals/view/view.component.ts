@@ -3,6 +3,7 @@ import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
+import { DeclineEntryDialogComponent } from 'src/app/shared/components/dialogs/decline-entry-dialog/decline-entry-dialog.component';
 import { NormalType } from 'src/app/shared/enums/accounts/normal-type';
 import { JournalApprovalType } from 'src/app/shared/enums/journals/journal-entry-approval-type';
 import { EntryListItemResponseDto } from 'src/app/shared/models/journal/dto/entry-list-item-response-dto';
@@ -64,9 +65,23 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
   createEntryDialogFn = this.createEntryDialog.bind(this);
 
-  async approveEntry(journalId: string, shouldAccept: boolean) {
-    await this.journalService.acceptDenyJournal(journalId, shouldAccept);
+  openDeclineDialog(journalId: string) {
+    this.dialogService.open(DeclineEntryDialogComponent, {
+      title: 'Decline Entry',
+      data: journalId,
+      action: this.declineEntryFn
+    })
   }
+
+  async declineEntry(comment: string, journalId: string) {
+    await this.approveEntry(journalId, false, comment)
+  }
+  declineEntryFn = this.declineEntry.bind(this);
+
+  async approveEntry(journalId: string, shouldAccept: boolean, comment = '') {
+    await this.journalService.acceptDenyJournal(journalId, shouldAccept, comment);
+  }
+  approveEntyFn = this.approveEntry.bind(this);
 
   searchEmitted(value: string | null) {
     this.filter = value || '';

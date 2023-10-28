@@ -48,11 +48,19 @@
     }
 
     &--description {
+        display: flex;
+        justify-content: space-between;
+
         h3 {
             font-size: 1.2rem;
             color: var(--letter-grey);
             padding: 0 !important;
             margin: 0 !important;
+        }
+
+        .decline-comment {
+            color: var(--red);
+            max-width: 25rem;
         }
     }
 

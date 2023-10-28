@@ -11,11 +11,9 @@ import * as admin from 'firebase-admin';
 import { FirestoreCollections } from "../../shared/enums/firestore-collections";
 import { EntryActionDto } from "../../shared/models/journals/dto/entry-action-dto";
 import { AccountEntry } from "../../shared/models/journals/account-journal";
-// import { NormalType } from "../../shared/enums/accounts/normal-type";
 import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
 import { AccountModel } from "../../shared/models/accounts/account-model";
 import { EntryCalculations } from "../../shared/helpers/calculations/entry-calculations";
-// import { Emailer } from "../../shared/helpers/messaging/emailer";
 
 export const createJournalEntry = onRequest(
     {cors: true},
@@ -89,7 +87,8 @@ export const approveRejectDeny = onRequest(
 
             if (!actionData.shouldAccept) {
                 await journalRef.update({
-                    approvalType: JournalApprovalType.declined
+                    approvalType: JournalApprovalType.declined,
+                    declineComment: actionData.comment
                 });
 
                 return okResponse({}, 200, res);
@@ -152,7 +151,8 @@ const updateAccounts = async (journalEntry: JournalEntry) => {
             entryName: journalEntry.entryName,
             debit: amounts.debit,
             credit: amounts.credit,
-            creationDate: journalEntry.creationDate
+            creationDate: journalEntry.creationDate,
+            balance: newBalance
         }
 
         // add entry to account

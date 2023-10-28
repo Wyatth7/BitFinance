@@ -12,4 +12,5 @@ export interface JournalEntryDto {
     approvalType: JournalApprovalType;
     files?: FileData[];
     accountEntries: AccountEntryDto[];
+    declineComment?: string;
 }

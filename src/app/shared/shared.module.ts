@@ -35,6 +35,7 @@ import { DebitCreditAccountFormComponent } from './components/dialogs/create-jou
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UploadComponent } from './components/upload/upload.component';
 import { MatListModule } from '@angular/material/list';
+import { DeclineEntryDialogComponent } from './components/dialogs/decline-entry-dialog/decline-entry-dialog.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { MatListModule } from '@angular/material/list';
     CreateJournalEntryDialogComponent,
     DebitCreditAccountFormComponent,
     UploadComponent,
+    DeclineEntryDialogComponent,
   ],
   imports: [
     CommonModule,

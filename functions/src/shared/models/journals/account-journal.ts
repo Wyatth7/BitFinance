@@ -3,5 +3,6 @@ export interface AccountEntry {
     journalId: string;
     debit: number;
     credit: number;
+    balance: number;
     creationDate: string;
 }

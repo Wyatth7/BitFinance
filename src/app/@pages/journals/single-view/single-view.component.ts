@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DeclineEntryDialogComponent } from 'src/app/shared/components/dialogs/decline-entry-dialog/decline-entry-dialog.component';
 import { JournalEntryPageModel } from 'src/app/shared/models/journal/journal-page-model';
+import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { JournalService } from 'src/app/shared/services/journal/journal.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
@@ -26,7 +28,8 @@ export class SingleViewComponent implements OnInit {
     public getEnum: GetEnumValueService,
     private router: Router,
     private route: ActivatedRoute,
-    private topNavService: TopNavService
+    private topNavService: TopNavService,
+    private dialogService: DialogService
   ) {}
 
   async ngOnInit() {
@@ -64,9 +67,22 @@ export class SingleViewComponent implements OnInit {
     a.click(); //Downloaded file
   }
 
-  async journalApproval(shouldApprove: boolean) {
-    await this.journalService.acceptDenyJournal(this.journalEntry!.journalId, shouldApprove)
+  openDeclineDialog() {
+    this.dialogService.open(DeclineEntryDialogComponent, {
+      title: 'Decline Entry',
+      data: this.journalEntry?.journalId,
+      action: this.declineEntryFn
+    })
+  }
+
+  async journalApproval(shouldApprove: boolean, comment = '') {
+    await this.journalService.acceptDenyJournal(this.journalEntry!.journalId, shouldApprove, comment)
   
     this.journalEntry = await this.journalService.getJournalEntryPageData(this.journalEntry!.journalId)
   }
+
+  async declineEntry(comment: string) {
+    await this.journalApproval(false, comment)
+  }
+  declineEntryFn = this.declineEntry.bind(this);
 }

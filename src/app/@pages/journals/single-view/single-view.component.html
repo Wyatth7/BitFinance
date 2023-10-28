@@ -52,8 +52,9 @@
 
     </app-info-page-header>
 
-    <div class="single-view--description" *ngIf="journalEntry.description">
+    <div class="single-view--description" >
         <h3>{{journalEntry.description}}</h3>
+        <h3 class="decline-comment" *ngIf="journalEntry.declineComment">{{journalEntry.declineComment}}</h3>
     </div>
 
     <mat-divider class="divider"></mat-divider>
@@ -157,7 +158,7 @@
     </button>
     <button 
         mat-menu-item
-        (click)="journalApproval(false)"
+        (click)="openDeclineDialog()"
         >Decline</button>
 </mat-menu>
 

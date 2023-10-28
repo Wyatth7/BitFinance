@@ -121,11 +121,11 @@ export class JournalService {
    * @param journalId Id of journal entry
    * @param shouldAccept Should entry be approved or declined
    */
-  async acceptDenyJournal(journalId: string, shouldAccept: boolean) {
+  async acceptDenyJournal(journalId: string, shouldAccept: boolean, comment = '') {
 
     const approveDeclineRef = httpsCallable(this.functions, JournalFunctions.approveDeclineJournal);
     try {
-      await approveDeclineRef({journalId, shouldAccept});
+      await approveDeclineRef({journalId, shouldAccept, comment});
   
       await this.getJournals();
       

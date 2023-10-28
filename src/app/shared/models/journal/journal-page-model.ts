@@ -8,8 +8,10 @@ export interface JournalEntryPageModel {
     description?: string;
     totalDebits: number;
     totalCredits: number;
+    balance: number;
     createdOn: string;
     approvalType: JournalApprovalType;
     files?: FileMetaDataModel[];
     accountEntries: JournalPageAccountEntryModel[];
+    declineComment: string;
 }

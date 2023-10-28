@@ -74,7 +74,6 @@ export const getJournalEntry = onRequest(
                 return badRequestResponse('Accounts could not be found for the entry.', res);
             }
 
-
             const accounts = accountSnapshot.docs.map(account => account.data() as AccountModel);
 
             const accountEntries: AccountEntryDto[] = [];
@@ -96,7 +95,8 @@ export const getJournalEntry = onRequest(
                     accountId,
                     accountName,
                     totalCredits: accountLevelAmount.credit,
-                    totalDebits: accountLevelAmount.debit
+                    totalDebits: accountLevelAmount.debit,
+                    balance: accountLevelAmount.balance
                 }
 
                 accountEntries.push(accountEntry);
@@ -113,7 +113,8 @@ export const getJournalEntry = onRequest(
                 files: entry.fileData,
                 accountEntries,
                 createdOn: entry.creationDate,
-                approvalType: entry.approvalType
+                approvalType: entry.approvalType,
+                declineComment: entry.declineComment
             }
 
             return okResponse(entryDto, 200, res);
@@ -131,7 +132,6 @@ const createEntryListResponse = (entries: JournalEntry[]): EntryListResponseDto 
         requested: [],
         declined: []
     }
-
 
     entries.forEach(entry => {
 

@@ -33,7 +33,7 @@
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
                             mat-stroked-button
                             color="primary"
-                            (click)="approveEntry(row.journalId, false)"
+                            (click)="openDeclineDialog(row.journalId)"
                             >Decline</button>
                             <button
                             mat-stroked-button

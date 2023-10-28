@@ -69,6 +69,11 @@
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
                             <td mat-cell *matCellDef="let row"> {{row.credit | currency }} </td>
                         </ng-container>
+
+                        <ng-container matColumnDef="balance">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Adjusted Balance </th>
+                            <td mat-cell *matCellDef="let row"> {{row.balance | currency }} </td>
+                        </ng-container>
                         
                         <ng-container matColumnDef="date" >
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
