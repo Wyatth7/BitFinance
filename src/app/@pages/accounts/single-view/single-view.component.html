@@ -36,11 +36,20 @@
     <mat-divider class="account-tansaction-divider"></mat-divider>
     <div class="journal-entries">
 
-        <app-secondary-top-nav title="Journal Entries"></app-secondary-top-nav>
+        <app-secondary-top-nav 
+            title="Journal Entries" 
+            [enableDatePicker]="true"
+            (searchString)="searchEmitted($event)"
+            (dateRange)="dateEmitted($event)"
+            ></app-secondary-top-nav>
         <ng-container *ngIf="account" >
 
             <div class="journal-table" *ngIf="account.entryList.length > 0; else noTransactions">
-                <app-table [tableData]="account.entryList" [displayedColumns]="displayedColumns">
+                <app-table 
+                    [tableData]="account.entryList" 
+                    [displayedColumns]="displayedColumns"
+                    [filters]="filter"
+                    [dateFilter]="dateFilter">
                     
                     <ng-container matSort>
                         

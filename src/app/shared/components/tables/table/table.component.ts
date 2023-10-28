@@ -46,11 +46,10 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
    * Used to update table when accounts added
    * @param changes simple chagnes
    */
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     // do nothing if data source is null
     if (!this.dataSource) return;
 
-    console.log(this.table);
     // do nothing if search filter is currently applied
     if (this.dataSource.filter.length > 0) return;
 
@@ -102,7 +101,8 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
   }
 
   applyDateFilter(value: {start: Date, end: Date}) {
-    if (!this.dataSource || (!value.end && !value.start)) return;
+    if (!this.dataSource) return;
+    if (!value.start && !value.end) this.dateFilterTableData = undefined;
     if (!value.start) this.dateFilterTableData = undefined;
 
     this.dateFilterTableData = this.tableData.filter(e => {

@@ -15,6 +15,8 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
   styleUrls: ['./single-view.component.scss']
 })
 export class SingleViewComponent implements OnInit{
+  filter: string | string[] = '';
+  dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
 
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
@@ -93,5 +95,13 @@ export class SingleViewComponent implements OnInit{
 
   navigateToEntry(journalId: string) {
     this.router.navigateByUrl(`/journal/${journalId}`)
+  }
+
+  searchEmitted(value: string | null) {
+    this.filter = value || '';
+  }
+
+  dateEmitted(value: {start: Date, end: Date}) {
+    this.dateFilter = {...value}
   }
 }
