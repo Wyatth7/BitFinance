@@ -36,6 +36,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UploadComponent } from './components/upload/upload.component';
 import { MatListModule } from '@angular/material/list';
 import { DeclineEntryDialogComponent } from './components/dialogs/decline-entry-dialog/decline-entry-dialog.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 @NgModule({
@@ -81,7 +83,9 @@ import { DeclineEntryDialogComponent } from './components/dialogs/decline-entry-
     MatMenuModule,
     MatAutocompleteModule,
     MatTooltipModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     SecondaryTopNavComponent,

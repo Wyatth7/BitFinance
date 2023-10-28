@@ -17,7 +17,7 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
 export class SingleViewComponent implements OnInit{
   account?: AccountModel;
 
-  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'date']
+  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
 
   dateCreated = new Date();
 

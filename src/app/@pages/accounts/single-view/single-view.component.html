@@ -75,7 +75,7 @@
                             <td mat-cell *matCellDef="let row"> {{row.balance | currency }} </td>
                         </ng-container>
                         
-                        <ng-container matColumnDef="date" >
+                        <ng-container matColumnDef="creationDate" >
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
                             <td mat-cell *matCellDef="let row"> {{row.creationDate | date:'longDate'}} </td>
                         </ng-container>       

@@ -24,6 +24,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   journalStatus: JournalApprovalType = JournalApprovalType.approved;
   title = 'Approved';
   
+  dateRangeFilter: {start: Date, end: Date} = {start: new Date(10/23/2023), end: new Date(10/24/2023)};
   filter: string | undefined = '';
   journalReponse?: EntryListResponseDto;
   journalList?: EntryListItemResponseDto[] = [];
@@ -85,6 +86,10 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   searchEmitted(value: string | null) {
     this.filter = value || '';
+  }
+
+  dateChange(value: any) {
+    this.dateRangeFilter = {...value};
   }
 
   navigateToView(id: string) {

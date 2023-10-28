@@ -1,6 +1,6 @@
 <div class="journals-view">
 
-    <app-secondary-top-nav [title]="title + ' Journal Entries'" (searchString)="searchEmitted($event)" searchPlaceholder="Search Accounts">
+    <app-secondary-top-nav [title]="title + ' Journal Entries'" [enableDatePicker]="true" (dateRange)="dateChange($event)" (searchString)="searchEmitted($event)" searchPlaceholder="Search Accounts">
         <div class="chips">
             <mat-chip-listbox [value]="1" (change)="change($event)">
                 <mat-chip-option [value]="1" matTooltip="View Approved Journals" selected>Approved ({{journalReponse?.approved?.length || 0}})</mat-chip-option>
@@ -12,6 +12,7 @@
     <ng-container *ngIf="journalList">
         <app-table 
         *ngIf="journalList.length > 0; else noJournals"
+        [dateFilter]="dateRangeFilter"
         [tableData]="journalList" 
         [displayedColumns]="displayedColumns" 
         [filters]="filter"

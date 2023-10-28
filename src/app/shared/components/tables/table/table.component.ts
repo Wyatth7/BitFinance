@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterContentInit, AfterViewInit, Component, ContentChildren, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatColumnDef, MatTable, MatTableDataSource } from '@angular/material/table';
 
@@ -21,13 +21,20 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
     set filters(value: string | string[] | undefined) {
       this.applyFilter(value);
     }
+  @Input()
+    set dateFilter(value: {start: Date, end: Date}) {
+      this.applyDateFilter(value);
+    }
   
+  dateFilterTableData?: T[];
   dataSource!: MatTableDataSource<T>;
   selection = new SelectionModel<any>(true, []);
 
-  @ViewChild(MatTable, {static: true}) table!: MatTable<T>
+  @ViewChild('table', {static: true}) table!: MatTable<T>
   @ContentChildren(MatColumnDef) columnDefs!: QueryList<MatColumnDef>;
   @ContentChildren(MatSort) sort!: QueryList<MatSort>;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
       // this.displayedColumns.unshift('select')
@@ -43,11 +50,12 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
     // do nothing if data source is null
     if (!this.dataSource) return;
 
+    console.log(this.table);
     // do nothing if search filter is currently applied
     if (this.dataSource.filter.length > 0) return;
-    
+
     // create new table data source
-    this.dataSource = new MatTableDataSource(this.tableData)
+    this.dataSource = new MatTableDataSource(this.dateFilterTableData || this.tableData)
 
     if (this.sort) {
       this.sort.forEach(sort => {
@@ -63,7 +71,6 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
 
     this.columnDefs
       .forEach(columnDef => {
-        
         this.table.addColumnDef(columnDef)
       });
   }
@@ -92,6 +99,25 @@ export class TableComponent<T> implements OnInit, OnChanges, AfterContentInit {
     }
 
     this.dataSource.filter = value.trim().toLowerCase();
+  }
+
+  applyDateFilter(value: {start: Date, end: Date}) {
+    if (!this.dataSource || (!value.end && !value.start)) return;
+    if (!value.start) this.dateFilterTableData = undefined;
+
+    this.dateFilterTableData = this.tableData.filter(e => {
+      /* @ts-ignore */
+      if (!value.end) {
+      /* @ts-ignore */
+        return new Date(e.creationDate).getTime() >= value.start.getTime()
+      } else if (!value.start) {
+        /* @ts-ignore */
+        return new Date(e.creationDate).getTime() <= value.end.getTime();
+      }
+      
+      /* @ts-ignore */
+      return new Date(e!.creationDate).getTime() >= value.start.getTime() && new Date(e.creationDate).getTime() <= value.end.getTime()
+    });
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
