@@ -29,7 +29,7 @@ export class SingleViewComponent implements OnInit{
   account?: AccountModel;
 
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date'];
-  eventLogDisplayedColumns = ['Date Changed', 'second column', 'third column'];
+  eventLogDisplayedColumns = ['dateChanged', 'secondColumn', 'thirdColumn'];
   eventLogData: EventLogModel[] = [];
   dateCreated = new Date();
   renderEntryList:boolean = true;
@@ -97,6 +97,7 @@ export class SingleViewComponent implements OnInit{
     console.log("Here back with the data");
     this.eventLogData = eventLogs;
     console.log(this.eventLogData);
+    
     //this.eventLogEntries = eventLogs;
 
 
