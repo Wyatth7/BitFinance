@@ -156,9 +156,9 @@ export const getAccountEventLogs = onRequest(
         const eventLogQuery = admin
         .firestore()
         .collection(FirestoreCollections.eventLogs)
-        .where("hostId", "==", accountId).get();
+        .where("hostId", "==", accountId);
 
-        const eventLogSnapshot = await eventLogQuery;
+        const eventLogSnapshot = await eventLogQuery.get();
 
         console.log('Here in the cloud function\n');
 

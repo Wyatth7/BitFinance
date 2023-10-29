@@ -90,12 +90,12 @@
 
         <ng-container *ngIf="!renderEntryList">
             <div class="event-table">
-                <app-table [tableData]="eventLogData" [displayedColumns]="eventLogDisplayedColumns">
+                <app-table [displayedColumns]="eventLogDisplayedColumns">
                     <ng-container matSort>
 
                         <ng-container matColumnDef="Date Changed">
                             <th mat-header-cell *matHeaderCellDef>Date Changed</th>
-                            <td></td>
+                            <td mat-cell *matCellDef="let row">{{row.dateChanged}}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="second column">
