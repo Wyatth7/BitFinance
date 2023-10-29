@@ -129,7 +129,7 @@ export class JournalService {
   
       await this.getJournals();
       
-      this.snackBarService.showSuccess(shouldAccept ? 'Entry Approval Successful' : 'Entry Decline Succesful')
+      this.snackBarService.showSuccess(shouldAccept ? 'Entry Posted Successfully' : 'Entry Decline Succesful')
     } catch (error) {
       this.snackBarService.showError('Entry approval action failed')
     }

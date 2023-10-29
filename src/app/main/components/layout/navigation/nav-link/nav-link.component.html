@@ -1,9 +1,7 @@
-<button
- [routerLink]="[route]"
- routerLinkActive="nav-link-active" 
- mat-button class="nav-link"
- [matTooltip]="tooltip"
- matTooltipPosition="right">
-    <mat-icon class="nav-link-icon" *ngIf="icon">{{ icon }}</mat-icon>
-    <p class="nav-link-text">{{ text }}</p>
-</button>
+<app-side-nav-button
+    [routerLink]="[route]"
+    routerLinkActive="nav-link-active" 
+    [tooltip]="tooltip"
+    [icon]="icon"
+    [text]="text"
+></app-side-nav-button>

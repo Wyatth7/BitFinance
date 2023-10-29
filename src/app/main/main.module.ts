@@ -18,6 +18,9 @@ import {NavLinkComponent} from './components/layout/navigation/nav-link/nav-link
 import { SecondaryTopNavComponent } from './components/layout/navigation/secondary-top-nav/secondary-top-nav.component';
 import { AuthenticationComponent } from './components/authentication/authentication/authentication.component'
 import {SharedModule} from './../shared/shared.module';
+import { SideNavButtonComponent } from './components/buttons/side-nav-button/side-nav-button.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import {SharedModule} from './../shared/shared.module';
     TopNavComponent,
     NavLinkComponent,
     SecondaryTopNavComponent,
-    AuthenticationComponent
+    AuthenticationComponent,
+    SideNavButtonComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +43,9 @@ import {SharedModule} from './../shared/shared.module';
     MatDividerModule,
     RouterModule,
     MatTooltipModule,
-    SharedModule
+    SharedModule,
+    MatCardModule,
+    MatDatepickerModule,
   ],
   exports: [
     LayoutComponent,
