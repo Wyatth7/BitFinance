@@ -9,7 +9,7 @@ import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
-
+import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
 
 interface JournalEntry {
   date: Date;
@@ -19,28 +19,6 @@ interface JournalEntry {
   createdBy: string;
 }
 
-interface EventlogEntry {
-  afterChange:{
-      accountId: string,
-      accountName: string,
-      accountNumber: number,
-      accountType: number,
-      balance: number,
-      createdOn: string,
-      description: string,
-      entries: number,
-      isActive: boolean,
-      normalType: number,
-      statementType: number
-  },
-  beforeChange: null,
-  collection: string,
-  dateChanged: string,
-  eventLogId: string,
-  hostId: string,
-  logAction: number,
-  userId: string
-};
 
 @Component({
   selector: 'app-single-view',
@@ -52,7 +30,7 @@ export class SingleViewComponent implements OnInit{
 
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date'];
   eventLogDisplayedColumns = ['Date Changed', 'second column', 'third column'];
-  eventLogData: EventlogEntry[] = [];
+  eventLogData: EventLogModel[] = [];
   dateCreated = new Date();
   renderEntryList:boolean = true;
   tableTitle = 'Journal Entries'

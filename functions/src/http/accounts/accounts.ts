@@ -11,29 +11,9 @@ import { AccountListResponseModel } from "../../shared/models/accounts/responses
 import { AccountModel } from "../../shared/models/accounts/account-model";
 import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
 import { AccountEntry } from "../../shared/models/journals/account-journal";
+import { EventLogModel } from "../../shared/models/event-log/event-log-model";
 
-interface EventlogEntry {
-    afterChange:{
-        accountId: string,
-        accountName: string,
-        accountNumber: number,
-        accountType: number,
-        balance: number,
-        createdOn: string,
-        description: string,
-        entries: number,
-        isActive: boolean,
-        normalType: number,
-        statementType: number
-    },
-    beforeChange: null,
-    collection: string,
-    dateChanged: string,
-    eventLogId: string,
-    hostId: string,
-    logAction: number,
-    userId: string
-};
+
 
 export const getAllAccounts = onRequest(
     {cors: true},
@@ -162,7 +142,7 @@ export const getAccountEventLogs = onRequest(
 
         console.log('Here in the cloud function\n');
 
-        const logs = eventLogSnapshot.docs.map(entry => entry.data() as EventlogEntry);
+        const logs = eventLogSnapshot.docs.map(entry => entry.data() as EventLogModel);
 
         logs.forEach((event) => {
             console.log(`The HOST ID is: ${event.hostId} and DATE is ${event.dateChanged}\n`);
