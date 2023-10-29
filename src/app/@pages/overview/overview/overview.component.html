@@ -40,27 +40,27 @@
     </app-card>
 
     <app-card 
-        route="/users/view"
+        route="/journal/view"
         icon="book" 
         title="Journal" 
-        subTitle="BitFinance User Information" 
-        buttonTitle="View Users"
+        subTitle="BitFinance Journal Information" 
+        buttonTitle="View Journals"
         [requiredButtonRoles]="[1]">
         <div class="overview-card-wrapper">
 
             <app-number-group
                 [color]="color.blue"
-                [number]="overviewData?.users?.requested || 0"
+                [number]="overviewData?.journals?.requested || 0"
                 text="Requested"
             ></app-number-group>
             <app-number-group
                 [color]="color.green"
-                [number]="overviewData?.users?.approved || 0"
+                [number]="overviewData?.journals?.approved || 0"
                 text="Approved"
             ></app-number-group>
             <app-number-group
                 [color]="color.red"
-                [number]="overviewData?.users?.declined || 0"
+                [number]="overviewData?.journals?.declined || 0"
                 text="Declined"
             ></app-number-group>
             

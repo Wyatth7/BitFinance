@@ -2,8 +2,11 @@ export interface OverviewDataModel {
     users: {
         requested: number;
         accepted: number;
+    },
+    journals: {
         approved: number;
-        declined: number;
+        requested: number;
+        declined: number
     },
     accounts: number;
 }
