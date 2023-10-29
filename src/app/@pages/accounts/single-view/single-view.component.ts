@@ -19,6 +19,29 @@ interface JournalEntry {
   createdBy: string;
 }
 
+interface EventlogEntry {
+  afterChange:{
+      accountId: string,
+      accountName: string,
+      accountNumber: number,
+      accountType: number,
+      balance: number,
+      createdOn: string,
+      description: string,
+      entries: number,
+      isActive: boolean,
+      normalType: number,
+      statementType: number
+  },
+  beforeChange: null,
+  collection: string,
+  dateChanged: string,
+  eventLogId: string,
+  hostId: string,
+  logAction: number,
+  userId: string
+};
+
 @Component({
   selector: 'app-single-view',
   templateUrl: './single-view.component.html',
@@ -27,10 +50,10 @@ interface JournalEntry {
 export class SingleViewComponent implements OnInit{
   account?: AccountModel;
 
-  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date']
-
+  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date'];
+  eventLogDisplayedColumns = ['Date Changed', 'second column', 'third column'];
+  eventLogData: EventlogEntry[] = [];
   dateCreated = new Date();
-
   renderEntryList:boolean = true;
   tableTitle = 'Journal Entries'
 
@@ -89,6 +112,20 @@ export class SingleViewComponent implements OnInit{
     }
 
     }
+
+  async getEventLogData(){
+    console.log("Here in the getEvenLogData");
+    const eventLogs = await this.accountService.getAccountEventLogs(this.account?.accountId);
+    console.log("Here back with the data");
+    this.eventLogData = eventLogs;
+    console.log(this.eventLogData);
+    //this.eventLogEntries = eventLogs;
+
+
+    // eventLogs.forEach((event)=>{
+      
+    // });    
+  }
   /*^^^^ Current Work ^^^^*/
 
   openEditModal(){

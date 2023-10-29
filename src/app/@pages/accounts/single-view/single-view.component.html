@@ -40,7 +40,7 @@
             <div class="chips">
                 <mat-chip-listbox #chipList (change)="change($event)">
                     <mat-chip-option [value]="true" matTooltip="View Entry List" selected>View Entry list</mat-chip-option>
-                    <mat-chip-option [value]="false" matTooltip="View Event Log">View Event Log</mat-chip-option>
+                    <mat-chip-option [value]="false" matTooltip="View Event Log" (click)="getEventLogData()">View Event Log</mat-chip-option>
                 </mat-chip-listbox>
             </div>
         </app-secondary-top-nav>
@@ -87,9 +87,30 @@
                 </app-table>
             </div>
         </ng-container>
+
         <ng-container *ngIf="!renderEntryList">
-            <div>
-                Hello
+            <div class="event-table">
+                <app-table [tableData]="eventLogData" [displayedColumns]="eventLogDisplayedColumns">
+                    <ng-container matSort>
+
+                        <ng-container matColumnDef="Date Changed">
+                            <th mat-header-cell *matHeaderCellDef>Date Changed</th>
+                            <td></td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="second column">
+                            <th mat-header-cell *matHeaderCellDef>Second Column</th>
+                            <td></td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="third column">
+                            <th mat-header-cell *matHeaderCellDef>Third Column</th>
+                            <td ></td>
+                        </ng-container>
+
+                    </ng-container>
+
+                </app-table>
             </div>
         </ng-container>
         </div>

@@ -3,5 +3,6 @@ export enum AccountFunctions {
     getAccount = 'accounts-getAccount',
     createAccount = 'accountOperations-createAccount',
     editAccount = 'accountOperations-editAccount',
-    toggleActivation = 'accountOperations-toggleActivation'
+    toggleActivation = 'accountOperations-toggleActivation',
+    getAccountEventLogs = 'accounts-getAccountEventLogs'
 }

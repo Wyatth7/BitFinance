@@ -12,12 +12,36 @@ import { ToggleActivationDto } from '../../models/accounts/dto/toggle-activation
 import { LoaderService } from '../component-services/loader.service';
 import { SnackBarService } from '../component-services/snack-bar.service';
 
+interface EventlogEntry {
+  afterChange:{
+      accountId: string,
+      accountName: string,
+      accountNumber: number,
+      accountType: number,
+      balance: number,
+      createdOn: string,
+      description: string,
+      entries: number,
+      isActive: boolean,
+      normalType: number,
+      statementType: number
+  },
+  beforeChange: null,
+  collection: string,
+  dateChanged: string,
+  eventLogId: string,
+  hostId: string,
+  logAction: number,
+  userId: string
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   accounts$ = new Subject<AccountListResponseModel>();
 
+  
   constructor(
     private functions: Functions,
     private authService: AuthenticationService,
@@ -115,5 +139,22 @@ export class AccountService {
       this.snackBarService.showError('Activation toggle failed');
       return false;
     }
+  }
+
+  async getAccountEventLogs(accountId?: string){
+    try{
+
+      const getEventLogsFunction = httpsCallable<string, EventlogEntry[]>(this.functions, AccountFunctions.getAccountEventLogs);
+      const eventLogs = (await getEventLogsFunction(accountId)).data;
+      
+      console.log(eventLogs);
+
+      return eventLogs;
+
+    } catch{
+      this.snackBarService.showError('EventLog Retrievel Failed');
+      return [];
+    }
+
   }
 }
