@@ -2,12 +2,8 @@
     <app-info-page-header [title]="account?.accountName || ''">
         <div class="top-data">
             <div class="top-data--left">
-                <app-number-text
-                    [value]="account?.balance"
-                    text="Balance"
-                    [valueType]="getEnum.valuTextType.currency"
-                    [focusColor]="getEnum.color.green"
-                ></app-number-text> 
+                <app-number-text [value]="account?.balance" text="Balance" [valueType]="getEnum.valuTextType.currency"
+                    [focusColor]="getEnum.color.green"></app-number-text>
             </div>
             <div class="top-data--right">
                 <div class="right-content">
@@ -15,17 +11,13 @@
                     <h3>Created on <span>{{ account?.createdOn | date:'longDate' }}</span></h3>
                     <app-required-role-view [roles]="[1]">
 
-                        <button
-                            class="button-menu"
-                            mat-flat-button
-                            color="primary"
-                            matTooltip="More Options"
+                        <button class="button-menu" mat-flat-button color="primary" matTooltip="More Options"
                             [matMenuTriggerFor]="moreOptionsMenu">
                             <p>Options</p>
                             <mat-icon>more_vert</mat-icon>
                         </button>
                     </app-required-role-view>
-                   
+
                 </div>
             </div>
         </div>
@@ -36,98 +28,91 @@
     <mat-divider class="account-tansaction-divider"></mat-divider>
     <div class="journal-entries">
 
-        <app-secondary-top-nav title={{tableTitle}}>
-            <div class="chips">
-                <mat-chip-listbox #chipList (change)="change($event)">
-                    <mat-chip-option [value]="true" matTooltip="View Entry List" selected>View Entry list</mat-chip-option>
-                    <mat-chip-option [value]="false" matTooltip="View Event Log" (click)="getEventLogData()">View Event Log</mat-chip-option>
-                </mat-chip-listbox>
-            </div>
-        </app-secondary-top-nav>
-        <ng-container *ngIf="account && renderEntryList"  >
-        <app-secondary-top-nav 
-            title="Journal Entries" 
-            [enableDatePicker]="true"
-            (searchString)="searchEmitted($event)"
-            (dateRange)="dateEmitted($event)"
-            ></app-secondary-top-nav>
-        <ng-container *ngIf="account" >
 
-            <div class="journal-table" *ngIf="account.entryList.length > 0; else noTransactions">
-                <app-table 
-                    [tableData]="account.entryList" 
-                    [displayedColumns]="displayedColumns"
-                    [filters]="filter"
-                    [dateFilter]="dateFilter">
-                    
-                    <ng-container matSort>
-                        
-                        <ng-container matColumnDef="actions" >
-                            <th mat-header-cell *matHeaderCellDef> Actions </th>
-                            <td mat-cell *matCellDef="let row"> 
-                                <button
-                                mat-stroked-button
-                                color="primary"
-                                (click)="navigateToEntry(row.journalId)"
-                                >View</button>
-                            </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="entryName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-                            <td mat-cell *matCellDef="let row"> {{row.entryName}} </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="debit">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Debited </th>
-                            <td mat-cell *matCellDef="let row"> {{row.debit | currency}} </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="credit">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
-                            <td mat-cell *matCellDef="let row"> {{row.credit | currency }} </td>
+            <app-secondary-top-nav [title]="tableTitle" [enableDatePicker]="renderEntryList"
+                (searchString)="searchEmitted($event)" (dateRange)="dateEmitted($event)">
+                <div class="chips">
+                    <mat-chip-listbox #chipList (change)="change($event)">
+                        <mat-chip-option [value]="true" matTooltip="View Entry List" selected>View Entry
+                            list</mat-chip-option>
+                        <mat-chip-option [value]="false" matTooltip="View Event Log">View Event
+                            Log</mat-chip-option>
+                    </mat-chip-listbox>
+                </div>
+            </app-secondary-top-nav>
+
+            <ng-container *ngIf="account && renderEntryList">
+
+                <div class="journal-table" *ngIf="account.entryList.length > 0; else noTransactions">
+                    <app-table [tableData]="account.entryList" [displayedColumns]="displayedColumns" [filters]="filter"
+                        [dateFilter]="dateFilter">
+
+                        <ng-container matSort>
+
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <button mat-stroked-button color="primary"
+                                        (click)="navigateToEntry(row.journalId)">View</button>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="entryName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                                <td mat-cell *matCellDef="let row"> {{row.entryName}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="debit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Debited </th>
+                                <td mat-cell *matCellDef="let row"> {{row.debit | currency}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="credit">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
+                                <td mat-cell *matCellDef="let row"> {{row.credit | currency }} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="balance">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Adjusted Balance </th>
+                                <td mat-cell *matCellDef="let row"> {{row.balance | currency }} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="creationDate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
+                                <td mat-cell *matCellDef="let row"> {{row.creationDate | date:'longDate'}} </td>
+                            </ng-container>
+
+
                         </ng-container>
 
-                        <ng-container matColumnDef="balance">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Adjusted Balance </th>
-                            <td mat-cell *matCellDef="let row"> {{row.balance | currency }} </td>
-                        </ng-container>
-                        
-                        <ng-container matColumnDef="creationDate" >
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
-                            <td mat-cell *matCellDef="let row"> {{row.creationDate | date:'longDate'}} </td>
-                        </ng-container>       
-                        
-                        
-                    </ng-container>
-                    
-                </app-table>
-            </div>
-        </ng-container>
+                    </app-table>
+                </div>
+            </ng-container>
+
 
         <ng-container *ngIf="eventLogData">
             <ng-container *ngIf="!renderEntryList">
                 <div class="event-table">
                     <app-table [tableData]="eventLogData" [displayedColumns]="eventLogDisplayedColumns">
                         <ng-container matSort>
-    
+
                             <ng-container matColumnDef="dateChanged">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Changed</th>
                                 <td mat-cell *matCellDef="let row">{{row.dateChanged}}</td>
                             </ng-container>
-    
+
                             <ng-container matColumnDef="secondColumn">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Second Column</th>
                                 <td mat-cell *matCellDef="let row">{{row.userId}}></td>
                             </ng-container>
-    
+
                             <ng-container matColumnDef="thirdColumn">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Third Column</th>
                                 <td mat-cell *matCellDef="let row">{{row.collection}}></td>
                             </ng-container>
-    
+
                         </ng-container>
-    
+
                     </app-table>
                 </div>
             </ng-container>
@@ -136,25 +121,14 @@
 </div>
 
 <mat-menu #moreOptionsMenu>
-    <button
-        mat-menu-item
-        color="primary"
-        (click)="openEditModal()"
-    >
+    <button mat-menu-item color="primary" (click)="openEditModal()">
         Edit Account
     </button>
-    <button 
-        *ngIf="account?.balance === 0" 
-        mat-menu-item
-        (click)="toggleActivation()"
-        >{{ account?.isActive ? 'Deactivate' : 'Activate' }}</button>
+    <button *ngIf="account?.balance === 0" mat-menu-item (click)="toggleActivation()">{{ account?.isActive ?
+        'Deactivate' : 'Activate' }}</button>
 </mat-menu>
 
 <ng-template #noTransactions>
-    <app-empty-table-info
-        headerText="journal entries"
-        buttonText="Create Entry"
-        [requiredActionRoles]="[1]"
-        [action]="openCreateEntryModalFn"
-    ></app-empty-table-info>
+    <app-empty-table-info headerText="journal entries" buttonText="Create Entry" [requiredActionRoles]="[1]"
+        [action]="openCreateEntryModalFn"></app-empty-table-info>
 </ng-template>

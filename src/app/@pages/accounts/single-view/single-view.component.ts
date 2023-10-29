@@ -65,7 +65,7 @@ export class SingleViewComponent implements OnInit{
   }
 
   /* Current Work */
-  change($event: MatChipListboxChange): void {
+  async change($event: MatChipListboxChange){
     console.log('Here');
     if($event.value === undefined){
       this.renderEntryList = true;
@@ -81,6 +81,7 @@ export class SingleViewComponent implements OnInit{
     }
     else{
       this.tableTitle = 'Event Log';
+      await this.getEventLogData();
     }
 
     }
@@ -92,12 +93,6 @@ export class SingleViewComponent implements OnInit{
     this.eventLogData = eventLogs;
     console.log(this.eventLogData);
     
-    //this.eventLogEntries = eventLogs;
-
-
-    // eventLogs.forEach((event)=>{
-      
-    // });    
   }
   /*^^^^ Current Work ^^^^*/
 

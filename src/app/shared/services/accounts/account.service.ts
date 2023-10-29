@@ -127,7 +127,7 @@ export class AccountService {
       
       console.log(eventLogs);
 
-      return eventLogs;
+      return [...eventLogs];
 
     } catch{
       this.snackBarService.showError('EventLog Retrievel Failed');
