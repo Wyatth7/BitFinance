@@ -1,7 +1,7 @@
-import { JournalEntryModel } from "../journal-entry-model";
+import { EntryListItemResponseDto } from "./entry-list-item-response-dto";
 
 export interface EntryListResponseDto {
-    approved: JournalEntryModel[],
-    requested: JournalEntryModel[],
-    declined: JournalEntryModel[],
+    approved: EntryListItemResponseDto[],
+    requested: EntryListItemResponseDto[],
+    declined: EntryListItemResponseDto[],
 }

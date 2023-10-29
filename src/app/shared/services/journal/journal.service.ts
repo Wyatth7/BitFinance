@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { EntryListResponseDto } from '../../models/journal/dto/entry-list-response-dto';
 import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
+import { JournalEntryPageModel } from '../../models/journal/journal-page-model';
 
 @Injectable({
   providedIn: 'root'
@@ -87,17 +88,52 @@ export class JournalService {
   }
 
   /**
+   * Gets a single journal entry
+   * @param entryId ID of entry to fetch
+   */
+  async getJournalEntryPageData(entryId: string): Promise<JournalEntryPageModel | undefined> { 
+
+    this.loaderService.showLoader('Journal Entry');
+
+    const entryFunction = httpsCallable<string, JournalEntryPageModel>(this.functions, JournalFunctions.getJournalEntry)
+
+    try {
+      
+      const entryPageData = await entryFunction(entryId);
+
+      this.loaderService.stopLoader();
+
+      return entryPageData.data;
+
+    } catch (error) {
+      this.dialogService.openErrorDialog({
+        title: 'Journal Entry Load Failed',
+        data: 'There was an issue loading the journal entry from the server. Refresh the page or try again later if the problem continues.'
+      })
+      this.loaderService.stopLoader();
+    }
+    
+    return;
+  }
+
+  /**
    * Approves or declines journal entry
    * @param journalId Id of journal entry
    * @param shouldAccept Should entry be approved or declined
    */
-  async acceptDenyJournal(journalId: string, shouldAccept: boolean) {
+  async acceptDenyJournal(journalId: string, shouldAccept: boolean, comment = '') {
 
     const approveDeclineRef = httpsCallable(this.functions, JournalFunctions.approveDeclineJournal);
+    try {
+      await approveDeclineRef({journalId, shouldAccept, comment});
+  
+      await this.getJournals();
+      
+      this.snackBarService.showSuccess(shouldAccept ? 'Entry Posted Successfully' : 'Entry Decline Succesful')
+    } catch (error) {
+      this.snackBarService.showError('Entry approval action failed')
+    }
 
-    await approveDeclineRef({journalId, shouldAccept});
-
-    await this.getJournals();
   }
 
 }

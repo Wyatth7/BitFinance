@@ -18,4 +18,5 @@ export interface JournalEntry {
     transactions: Transaction[];
     attachedFileCount: number;
     fileData?: FileData[];
+    declineComment?: string;
 }

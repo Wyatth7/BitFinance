@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
@@ -11,26 +11,19 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
 import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
 import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
 
-interface JournalEntry {
-  date: Date;
-  description: string;
-  transactionType: string;
-  amount: number;
-  createdBy: string;
-}
-
-
 @Component({
   selector: 'app-single-view',
   templateUrl: './single-view.component.html',
   styleUrls: ['./single-view.component.scss']
 })
 export class SingleViewComponent implements OnInit{
+  filter: string | string[] = '';
+  dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
 
-  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'date'];
   eventLogDisplayedColumns = ['dateChanged', 'secondColumn', 'thirdColumn'];
   eventLogData: EventLogModel[] = [];
+  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
   dateCreated = new Date();
   renderEntryList:boolean = true;
   tableTitle = 'Journal Entries'
@@ -40,7 +33,8 @@ export class SingleViewComponent implements OnInit{
       public getEnum: GetEnumValueService,
       private topNavService: TopNavService,
       private dialogService: DialogService,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private router: Router
     ) {}
 
   async ngOnInit(): Promise<void> {
@@ -141,112 +135,15 @@ export class SingleViewComponent implements OnInit{
   }
   openCreateEntryModalFn = this.openCreateEntryModal.bind(this);
 
-  // journalEntries: JournalEntry[] = [
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   // Add more journal entries as needed
-  // ];
+  navigateToEntry(journalId: string) {
+    this.router.navigateByUrl(`/journal/${journalId}`)
+  }
+
+  searchEmitted(value: string | null) {
+    this.filter = value || '';
+  }
+
+  dateEmitted(value: {start: Date, end: Date}) {
+    this.dateFilter = {...value}
+  }
 }

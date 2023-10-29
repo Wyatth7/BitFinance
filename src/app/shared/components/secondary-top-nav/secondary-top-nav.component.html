@@ -7,19 +7,30 @@
         </div>
     </div>
 
-    <div class="filtering" *ngIf="showSearch">
-        <mat-form-field 
-            appearance="outline" 
-            class="search-bar" 
-            subscriptSizing="dynamic"
-            >
-            <input 
+    <div class="filtering" >
+            <mat-form-field *ngIf="enableDatePicker" class="date-picker" appearance="outline">
+                <mat-label>Filter Date</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                    <input [(ngModel)]="dateRangeValues.start" (dateChange)="emitDateFilter()" matStartDate placeholder="Start date">
+                    <input [(ngModel)]="dateRangeValues.end" (dateChange)="emitDateFilter()" matEndDate placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+            </mat-form-field>
+        <ng-container *ngIf="showSearch">
+            <mat-form-field 
+                appearance="outline" 
+                class="search-bar" 
+                subscriptSizing="dynamic"
+                >
+                <input 
                 matInput    
                 type="text"
                 [(ngModel)]="searchValue"
                 [placeholder]="searchPlaceholder"
-             />
-             <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+                />
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+        </ng-container>
     </div>
 </div>

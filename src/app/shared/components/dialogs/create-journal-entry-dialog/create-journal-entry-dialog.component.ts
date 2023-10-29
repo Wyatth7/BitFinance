@@ -15,10 +15,10 @@ import { JournalService } from 'src/app/shared/services/journal/journal.service'
 export class CreateJournalEntryDialogComponent {
   loading = false;
   shouldReset$ = new Subject<boolean>();
-  transactionsValid = false;
+  transactionsValid = true;
 
   private _selectedFiles?: File[];
-  private _transactions: TransactionEntryListItem[] = [];
+  transactions: TransactionEntryListItem[] = [];
 
   form = this.formBuilder.group({
       entryName: new FormControl('', [Validators.required]),
@@ -35,13 +35,11 @@ export class CreateJournalEntryDialogComponent {
   async executeAction(){ 
     this.loading = true;
 
-    console.log(this._selectedFiles);
-    
     const generalEntryForm =  this.form.value;
     const entryData: JournalEntryBaseModel = {
       name: generalEntryForm.entryName!,
       description: generalEntryForm.entryDescription!,
-      transactions: this._transactions,
+      transactions: this.transactions,
       files: this._selectedFiles
     }
     
@@ -53,18 +51,20 @@ export class CreateJournalEntryDialogComponent {
 
   resetForm() {
     this.form.reset();
-    this._transactions = [],
-    this.transactionsValid = false;
+    this.transactions = [],
+    this.transactionsValid = true;
     this.shouldReset$.next(true);
   }
 
-  set transactions(transactions: {transactions: TransactionEntryListItem[], isBalanced: boolean}) {
-    this._transactions = transactions.transactions;
+  settransactions(transactions: {transactions: TransactionEntryListItem[], isBalanced: boolean}) {
+    this.transactions = transactions.transactions;
     this.transactionsValid = transactions.isBalanced
   }
 
   get transactionCount() {
-    return this._transactions.length;
+    console.log(this.transactions);
+    
+    return this.transactions.length;
   }
 
   set files(files: File[]) {

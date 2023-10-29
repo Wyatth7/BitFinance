@@ -45,9 +45,20 @@
             </div>
         </app-secondary-top-nav>
         <ng-container *ngIf="account && renderEntryList"  >
+        <app-secondary-top-nav 
+            title="Journal Entries" 
+            [enableDatePicker]="true"
+            (searchString)="searchEmitted($event)"
+            (dateRange)="dateEmitted($event)"
+            ></app-secondary-top-nav>
+        <ng-container *ngIf="account" >
 
             <div class="journal-table" *ngIf="account.entryList.length > 0; else noTransactions">
-                <app-table [tableData]="account.entryList" [displayedColumns]="displayedColumns">
+                <app-table 
+                    [tableData]="account.entryList" 
+                    [displayedColumns]="displayedColumns"
+                    [filters]="filter"
+                    [dateFilter]="dateFilter">
                     
                     <ng-container matSort>
                         
@@ -57,6 +68,7 @@
                                 <button
                                 mat-stroked-button
                                 color="primary"
+                                (click)="navigateToEntry(row.journalId)"
                                 >View</button>
                             </td>
                         </ng-container>
@@ -75,8 +87,13 @@
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount Credited </th>
                             <td mat-cell *matCellDef="let row"> {{row.credit | currency }} </td>
                         </ng-container>
+
+                        <ng-container matColumnDef="balance">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Adjusted Balance </th>
+                            <td mat-cell *matCellDef="let row"> {{row.balance | currency }} </td>
+                        </ng-container>
                         
-                        <ng-container matColumnDef="date" >
+                        <ng-container matColumnDef="creationDate" >
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
                             <td mat-cell *matCellDef="let row"> {{row.creationDate | date:'longDate'}} </td>
                         </ng-container>       

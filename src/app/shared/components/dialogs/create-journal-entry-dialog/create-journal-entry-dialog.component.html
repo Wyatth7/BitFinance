@@ -5,6 +5,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Entry Name</mat-label>
                 <input matInput formControlName="entryName" type="text" />
+                <mat-error>An Entry name is required</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" hideRequiredMarker>
                 <mat-label>Description (optional)</mat-label>
@@ -13,7 +14,8 @@
         </div>
 
         <h2>Double Entry</h2>
-        <app-debit-credit-account-form [shouldReset$]="shouldReset$" (transactionChange)="transactions = $event"></app-debit-credit-account-form>
+        <mat-error class="journal-error" *ngIf="!transactionsValid">Journal entry is not balanced. A journal entry must be balanced before it can be submitted for approval.</mat-error>
+        <app-debit-credit-account-form [shouldReset$]="shouldReset$" (transactionChange)="settransactions($event)"></app-debit-credit-account-form>
     </form>
 
     <div class="upload-button">
@@ -28,6 +30,6 @@
       [spin]="loading" 
       text="Submit" 
       (click)="executeAction()" 
-      [disabled]="form.invalid || !transactionsValid"
+      [disabled]="form.invalid || !transactionsValid || transactions.length === 0"
     ></app-spinner-button>
 </mat-dialog-actions>
