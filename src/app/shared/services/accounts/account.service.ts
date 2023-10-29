@@ -122,12 +122,10 @@ export class AccountService {
   async getAccountEventLogs(accountId?: string){
     try{
 
-      const getEventLogsFunction = httpsCallable<string, EventLogModel[]>(this.functions, AccountFunctions.getAccountEventLogs);
-      const eventLogs = (await getEventLogsFunction(accountId)).data;
-      
-      console.log(eventLogs);
+      const getEventLogsFunction = httpsCallable<string, {eventLogs: EventLogModel[]}>(this.functions, AccountFunctions.getAccountEventLogs);
+      const query  = await getEventLogsFunction(accountId);
 
-      return [...eventLogs];
+      return [...query.data.eventLogs];
 
     } catch{
       this.snackBarService.showError('EventLog Retrievel Failed');

@@ -147,8 +147,8 @@ export const getAccountEventLogs = onRequest(
         logs.forEach((event) => {
             console.log(`The HOST ID is: ${event.hostId} and DATE is ${event.dateChanged}\n`);
         });
-        
-        return okResponse(logs, 200, res);
+
+        return okResponse({eventLogs: logs}, 200, res);
     } catch(error){
         logger.error(error);
         return badRequestResponse('An error occured while getting the account, and the account could not be send.', res);
