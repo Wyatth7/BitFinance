@@ -21,7 +21,7 @@ export class SingleViewComponent implements OnInit{
   dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
 
-  eventLogDisplayedColumns = ['actions', 'dateChanged', 'balance', 'active?', 'statementType'];
+  eventLogDisplayedColumns = ['actions', 'dateChanged', 'balance', 'isActive', 'statementType'];
   eventLogData: EventLogModel[] = [];
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
   dateCreated = new Date();
@@ -66,7 +66,6 @@ export class SingleViewComponent implements OnInit{
 
   /* Current Work */
   async change($event: MatChipListboxChange){
-    console.log('Here');
     if($event.value === undefined){
       this.renderEntryList = true;
       this.tableTitle = "Journal Entries"
@@ -87,18 +86,14 @@ export class SingleViewComponent implements OnInit{
     }
 
   async getEventLogData(){
-    console.log("Here in the getEvenLogData");
     const eventLogs = await this.accountService.getAccountEventLogs(this.account?.accountId);
-    console.log("Here back with the data");
     this.eventLogData = eventLogs;
-    console.log(this.eventLogData);
     
   }
 
   navigateToEventLog(){
     console.log("Needs implementation");
   }
-  /*^^^^ Current Work ^^^^*/
 
   openEditModal(){
     const formData: CreateAccountForm = {

@@ -62,8 +62,6 @@ export class CreateJournalEntryDialogComponent {
   }
 
   get transactionCount() {
-    console.log(this.transactions);
-    
     return this.transactions.length;
   }
 
