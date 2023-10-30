@@ -3,5 +3,10 @@ export interface OverviewDataModel {
         requested: number;
         accepted: number;
     },
+    journals: {
+        approved: number;
+        requested: number;
+        declined: number
+    },
     accounts: number;
 }
