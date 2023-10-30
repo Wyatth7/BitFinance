@@ -102,7 +102,7 @@ export class SingleViewComponent implements OnInit{
 
   navigateToEventLog(){
     const dialogRef = this.dialog.open(AccountLogDialogComponent, {
-       //data: { name: accountName } //Will need this later
+       data: {  name: this.account?.accountName } //Will need this later
     });
   }
 
