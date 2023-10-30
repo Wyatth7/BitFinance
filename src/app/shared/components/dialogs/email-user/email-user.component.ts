@@ -1,10 +1,8 @@
-import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, AfterContentChecked, OnChanges } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { User } from 'firebase/auth';
 import { Observable, Subscription, map, startWith } from 'rxjs';
 import { DialogData } from 'src/app/shared/models/dialog/dialog-data';
-import { UserListModel } from 'src/app/shared/models/users/user-list-model';
 import { UserModel } from 'src/app/shared/models/users/user-model';
 import { EmailService } from 'src/app/shared/services/messaging/email.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
@@ -16,6 +14,7 @@ import { CreateAccountDialogComponent } from '../create-account-dialog/create-ac
   styleUrls: ['./email-user.component.scss']
 })
 export class EmailUserComponent implements OnInit, OnDestroy {
+  showUserLoadingSpinner = false;
   loading = false;
   filteredOptions!: Observable<UserModel[]>;
   users?: UserModel[];
@@ -47,7 +46,11 @@ export class EmailUserComponent implements OnInit, OnDestroy {
     });
 
     if (!this.users) {
+      this.showUserLoadingSpinner = true;
+
       await this.userService.getUserList();
+      
+      this.showUserLoadingSpinner = false;
     }
     
     this.configureFilterOptions();

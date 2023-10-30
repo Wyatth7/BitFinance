@@ -1,6 +1,7 @@
+<app-section-loading-spinner *ngIf="showUserLoadingSpinner"></app-section-loading-spinner>
 <h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
 <mat-dialog-content>
-    <form class="email-form" [formGroup]="form">
+  <form class="email-form" [formGroup]="form">
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Send to</mat-label>
             <input type="text" matInput formControlName="mailTo" [matAutocomplete]="auto">

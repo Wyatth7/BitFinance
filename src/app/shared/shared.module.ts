@@ -38,6 +38,7 @@ import { MatListModule } from '@angular/material/list';
 import { DeclineEntryDialogComponent } from './components/dialogs/decline-entry-dialog/decline-entry-dialog.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SectionLoadingSpinnerComponent } from './components/spinners-loader/section-loading-spinner/section-loading-spinner.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     DebitCreditAccountFormComponent,
     UploadComponent,
     DeclineEntryDialogComponent,
+    SectionLoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -97,6 +99,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     SpinnerButtonComponent,
     EllipsisPipe,
     ContentLoadingScreenComponent,
+    SectionLoadingSpinnerComponent,
     ValueTextComponent,
     InfoPageHeaderComponent,
     EmptyTableInfoComponent,

@@ -17,6 +17,9 @@ import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-m
   styleUrls: ['./single-view.component.scss']
 })
 export class SingleViewComponent implements OnInit{
+  /** Spinner shown when event log data is loading */
+  showEventLogSpinner = true;
+
   filter: string | string[] = '';
   dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
@@ -86,9 +89,12 @@ export class SingleViewComponent implements OnInit{
     }
 
   async getEventLogData(){
+    this.showEventLogSpinner = true;
+
     const eventLogs = await this.accountService.getAccountEventLogs(this.account?.accountId);
     this.eventLogData = eventLogs;
-    
+
+    // this.showEventLogSpinner = false;
   }
 
   navigateToEventLog(){

@@ -32,12 +32,10 @@ export class AccountService {
    * THIS FUNCTION / CALL HAS NOT BEEN TESTED
    */
   async getAccountList() {
-    this.loaderService.showLoader('Chart of Accounts');
     const accountListFunction = httpsCallable<null, AccountListResponseModel>(this.functions, AccountFunctions.getAllAccounts);
 
     const accounts = await accountListFunction();
 
-    this.loaderService.stopLoader();
     this.accounts$.next(accounts.data);
   }
 

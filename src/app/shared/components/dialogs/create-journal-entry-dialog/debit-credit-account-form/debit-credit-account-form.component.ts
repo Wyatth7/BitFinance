@@ -15,6 +15,7 @@ import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value
   styleUrls: ['./debit-credit-account-form.component.scss']
 })
 export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
+  showSpinner = false;
   private _accountsSubscription!: Subscription;
 
   @Input() shouldReset$!: Subject<boolean>;
@@ -45,7 +46,9 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
         .subscribe(accounts => this.accountList = accounts.accounts);
     
     if (!this.accountList) {
+      this.showSpinner = true;
       await this.accountService.getAccountList();
+      this.showSpinner = false;
     }
 
     this._resetSubscription = this.shouldReset$.subscribe(reset => {
