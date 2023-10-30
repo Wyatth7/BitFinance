@@ -11,6 +11,9 @@ import { AccountListResponseModel } from "../../shared/models/accounts/responses
 import { AccountModel } from "../../shared/models/accounts/account-model";
 import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
 import { AccountEntry } from "../../shared/models/journals/account-journal";
+import { EventLogModel } from "../../shared/models/event-log/event-log-model";
+
+
 
 export const getAllAccounts = onRequest(
     {cors: true},
@@ -117,3 +120,40 @@ export const getAccount = onRequest(
         }
     }
 );
+
+export const getAccountEventLogs = onRequest(
+    {cors: true},
+    async (req, res) => {
+
+        const accountId = req.body.data as string;
+
+        if (!accountId) return badRequestResponse('The account ID provided is invalid.', res);
+
+        //const evenLogSnapshot = 
+
+    try{
+        console.log(accountId);
+        const eventLogQuery = admin
+        .firestore()
+        .collection(FirestoreCollections.eventLogs)
+        .where("hostId", "==", accountId);
+
+        const eventLogSnapshot = await eventLogQuery.get();
+
+        console.log('Here in the cloud function\n');
+
+        const logs = eventLogSnapshot.docs.map(entry => entry.data() as EventLogModel);
+
+        logs.forEach((event) => {
+            console.log(`The HOST ID is: ${event.hostId} and DATE is ${event.dateChanged}\n`);
+        });
+
+        return okResponse({eventLogs: logs}, 200, res);
+    } catch(error){
+        logger.error(error);
+        return badRequestResponse('An error occured while getting the account, and the account could not be send.', res);
+    }
+    }
+);
+
+

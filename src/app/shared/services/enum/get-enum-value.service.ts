@@ -4,6 +4,7 @@ import { AccountType } from '../../enums/accounts/account-type';
 import { ValueTextType } from '../../enums/value-text-types.ts/value-text-type';
 import { NormalType } from '../../enums/accounts/normal-type';
 import { JournalApprovalType } from '../../enums/journals/journal-entry-approval-type';
+import { StatementType } from '../../enums/accounts/statement-type';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,21 @@ export class GetEnumValueService {
 
   accountTypeString(accountType: AccountType): string {
     return AccountType[accountType];
+  }
+
+  get statementType(): typeof StatementType {
+    return StatementType;
+  }
+
+  statementTypeString(statementType: StatementType): string {
+    switch(statementType) {
+      case StatementType.BS:
+        return 'Balance Sheet';
+      case StatementType.IS: 
+        return 'Income Statement';
+      case StatementType.RE:
+        return 'Retained Earnings';
+    }
   }
 
   get journalApprovalType(): typeof JournalApprovalType {
