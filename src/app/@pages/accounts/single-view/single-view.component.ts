@@ -21,7 +21,7 @@ export class SingleViewComponent implements OnInit{
   dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
 
-  eventLogDisplayedColumns = ['dateChanged', 'secondColumn', 'thirdColumn'];
+  eventLogDisplayedColumns = ['actions', 'dateChanged', 'balance', 'active?', 'statementType'];
   eventLogData: EventLogModel[] = [];
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
   dateCreated = new Date();
@@ -93,6 +93,10 @@ export class SingleViewComponent implements OnInit{
     this.eventLogData = eventLogs;
     console.log(this.eventLogData);
     
+  }
+
+  navigateToEventLog(){
+    console.log("Needs implementation");
   }
   /*^^^^ Current Work ^^^^*/
 
