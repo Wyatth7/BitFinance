@@ -10,6 +10,8 @@ import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
 import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
+import { MatDialog } from '@angular/material/dialog';
+import { AccountLogDialogComponent } from 'src/app/shared/components/dialogs/account-log-dialog/account-log-dialog.component';
 
 @Component({
   selector: 'app-single-view',
@@ -37,7 +39,8 @@ export class SingleViewComponent implements OnInit{
       private topNavService: TopNavService,
       private dialogService: DialogService,
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router,
+      private dialog: MatDialog
     ) {}
 
   async ngOnInit(): Promise<void> {
@@ -98,7 +101,9 @@ export class SingleViewComponent implements OnInit{
   }
 
   navigateToEventLog(){
-    console.log("Needs implementation");
+    const dialogRef = this.dialog.open(AccountLogDialogComponent, {
+       //data: { name: accountName } //Will need this later
+    });
   }
 
   openEditModal(){
