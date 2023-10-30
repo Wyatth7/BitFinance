@@ -1,1 +1,18 @@
-<p>account-log-dialog works!</p>
+<mat-dialog-content>
+    <h1>{{data.name | titlecase}} Event Log Details</h1>
+    <h2>[User] / [Date]</h2>
+    <div class="allContent">  <!--Content is in a div together, then individual div containers for each column-->
+            <div class="before-column">
+                    <h3>Before</h3>
+                    <p></p>
+            </div>
+            <mat-divider [vertical]="true"></mat-divider>
+            <div class="after-column">
+                    <h3>After</h3>
+                    <p></p>
+            </div>
+    </div>
+            <mat-dialog-actions class = "buttons">
+                    <button mat-flat-button color="primary" (click)="onClose()">Close</button>
+            </mat-dialog-actions>
+    </mat-dialog-content>    
