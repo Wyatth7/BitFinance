@@ -11,6 +11,7 @@ import { EditAccountDto } from '../../models/accounts/dto/edit-account-dto';
 import { ToggleActivationDto } from '../../models/accounts/dto/toggle-activation-dto';
 import { LoaderService } from '../component-services/loader.service';
 import { SnackBarService } from '../component-services/snack-bar.service';
+import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ import { SnackBarService } from '../component-services/snack-bar.service';
 export class AccountService {
   accounts$ = new Subject<AccountListResponseModel>();
 
+  
   constructor(
     private functions: Functions,
     private authService: AuthenticationService,
@@ -115,5 +117,20 @@ export class AccountService {
       this.snackBarService.showError('Activation toggle failed');
       return false;
     }
+  }
+
+  async getAccountEventLogs(accountId?: string){
+    try{
+
+      const getEventLogsFunction = httpsCallable<string, {eventLogs: EventLogModel[]}>(this.functions, AccountFunctions.getAccountEventLogs);
+      const query  = await getEventLogsFunction(accountId);
+
+      return [...query.data.eventLogs];
+
+    } catch{
+      this.snackBarService.showError('EventLog Retrievel Failed');
+      return [];
+    }
+
   }
 }

@@ -21,6 +21,19 @@
             </div>
         </div>
             <div class="menu">
+                <!-- <app-nav-link route="test123" tooltip="Calendar" icon="calendar_month" text="Calendar"></app-nav-link> -->
+                <app-side-nav-button 
+                    tooltip="Calendar" 
+                    text="Calendar" 
+                    icon="calendar_month"
+                    [matMenuTriggerFor]="calendarMenu"
+                    ></app-side-nav-button>
+                <!-- <button
+                    
+                >
+                    <mat-icon>calendar_month</mat-icon>
+                    Calendar
+                </button> -->
                 <button 
                     class="menu-button" 
                     mat-button 
@@ -42,3 +55,7 @@
         </div>
     </div>
 </app-side-bar>
+
+<mat-menu #calendarMenu xPosition="after">
+    <mat-calendar (click)="$event.stopPropagation()"></mat-calendar>
+</mat-menu>

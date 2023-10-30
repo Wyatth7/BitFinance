@@ -8,6 +8,8 @@ import { AccountService } from 'src/app/shared/services/accounts/account.service
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
+import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
 
 @Component({
   selector: 'app-single-view',
@@ -19,9 +21,12 @@ export class SingleViewComponent implements OnInit{
   dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
 
+  eventLogDisplayedColumns = ['actions', 'dateChanged', 'balance', 'isActive', 'statementType'];
+  eventLogData: EventLogModel[] = [];
   displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
-
   dateCreated = new Date();
+  renderEntryList:boolean = true;
+  tableTitle = 'Journal Entries'
 
   constructor(
       private accountService: AccountService,
@@ -57,6 +62,37 @@ export class SingleViewComponent implements OnInit{
     this.account.isActive = success 
       ? !this.account.isActive 
       : this.account.isActive 
+  }
+
+  /* Current Work */
+  async change($event: MatChipListboxChange){
+    if($event.value === undefined){
+      this.renderEntryList = true;
+      this.tableTitle = "Journal Entries"
+      return;
+    }
+
+    this.renderEntryList = $event.value;
+
+    if(this.renderEntryList){
+      this.tableTitle = 'Journal Entries';
+      return;
+    }
+    else{
+      this.tableTitle = 'Event Log';
+      await this.getEventLogData();
+    }
+
+    }
+
+  async getEventLogData(){
+    const eventLogs = await this.accountService.getAccountEventLogs(this.account?.accountId);
+    this.eventLogData = eventLogs;
+    
+  }
+
+  navigateToEventLog(){
+    console.log("Needs implementation");
   }
 
   openEditModal(){

@@ -26,17 +26,20 @@
 
                             <button
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
+                            matTooltip="Approve Entry"
                             mat-stroked-button
                             color="primary"
                             (click)="approveEntry(row.journalId, true)"
                             >Approve</button>
                             <button
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
+                            matTooltip="Decline Entry"
                             mat-stroked-button
                             color="primary"
                             (click)="openDeclineDialog(row.journalId)"
                             >Decline</button>
                             <button
+                            matTooltip="View Entry"
                             mat-stroked-button
                             color="primary"
                             (click)="navigateToView(row.journalId)"
