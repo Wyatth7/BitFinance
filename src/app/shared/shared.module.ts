@@ -39,6 +39,8 @@ import { DeclineEntryDialogComponent } from './components/dialogs/decline-entry-
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SectionLoadingSpinnerComponent } from './components/spinners-loader/section-loading-spinner/section-loading-spinner.component';
+import { AccountLogDialogComponent } from './components/dialogs/account-log-dialog/account-log-dialog.component';
+import { EventLogComponent } from './components/dialogs/account-log-dialog/event-log/event-log.component';
 
 
 @NgModule({
@@ -63,6 +65,8 @@ import { SectionLoadingSpinnerComponent } from './components/spinners-loader/sec
     UploadComponent,
     DeclineEntryDialogComponent,
     SectionLoadingSpinnerComponent,
+    AccountLogDialogComponent,
+    EventLogComponent,
   ],
   imports: [
     CommonModule,
