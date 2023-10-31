@@ -10,6 +10,10 @@ import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
 import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
+//Added import statements below
+import { MatDialog } from '@angular/material/dialog';
+import { AccountLogDialogComponent } from 'src/app/shared/components/dialogs/account-log-dialog/account-log-dialog.component';
+
 
 @Component({
   selector: 'app-single-view',
@@ -37,7 +41,9 @@ export class SingleViewComponent implements OnInit{
       private topNavService: TopNavService,
       private dialogService: DialogService,
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router,
+      //added dependency injection
+      private dialog: MatDialog
     ) {}
 
   async ngOnInit(): Promise<void> {
@@ -97,9 +103,13 @@ export class SingleViewComponent implements OnInit{
     // this.showEventLogSpinner = false;
   }
 
-  navigateToEventLog(){
-    console.log("Needs implementation");
-  }
+  //Replaced Function below
+  navigateToEventLog(eventLog: EventLogModel){
+    const dialogRef = this.dialog.open(AccountLogDialogComponent, {
+    data: { name: this.account?.accountName, //For <h1> in account-log-dialog.component.html
+    eventLog: eventLog } //Accessing eventLogData for modal
+    });
+    } 
 
   openEditModal(){
     const formData: CreateAccountForm = {

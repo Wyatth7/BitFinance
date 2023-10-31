@@ -1,0 +1,20 @@
+.dialog-box{
+    width: auto;
+    height: auto;
+    margin: 30px;
+    }
+    h1, h2, h3{
+    text-align: center;
+    }
+    .allContent {
+    display: flex;
+    align-items: stretch;
+    }
+    .before-column, .after-column {
+    flex: 1;
+    padding: 10px;
+    flex-direction: column;
+    }
+    .buttons{
+    justify-content: center;
+    }    

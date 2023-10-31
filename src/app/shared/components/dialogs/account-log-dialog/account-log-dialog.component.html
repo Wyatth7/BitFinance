@@ -1,0 +1,34 @@
+<mat-dialog-content>
+    <h1>{{data.name | titlecase}} Event Log Details</h1>
+    <h2>Changes made by: {{ data.eventLog.userId }} </h2>
+    <h2>Date & Time: {{data.eventLog.dateChanged}} </h2>
+    <mat-divider></mat-divider>
+    <div class="allContent"> <!--Content is in a div together, then individual div containers for each column-->
+    <div class="before-column">
+    <h3>Before</h3>
+    <!--Before data below-->
+    <p>Account name: {{data.eventLog.beforeChange.accountName | titlecase}}</p>
+    <p>Account number: {{data.eventLog.beforeChange.accountNumber}}</p>
+    <p>Balance: {{data.eventLog.beforeChange.balance}}</p>
+    <p>Description: {{data.eventLog.beforeChange.description}}</p>
+    <p>Account type: {{data.eventLog.beforeChange.accountType}}</p>
+    <p>Normal type: {{data.eventLog.beforeChange.normalType}}</p>
+    <p>Statement type: {{data.eventLog.beforeChange.statementType}}</p>
+    </div>
+    <mat-divider vertical></mat-divider>
+    <div class="after-column">
+        <h3>After</h3>
+<!--After data below-->
+<p>Account name: {{data.eventLog.afterChange.accountName | titlecase}}</p>
+<p>Account number: {{data.eventLog.afterChange.accountNumber}}</p>
+<p>Balance: {{data.eventLog.afterChange.balance}}</p>
+<p>Description: {{data.eventLog.afterChange.description}}</p>
+<p>Account type: {{data.eventLog.afterChange.accountType}}</p>
+<p>Normal type: {{data.eventLog.afterChange.normalType}}</p>
+<p>Statement type: {{data.eventLog.afterChange.statementType}}</p>
+</div>
+</div>
+<mat-dialog-actions class = "buttons">
+<button mat-flat-button color="primary" (click)="onClose()">Close</button>
+</mat-dialog-actions>
+</mat-dialog-content>
