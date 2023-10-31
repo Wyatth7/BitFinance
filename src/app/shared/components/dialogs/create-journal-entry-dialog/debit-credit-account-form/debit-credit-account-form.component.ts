@@ -16,12 +16,14 @@ import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value
 })
 export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
   showSpinner = false;
-  private _accountsSubscription!: Subscription;
-
+  showAmountBalanceError = false;
+  
   @Input() shouldReset$!: Subject<boolean>;
   private _resetSubscription!: Subscription;
+  private _accountsSubscription!: Subscription;
+  private _formChangeSubscription!: Subscription;
 
-  form = new FormGroup({
+  form =  new FormGroup({
     account: new FormControl('', Validators.required),
     normalType: new FormControl(NormalType.debit, Validators.required),
     amount: new FormControl(1, [Validators.required, Validators.min(1)])
@@ -30,6 +32,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
   balance = 0;
   transactionList: TransactionEntryListItem[] = [];
   accountList?: AccountListItemModel[];
+  selectedAccount?: AccountListItemModel;
 
   dataSource = new MatTableDataSource();
 
@@ -42,6 +45,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
     public enumService: GetEnumValueService) { }
 
   async ngOnInit() {
+
     this._accountsSubscription = this.accountService.accounts$
         .subscribe(accounts => this.accountList = accounts.accounts);
     
@@ -56,13 +60,39 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
       this.transactionList = []
       this.dataSource.data = []
       this.balance = 0;
+
       this.resetForm();
     })
+
+    this.form.valueChanges
+      .subscribe(values => {
+        this.accountAmountBalanceValidator(values)
+      });
   }
 
   ngOnDestroy(): void {
     this._accountsSubscription.unsubscribe();
     this._resetSubscription.unsubscribe();
+    this._formChangeSubscription.unsubscribe();
+  }
+
+  private accountAmountBalanceValidator(values: Partial<{
+    account: string | null;
+    normalType: NormalType | null;
+    amount: number | null;
+  }>){ 
+    
+    if (!values.account || !values.amount) return;
+
+    const account = this.accountList?.find(account => account.accountId === values.account);    
+
+    if (values.normalType !== account?.normalType) {
+      this.showAmountBalanceError = values.amount > account!.balance;
+      
+      return;
+    }
+
+    this.showAmountBalanceError = false;
   }
 
   /**
@@ -141,6 +171,9 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
       normalType: NormalType.debit,
       amount: 1
     });
+
+    this.selectedAccount = undefined;
+    this.showAmountBalanceError = false;
   }
 
   /**
