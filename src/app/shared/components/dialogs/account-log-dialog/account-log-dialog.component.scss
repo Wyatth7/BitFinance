@@ -1,35 +1,24 @@
 .dialog-box{
     width: auto;
     height: auto;
+    margin: 30px;
     }
-    
     
     h1, h2, h3{
-    text-align: center;
+        text-align: center;
     }
-    
-    
+       
     .allContent {
     display: flex;
-    align-items: start;
-    justify-content: space-between;
+    align-items: stretch;
     }
-    
     
     .before-column, .after-column {
     flex: 1;
     padding: 10px;
+    flex-direction: column;
     }
-  
-    .mat-divider{
-        height: 100%;
-        padding-top: 30px;
-        width: 1px;
-        background-color: gray;
-        align-self: stretch;
-        }
-        
-        
+          
      .buttons{
      justify-content: center;
      }

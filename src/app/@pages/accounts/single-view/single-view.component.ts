@@ -100,9 +100,10 @@ export class SingleViewComponent implements OnInit{
     // this.showEventLogSpinner = false;
   }
 
-  navigateToEventLog(){
+  navigateToEventLog(eventLog: EventLogModel){
     const dialogRef = this.dialog.open(AccountLogDialogComponent, {
-       data: {  name: this.account?.accountName } //Will need this later
+       data: {  name: this.account?.accountName,     //For <h1> in account-log-dialog.component.html
+                eventLog: eventLog  }       //Accessing eventLogData for modal
     });
   }
 
