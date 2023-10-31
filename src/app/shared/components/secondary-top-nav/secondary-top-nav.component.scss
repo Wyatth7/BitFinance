@@ -31,12 +31,20 @@
     }
 
     .filtering {
+        margin-top: .2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
         .search-bar {
             height: fit-content !important;
             align-items: center;
             margin: 0 !important;
             padding: 0 !important;
+        }
 
+        .date-picker {
+           margin-bottom: -1.4rem;
         }
     }
 }

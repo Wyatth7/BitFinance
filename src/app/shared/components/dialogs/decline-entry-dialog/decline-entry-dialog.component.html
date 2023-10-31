@@ -1,0 +1,26 @@
+<h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
+<mat-dialog-content>
+    
+    <h3>You are about to decline this journal entry request. Enter a comment detailing why this entry is being declined.</h3>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Comment</mat-label>
+        <textarea 
+            matInput
+            cdkTextareaAutosize 
+            cdkAutosizeMinRows="4" 
+            type="text" 
+            required 
+            [(ngModel)]="comment"></textarea>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <app-spinner-button 
+      [spin]="loading" 
+      text="Submit" 
+      (click)="executeAction()" 
+      [disabled]="comment.length === 0"
+    ></app-spinner-button>
+</mat-dialog-actions>

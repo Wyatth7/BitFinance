@@ -18,12 +18,19 @@
       <button 
          mat-mini-fab 
          class="top-nav-button"
-         matTooltip="Get Help"
-         (click)="navigateToHelp()">
-         <mat-icon>question_mark</mat-icon>
+         matTooltip="More Options"
+         [matMenuTriggerFor]="more"
+         >
+         <mat-icon>more_vert</mat-icon>
       </button>
-      <!-- <mat-menu #notificationsMenu="matMenu">
-         <div class="notifications-menu">
+      <mat-menu #more="matMenu">
+         <button mat-menu-item (click)="navigateToHelp()">Get Help</button>
+         <app-required-role-view [roles]="[1]">
+            <button 
+               mat-menu-item
+               (click)="openEmailDialog()">Send Email</button>
+         </app-required-role-view>
+         <!-- <div class="notifications-menu">
             <div class="notifications-empty">
                <p class="notifications-empty--text">You have no new notifications.</p>
                <button 
@@ -34,7 +41,7 @@
                   Close
                </button>
             </div>
-         </div>
-      </mat-menu> -->
+         </div> -->
+      </mat-menu>
    </div>
 </div>

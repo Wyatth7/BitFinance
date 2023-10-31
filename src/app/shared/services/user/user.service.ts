@@ -122,18 +122,14 @@ export class UserService {
    * @returns List of users in the system
    */
   async getUserList() {
-    this.loaderService.showLoader('Users');
-
     try {
         const usersQuery = httpsCallable(this.functions, UserFunctions.getUsers)
         this._users = (await usersQuery()).data as UserListModel;
   
-      this.loaderService.stopLoader();
       this.users$.next(this._users);
       
     } catch (error) {
       this.dialogService.openErrorDialog({title: 'User Load Failed', data: 'There was an issue retrieving users from the server. Please refresh the page or try again later.'})
-      this.loaderService.stopLoader();
     }
 
     return;

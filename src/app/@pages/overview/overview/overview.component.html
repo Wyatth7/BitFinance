@@ -38,4 +38,32 @@
             
         </div>
     </app-card>
+
+    <app-card 
+        route="/journal/view"
+        icon="import_contacts" 
+        title="Journal" 
+        subTitle="BitFinance Journal Information" 
+        buttonTitle="View Journals"
+        [requiredButtonRoles]="[1]">
+        <div class="overview-card-wrapper">
+
+            <app-number-group
+                [color]="color.blue"
+                [number]="overviewData?.journals?.requested || 0"
+                text="Requested"
+            ></app-number-group>
+            <app-number-group
+                [color]="color.green"
+                [number]="overviewData?.journals?.approved || 0"
+                text="Approved"
+            ></app-number-group>
+            <app-number-group
+                [color]="color.red"
+                [number]="overviewData?.journals?.declined || 0"
+                text="Declined"
+            ></app-number-group>
+            
+        </div>
+    </app-card>
 </div>

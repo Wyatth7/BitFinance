@@ -106,7 +106,8 @@ export const editAccount = onRequest(
                 balance: dto.general.balance,
                 isActive: before.isActive,
                 createdOn: before.createdOn,
-                accountId: before.accountId
+                accountId: before.accountId,
+                entries: before.entries
             }
 
             await createAccountEventLog(after, dto.userId, before)
@@ -188,7 +189,8 @@ const configureAccount = (createEditData: CreateEditAccountDto): AccountModel =>
         normalType: +createEditData.types.normalType,
         accountId: Guid.createGuid(),
         createdOn: new Date().toISOString(),
-        isActive: true
+        isActive: true,
+        entries: 0
     }
 }
 

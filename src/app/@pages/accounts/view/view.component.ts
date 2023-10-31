@@ -1,17 +1,14 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
 import { Subscription } from 'rxjs';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { AccountType } from 'src/app/shared/enums/accounts/account-type';
 import { Colors } from 'src/app/shared/enums/colors';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
-import { AccountListItemModel } from 'src/app/shared/models/accounts/account-list/account-list-item-model';
 import { AccountListResponseModel } from 'src/app/shared/models/accounts/account-list/account-list-response-model';
-import { AccountTableModel } from 'src/app/shared/models/accounts/account-table-model';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
+import { LoaderService } from 'src/app/shared/services/component-services/loader.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
 
@@ -35,7 +32,8 @@ export class ViewComponent implements OnInit, OnDestroy {
     private dialogService: DialogService, 
     private accountService: AccountService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loaderService: LoaderService,
     ) {}
 
   async ngOnInit(): Promise<void> {
@@ -50,7 +48,9 @@ export class ViewComponent implements OnInit, OnDestroy {
         requiredRole: [1]
       });
 
+      this.loaderService.showLoader('Chart of Accounts');
       await this.accountService.getAccountList()
+      this.loaderService.stopLoader();
     }
 
   ngOnDestroy(): void {

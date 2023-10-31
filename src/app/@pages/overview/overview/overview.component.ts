@@ -19,7 +19,7 @@ export class OverviewComponent implements OnInit {
   async ngOnInit(): Promise<void> {
       this.topNavService.setTopNav({
         topNavHeader: 'Overview',
-        topNavIcon: PageIcon.overview.toString()
+        topNavIcon: PageIcon.overview.toString(),
       })
 
       this.overviewData = await this.overviewService.getOverviewData();

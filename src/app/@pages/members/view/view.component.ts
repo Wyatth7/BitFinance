@@ -3,6 +3,7 @@ import { MatChipListbox, MatChipListboxChange } from '@angular/material/chips';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserListModel } from 'src/app/shared/models/users/user-list-model';
+import { LoaderService } from 'src/app/shared/services/component-services/loader.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
@@ -22,14 +23,18 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private loaderService: LoaderService
+    ) {}
 
   async ngOnInit(): Promise<void> {
 
     this.userSubscription = this.userService.users$
       .subscribe(users => this.users = users);
 
+    this.loaderService.showLoader('Users')
     await this.userService.getUserList();
+    this.loaderService.stopLoader();
 
   }
 

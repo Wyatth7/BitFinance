@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AccountModel } from 'functions/src/shared/models/accounts/account-model';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
+import { CreateJournalEntryDialogComponent } from 'src/app/shared/components/dialogs/create-journal-entry-dialog/create-journal-entry-dialog.component';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
+import { AccountModel } from 'src/app/shared/models/accounts/account-model';
 import { AccountService } from 'src/app/shared/services/accounts/account.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import { MatChipListboxChange, MatChipListbox } from '@angular/material/chips';
+import { EventLogModel } from 'functions/src/shared/models/event-log/event-log-model';
+//Added import statements below
+import { MatDialog } from '@angular/material/dialog';
+import { AccountLogDialogComponent } from 'src/app/shared/components/dialogs/account-log-dialog/account-log-dialog.component';
 
-interface JournalEntry {
-  date: Date;
-  description: string;
-  transactionType: string;
-  amount: number;
-  createdBy: string;
-}
 
 @Component({
   selector: 'app-single-view',
@@ -22,26 +21,36 @@ interface JournalEntry {
   styleUrls: ['./single-view.component.scss']
 })
 export class SingleViewComponent implements OnInit{
+  /** Spinner shown when event log data is loading */
+  showEventLogSpinner = true;
+
+  filter: string | string[] = '';
+  dateFilter: {start: Date, end: Date} = {start: new Date (10/23/1950), end: new Date()};
   account?: AccountModel;
-  journalEntries?: JournalEntry[];
 
-  displayedColumns = ['actions', 'description', 'transactionType', 'amount', 'createdBy','date']
-
+  eventLogDisplayedColumns = ['actions', 'dateChanged', 'balance', 'isActive', 'statementType'];
+  eventLogData: EventLogModel[] = [];
+  displayedColumns = ['actions', 'entryName', 'debit', 'credit', 'balance', 'creationDate']
   dateCreated = new Date();
+  renderEntryList:boolean = true;
+  tableTitle = 'Journal Entries'
 
   constructor(
       private accountService: AccountService,
       public getEnum: GetEnumValueService,
       private topNavService: TopNavService,
       private dialogService: DialogService,
-      private route: ActivatedRoute
+      private route: ActivatedRoute,
+      private router: Router,
+      //added dependency injection
+      private dialog: MatDialog
     ) {}
 
   async ngOnInit(): Promise<void> {
       this.topNavService.setTopNavAction({
-        tooltip: 'Add Transaction',
+        tooltip: 'Create an Entry',
         icon: 'add_card',
-        action: () => {}
+        action: () => this.openCreateEntryModalFn()
       })
 
       const accountId = this.route.snapshot.url[0].path;
@@ -63,6 +72,44 @@ export class SingleViewComponent implements OnInit{
       ? !this.account.isActive 
       : this.account.isActive 
   }
+
+  /* Current Work */
+  async change($event: MatChipListboxChange){
+    if($event.value === undefined){
+      this.renderEntryList = true;
+      this.tableTitle = "Journal Entries"
+      return;
+    }
+
+    this.renderEntryList = $event.value;
+
+    if(this.renderEntryList){
+      this.tableTitle = 'Journal Entries';
+      return;
+    }
+    else{
+      this.tableTitle = 'Event Log';
+      await this.getEventLogData();
+    }
+
+    }
+
+  async getEventLogData(){
+    this.showEventLogSpinner = true;
+
+    const eventLogs = await this.accountService.getAccountEventLogs(this.account?.accountId);
+    this.eventLogData = eventLogs;
+
+    // this.showEventLogSpinner = false;
+  }
+
+  //Replaced Function below
+  navigateToEventLog(eventLog: EventLogModel){
+    const dialogRef = this.dialog.open(AccountLogDialogComponent, {
+    data: { name: this.account?.accountName, //For <h1> in account-log-dialog.component.html
+    eventLog: eventLog } //Accessing eventLogData for modal
+    });
+    } 
 
   openEditModal(){
     const formData: CreateAccountForm = {
@@ -90,112 +137,23 @@ export class SingleViewComponent implements OnInit{
   }
   openEditModalFn = this.openEditModal.bind(this);
 
-  // journalEntries: JournalEntry[] = [
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-01'),
-  //     description: 'Sales of Products',
-  //     amount: 10000,
-  //     transactionType: 'debit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   {
-  //     date: new Date('2023-10-02'),
-  //     description: 'Purchase of Supplies',
-  //     amount: 500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Wyatt Hardin',
-  //   },
-  //   {
-  //     date: new Date('2023-10-03'),
-  //     description: 'Payment of Rent',
-  //     amount: 1500,
-  //     transactionType: 'credit',
-  //     createdBy: 'Andrew Quarles',
-  //   },
-  //   // Add more journal entries as needed
-  // ];
+  openCreateEntryModal() {
+    this.dialogService.open(CreateJournalEntryDialogComponent, {
+      title: 'Create An Entry',
+      data: ''
+    })
+  }
+  openCreateEntryModalFn = this.openCreateEntryModal.bind(this);
+
+  navigateToEntry(journalId: string) {
+    this.router.navigateByUrl(`/journal/${journalId}`)
+  }
+
+  searchEmitted(value: string | null) {
+    this.filter = value || '';
+  }
+
+  dateEmitted(value: {start: Date, end: Date}) {
+    this.dateFilter = {...value}
+  }
 }

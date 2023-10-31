@@ -1,0 +1,39 @@
+<app-section-loading-spinner *ngIf="showUserLoadingSpinner"></app-section-loading-spinner>
+<h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
+<mat-dialog-content>
+  <form class="email-form" [formGroup]="form">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Send to</mat-label>
+            <input type="text" matInput formControlName="mailTo" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.fullName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Subject</mat-label>
+            <input matInput type="text" formControlName="subject" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Message</mat-label>
+            <textarea 
+                formControlName="message"
+                matInput 
+                cdkTextareaAutosize 
+                cdkAutosizeMinRows="5" 
+                type="text" 
+                >
+            </textarea>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <app-spinner-button 
+      [spin]="loading" 
+      text="Send Email" 
+      (click)="executeAction()" 
+      [disabled]="form.invalid"
+    ></app-spinner-button>
+</mat-dialog-actions>

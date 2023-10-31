@@ -44,4 +44,13 @@ export class TopNavService {
     this._topNavData.topNavAction = topNavAction;
     this.topNavData$.next(this._topNavData);
   }
+
+  /**
+   * Updates the current top nav header text
+   * @param header string to replace header
+   */
+  setTopNavHeader(header: string) {
+    this._topNavData.topNavHeader = header;
+    this.topNavData$.next(this._topNavData);
+  }
 }

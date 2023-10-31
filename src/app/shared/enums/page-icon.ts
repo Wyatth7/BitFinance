@@ -5,5 +5,7 @@ export enum PageIcon {
     equipment = 'fitness_center',
     payments = 'payments',
     accounts = 'article',
-    help = 'question_mark'
+    journal = 'import_contacts',
+    help = 'question_mark',
+    card = 'add_card'
 }

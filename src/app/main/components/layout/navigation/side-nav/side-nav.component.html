@@ -13,6 +13,7 @@
             <div class="nav-links">
                 <app-nav-link tooltip="Overview" route="/overview/view" icon="bar_chart_4_bars" text="Overview"></app-nav-link>
                 <app-nav-link tooltip="Accounts" route="/accounts/view" icon="article" text="Accounts"></app-nav-link>
+                <app-nav-link tooltip="Journal" route="/journal/view" icon="import_contacts" text="Journal"></app-nav-link>
                 <!-- <app-nav-link tooltip="Reports" route="/reports/view" icon="print" text="Reports"></app-nav-link> -->
                 <app-required-role-view [roles]="[1]">
                     <app-nav-link tooltip="Users" route="/users/view" icon="group" text="Users"></app-nav-link>
@@ -20,6 +21,19 @@
             </div>
         </div>
             <div class="menu">
+                <!-- <app-nav-link route="test123" tooltip="Calendar" icon="calendar_month" text="Calendar"></app-nav-link> -->
+                <app-side-nav-button 
+                    tooltip="Calendar" 
+                    text="Calendar" 
+                    icon="calendar_month"
+                    [matMenuTriggerFor]="calendarMenu"
+                    ></app-side-nav-button>
+                <!-- <button
+                    
+                >
+                    <mat-icon>calendar_month</mat-icon>
+                    Calendar
+                </button> -->
                 <button 
                     class="menu-button" 
                     mat-button 
@@ -41,3 +55,7 @@
         </div>
     </div>
 </app-side-bar>
+
+<mat-menu #calendarMenu xPosition="after">
+    <mat-calendar (click)="$event.stopPropagation()"></mat-calendar>
+</mat-menu>

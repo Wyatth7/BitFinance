@@ -5,6 +5,7 @@ import { SuspendedAccountModel } from "./suspended-account-model";
 export interface UserModel {
     firstName: string;
     lastName: string;
+    fullName?: string;
     userName: string;
     email: string;
     passwords: PasswordModel[]
