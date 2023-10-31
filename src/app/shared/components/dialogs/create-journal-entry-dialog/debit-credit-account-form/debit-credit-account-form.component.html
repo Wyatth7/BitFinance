@@ -15,6 +15,7 @@
                     <mat-option 
                         *ngFor="let account of accountList"
                         [value]="account.accountId"
+                        (onSelectionChange)="selectedAccount = account"
                     >{{ account.accountName }} {{ account.balance | currency }}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -26,11 +27,12 @@
             </mat-form-field>
             <mat-form-field class="entry-inputs--field" appearance="outline">
                 <mat-label>Amount</mat-label>
-                <input min="1" formControlName="amount" matInput type="number" />
+                <input  min="1" formControlName="amount" matInput type="number" />
             </mat-form-field>
         </div>
+        <mat-error *ngIf="showAmountBalanceError">The amount entered is greater than the balance of this account.</mat-error>
         <button 
-            [disabled]="form.invalid" 
+            [disabled]="form.invalid || showAmountBalanceError"
             mat-flat-button 
             color="primary"
             (click)="addToTransactionList()"

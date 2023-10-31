@@ -1,3 +1,4 @@
+import { NormalType } from "../../enums/accounts/normal-type";
 import { AccountType } from "../enums/account-type";
 
 export interface AccountsListItemModel {
@@ -8,4 +9,5 @@ export interface AccountsListItemModel {
     category: AccountType;
     entries: number;
     isActive: boolean;
+    normalType: NormalType;
 }
