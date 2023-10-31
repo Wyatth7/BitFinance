@@ -1,0 +1,24 @@
+.dialog-content {
+    min-width: 30rem !important;
+
+    .content-header {
+        margin-bottom: 1rem !important;
+    }
+
+    .allContent {
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+    }
+
+    .before-column, .after-column {
+        flex: 1;
+        min-width: 15rem;
+    }
+
+    .after-column {
+        text-align: end;
+    }
+}
+
+  

@@ -1,0 +1,19 @@
+<app-section-loading-spinner *ngIf="showLoader"></app-section-loading-spinner>
+<h2 mat-dialog-title>{{data.name | titlecase}} Event Log Details</h2>
+<mat-dialog-content class="dialog-content">
+    <p class="content-header">{{data.name | titlecase}} {{data.eventLog.beforeChange ? 'updated' : 'created'}} by {{ user?.fullName || '' | titlecase}} on {{data.eventLog.dateChanged | date:'longDate'}}.</p>
+    <mat-divider></mat-divider>
+    <div class="allContent">
+        <div class="before-column">
+            <app-event-log title="Before" [accountModel]="data.eventLog.beforeChange"></app-event-log>
+        </div>
+        <mat-divider vertical></mat-divider>
+        <div class="after-column">
+            <app-event-log title="After" [accountModel]="data.eventLog.afterChange"></app-event-log>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="buttons" align="end">
+<button mat-flat-button color="primary" (click)="onClose()">Close</button>
+</mat-dialog-actions>
