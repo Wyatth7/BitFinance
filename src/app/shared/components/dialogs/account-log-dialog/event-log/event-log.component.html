@@ -1,0 +1,14 @@
+<div class="event-log">
+    <div class="content">
+        <h3>{{title}}</h3>
+        <ng-container *ngIf="accountModel">
+            <p>Account name: {{accountModel.accountName | titlecase}}</p>
+            <p>Account#: {{accountModel.accountNumber}}</p>
+            <p>Balance: {{accountModel.balance | currency}}</p>
+            <p>Description: {{accountModel.description}}</p>
+            <p>Account type: {{getEnum.accountTypeString(accountModel.accountType)}}</p>
+            <p>Normal type: {{getEnum.normalTypeString(accountModel.normalType)}}</p>
+            <p>Statement type: {{getEnum.statementTypeString(accountModel.statementType)}}</p>
+        </ng-container>
+    </div>
+</div>

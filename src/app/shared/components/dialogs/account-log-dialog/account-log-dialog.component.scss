@@ -1,20 +1,24 @@
-.dialog-box{
-    width: auto;
-    height: auto;
-    margin: 30px;
+.dialog-content {
+    min-width: 30rem !important;
+
+    .content-header {
+        margin-bottom: 1rem !important;
     }
-    h1, h2, h3{
-    text-align: center;
-    }
+
     .allContent {
-    display: flex;
-    align-items: stretch;
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
     }
+
     .before-column, .after-column {
-    flex: 1;
-    padding: 10px;
-    flex-direction: column;
+        flex: 1;
+        min-width: 15rem;
     }
-    .buttons{
-    justify-content: center;
-    }    
+
+    .after-column {
+        text-align: end;
+    }
+}
+
+  
