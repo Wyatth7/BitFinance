@@ -60,6 +60,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
       this.transactionList = []
       this.dataSource.data = []
       this.balance = 0;
+
       this.resetForm();
     })
 
@@ -172,6 +173,7 @@ export class DebitCreditAccountFormComponent implements OnInit, OnDestroy {
     });
 
     this.selectedAccount = undefined;
+    this.showAmountBalanceError = false;
   }
 
   /**
