@@ -5,6 +5,10 @@ import { ViewComponent } from './view/view.component';
 import { SingleViewComponent } from './single-view/single-view.component';
 import {ReportRoutingModule} from "./report-routing.module";
 import {SharedModule} from "../../shared/shared.module";
+import {MatSortModule} from "@angular/material/sort";
+import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from "@angular/material/button";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 
@@ -17,7 +21,11 @@ import {SharedModule} from "../../shared/shared.module";
   imports: [
     CommonModule,
     ReportRoutingModule,
-    SharedModule
+    SharedModule,
+    MatSortModule,
+    MatTableModule,
+    MatButtonModule,
+    MatTooltipModule
   ]
 })
 export class ReportsModule { }

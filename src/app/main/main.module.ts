@@ -47,9 +47,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatCardModule,
     MatDatepickerModule,
   ],
-  exports: [
-    LayoutComponent,
-    AuthenticationComponent
-  ]
+    exports: [
+        LayoutComponent,
+        AuthenticationComponent,
+        SecondaryTopNavComponent
+    ]
 })
 export class MainModule { }
