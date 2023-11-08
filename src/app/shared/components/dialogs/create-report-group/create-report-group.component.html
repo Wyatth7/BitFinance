@@ -1,1 +1,35 @@
-<p>create-report-group works!</p>
+<h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
+<mat-dialog-content>
+  <form class="create-form" [formGroup]="form">
+      <div class="two-column">
+        <mat-form-field appearance="outline">
+          <mat-label>Report Group Name</mat-label>
+          <input formControlName="reportGroupName" matInput type="text" />
+          <mat-error>Report group name required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Description (optional)</mat-label>
+          <input formControlName="reportGroupDescription" matInput type="text" />
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate formControlName="startDate" placeholder="Start date">
+          <input matEndDate formControlName="endDate" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="warn">Cancel</button>
+  <app-spinner-button
+    [spin]="loading"
+    text="Submit"
+    (click)="executeAction()"
+    [disabled]="form.invalid"
+  ></app-spinner-button>
+</mat-dialog-actions>
