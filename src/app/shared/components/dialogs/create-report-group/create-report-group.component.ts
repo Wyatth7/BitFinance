@@ -28,5 +28,7 @@ export class CreateReportGroupComponent {
     console.log(this.form.value)
     // await  this.data.action();
     this.loading = false;
+
+    this.dialogRef.close();
   }
 }
