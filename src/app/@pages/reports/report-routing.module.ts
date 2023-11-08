@@ -9,14 +9,17 @@ const routes: Routes = [
   {
     path: '',
     component: ReportsComponent,
+
     children: [
       {
         path: 'view',
         component: ViewComponent,
+        title: 'Reports | BitFinance'
       },
       {
         path: ':id',
         component: SingleViewComponent,
+        title: 'Report Group | BitFinance'
       },
     ]
   }

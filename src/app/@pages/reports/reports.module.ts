@@ -4,6 +4,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { ViewComponent } from './view/view.component';
 import { SingleViewComponent } from './single-view/single-view.component';
 import {ReportRoutingModule} from "./report-routing.module";
+import {SharedModule} from "../../shared/shared.module";
 
 
 
@@ -15,7 +16,8 @@ import {ReportRoutingModule} from "./report-routing.module";
   ],
   imports: [
     CommonModule,
-    ReportRoutingModule
+    ReportRoutingModule,
+    SharedModule
   ]
 })
 export class ReportsModule { }
