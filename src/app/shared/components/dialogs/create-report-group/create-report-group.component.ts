@@ -28,13 +28,14 @@ export class CreateReportGroupComponent {
     if (!this.data.action) return;
 
     this.loading = true;
-    console.log(this.form.value)
 
     const data: CreateReportDto = {
       reportName: this.form.value.reportGroupName!,
       reportDescription: this.form.value.reportGroupDescription || undefined,
-      startDate: this.form.value.startDate!,
-      endDate: this.form.value.endDate!
+      dateRange: {
+        start:  new Date(this.form.value.startDate!).toISOString(),
+        end: new Date(this.form.value.endDate!).toISOString()
+      }
     }
 
     await this.data.action(data);

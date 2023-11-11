@@ -116,7 +116,7 @@ export const getAccount = onRequest(
             return okResponse({...account, entryList: entries}, 200, res);
         } catch (error) {
             logger.error(error);
-            return badRequestResponse('An error occured while getting the account, and the account could not be send.', res);
+            return badRequestResponse('An error occurred while getting the account, and the account could not be send.', res);
         }
     }
 );

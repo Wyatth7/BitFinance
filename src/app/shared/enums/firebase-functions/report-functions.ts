@@ -1,3 +1,3 @@
 export enum ReportFunctions {
-  generateReport = 'reports-generateReports'
+  generateReport = 'financialReports-generateReports'
 }
