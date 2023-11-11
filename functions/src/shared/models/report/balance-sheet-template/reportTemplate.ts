@@ -1,6 +1,6 @@
 import {Section} from "./section";
 
-export interface Report {
+export interface ReportTemplate {
   /**
    * The name of the report being shown.
    * Apple's is called "Condensed Consolidated Balance Sheets"
