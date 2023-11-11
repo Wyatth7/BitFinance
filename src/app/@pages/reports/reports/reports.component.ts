@@ -7,6 +7,7 @@ import {
 } from "../../../shared/components/dialogs/create-report-group/create-report-group.component";
 import {ReportGroupCreateForm} from "../../../shared/form/partials/report-group-create-form";
 import {ReportService} from "../../../shared/services/report/report.service";
+import {CreateReportDto} from "../../../shared/models/reports/dto/create-report-dto";
 
 @Component({
   selector: 'app-reports',
@@ -46,7 +47,7 @@ export class ReportsComponent implements OnInit{
    * Action to create a report.ts group
    * @param reportGroupForm Form used to create report.ts group
    */
-  async createReportGroup(reportGroupForm: ReportGroupCreateForm) {
-
+  async createReportGroup(reportGroupForm: CreateReportDto) {
+    await this.reportService.createReportGroup(reportGroupForm);
   }
 }

@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "../../../models/dialog/dialog-data";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {CreateReportDto} from "../../../models/reports/dto/create-report-dto";
 
 @Component({
   selector: 'app-create-report.ts-group',
@@ -24,9 +25,20 @@ export class CreateReportGroupComponent {
   ) {}
 
   async executeAction() {
+    if (!this.data.action) return;
+
     this.loading = true;
     console.log(this.form.value)
-    // await  this.data.action();
+
+    const data: CreateReportDto = {
+      reportName: this.form.value.reportGroupName!,
+      reportDescription: this.form.value.reportGroupDescription || undefined,
+      startDate: this.form.value.startDate!,
+      endDate: this.form.value.endDate!
+    }
+
+    await this.data.action(data);
+
     this.loading = false;
 
     this.dialogRef.close();
