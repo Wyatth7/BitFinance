@@ -14,7 +14,6 @@ import { AccountEntry } from "../../shared/models/journals/account-journal";
 import { EventLogModel } from "../../shared/models/event-log/event-log-model";
 
 
-
 export const getAllAccounts = onRequest(
     {cors: true},
     async (req, res) => {
@@ -26,7 +25,7 @@ export const getAllAccounts = onRequest(
             const accountsSnapshot = await admin.firestore()
                 .collection(FirestoreCollections.accounts.toString())
                 .get()
-        
+
             if (accountsSnapshot.empty) {
                 return okResponse([], 200, res);
             }
@@ -36,7 +35,7 @@ export const getAllAccounts = onRequest(
                 liability: 0,
                 equity: 0
             }
-            
+
             // sort accounts by category
             const accounts = accountsSnapshot.docs
                 .map(accountDoc => {
@@ -70,14 +69,14 @@ export const getAllAccounts = onRequest(
                     return account;
                 })
                 .sort((a: AccountsListItemModel, b: AccountsListItemModel) => a.category - b.category );
-    
+
             const accountListResponse: AccountListResponseModel = {
                 accounts: accounts,
                 balanceTotals: balances
             }
 
-            return okResponse(accountListResponse, 200, res);        
-            
+            return okResponse(accountListResponse, 200, res);
+
         } catch (error) {
             logger.error(error)
             return badRequestResponse("An error occurred while getting the chart of accounts. Try again later.", res);
@@ -97,7 +96,7 @@ export const getAccount = onRequest(
         if (!accountId) return badRequestResponse('The account ID provided is invalid.', res);
 
         try {
-            
+
             const accountRef = admin
                 .firestore()
                 .collection(FirestoreCollections.accounts)
@@ -130,7 +129,7 @@ export const getAccountEventLogs = onRequest(
 
         if (!accountId) return badRequestResponse('The account ID provided is invalid.', res);
 
-        //const evenLogSnapshot = 
+        //const evenLogSnapshot =
 
     try{
         console.log(accountId);

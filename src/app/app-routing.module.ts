@@ -29,7 +29,7 @@ const routes: Routes = [
       canActivate: [authGuardChild]
   },
   {
-    path: 'report',
+    path: 'report.ts',
     loadChildren: () => import('./@pages/reports/reports.module')
       .then(r => r.ReportsModule),
     canActivate: [authGuardChild]

@@ -28,4 +28,5 @@ export * as accounts from './http/accounts/accounts';
 export * as accountOperations from './http/accounts/create-edit-accounts';
 export * as journalOperations from './http/journals/create-approve-journals';
 export * as journals from './http/journals/journals';
+export * as reports from './http/reports/reports';
 export * as email from './messaging/emailer';

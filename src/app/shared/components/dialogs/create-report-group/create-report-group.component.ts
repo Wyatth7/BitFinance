@@ -4,7 +4,7 @@ import {DialogData} from "../../../models/dialog/dialog-data";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-create-report-group',
+  selector: 'app-create-report.ts-group',
   templateUrl: './create-report-group.component.html',
   styleUrls: ['./create-report-group.component.scss']
 })

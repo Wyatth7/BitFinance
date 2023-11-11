@@ -32,7 +32,7 @@ export class ReportsComponent implements OnInit{
   }
 
   /**
-   * Opens the report group creation modal
+   * Opens the report.ts group creation modal
    */
   openReportGroupCreateModal() {
     this.dialogService.open(CreateReportGroupComponent, {
@@ -43,8 +43,8 @@ export class ReportsComponent implements OnInit{
   }
 
   /**
-   * Action to create a report group
-   * @param reportGroupForm Form used to create report group
+   * Action to create a report.ts group
+   * @param reportGroupForm Form used to create report.ts group
    */
   async createReportGroup(reportGroupForm: ReportGroupCreateForm) {
 
