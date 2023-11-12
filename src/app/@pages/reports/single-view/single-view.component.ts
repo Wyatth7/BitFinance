@@ -6,7 +6,9 @@ import {LoaderService} from "../../../shared/services/component-services/loader.
 import {MatChipListboxChange} from "@angular/material/chips";
 import {ReportType} from "../../../shared/enums/reports/report-type";
 import {GetEnumValueService} from "../../../shared/services/enum/get-enum-value.service";
-import {DomSanitizer} from "@angular/platform-browser";
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {DocumentsDto} from "../../../shared/models/reports/dto/documents-dto";
+import {SafeDocuments} from "../../../shared/models/reports/safe-documents";
 
 @Component({
   selector: 'app-single-view',
@@ -17,9 +19,11 @@ export class SingleViewComponent implements OnInit{
 
   report?: ReportDto;
 
-  pdf?: string;
+  pdf?: SafeResourceUrl;
 
   selectedReport = ReportType.balanceSheet;
+
+  sanitizedPdfs?: SafeDocuments;
 
   constructor(
     private reportService: ReportService,
@@ -36,7 +40,11 @@ export class SingleViewComponent implements OnInit{
     this.report = await this.reportService.getReport(reportId);
 
     if (this.report) {
-      this.pdf = this.report.documents.balanceSheet;
+      this.sanitizePdfs();
+    }
+    
+    if (this.sanitizedPdfs) {
+      this.pdf = this.sanitizedPdfs.balanceSheet;
     }
 
     this.loaderService.stopLoader();
@@ -51,22 +59,29 @@ export class SingleViewComponent implements OnInit{
 
     this.selectedReport = $event.value;
 
+    if (!this.report || !this.sanitizedPdfs) return;
+
     switch ($event.value) {
       case ReportType.balanceSheet:
-        this.pdf = this.report?.documents.balanceSheet;
+        this.pdf = this.sanitizedPdfs.balanceSheet;
         break;
       case ReportType.trialBalance:
-        this.pdf = this.report?.documents.trialBalance;
+        this.pdf = this.sanitizedPdfs.trialBalance;
         break;
       default:
-        this.pdf = this.report?.documents.balanceSheet;
+        this.pdf = this.sanitizedPdfs.balanceSheet;
     }
 
   }
 
-  photoUrl(){
-    if (!this.pdf) return '';
+  private sanitizePdfs() {
+    if (!this.report) return;
 
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.pdf);
+    this.sanitizedPdfs = {
+      balanceSheet: this.sanitizer
+        .bypassSecurityTrustResourceUrl(this.report.documents.balanceSheet),
+      trialBalance: this.sanitizer
+        .bypassSecurityTrustResourceUrl(this.report.documents.trialBalance)
+    }
   }
 }
