@@ -14,9 +14,11 @@ export const generateReports = onRequest(
 
     try {
 
-      await ReportEngine.generateReport(dto.dateRange);
+      const reports = await ReportEngine.generateReport(dto.dateRange);
 
-      return okResponse({}, 200, res);
+      console.log(reports.balanceSheet)
+
+      return okResponse({report: reports.balanceSheet}, 200, res);
     }catch (error) {
       logger.error(error);
       return badRequestResponse('There was an error and the report could not be generated.', res);

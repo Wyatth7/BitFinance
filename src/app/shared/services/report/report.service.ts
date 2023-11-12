@@ -13,11 +13,17 @@ export class ReportService {
   constructor(private functions: Functions, private snackbarService: SnackBarService) { }
 
   async createReportGroup(reportGroupForm: CreateReportDto) {
-    const createReportFunction = httpsCallable<CreateReportDto, null>(this.functions, ReportFunctions.generateReport);
+    const createReportFunction = httpsCallable<CreateReportDto, { report: string }>(this.functions, ReportFunctions.generateReport);
 
     try {
 
-      await createReportFunction(reportGroupForm);
+      const base64String = await createReportFunction(reportGroupForm);
+
+        const a = document.createElement("a"); //Create <a>
+        a.href = base64String.data.report; //Image Base64 Goes here
+        a.download = 'test-balance-sheet.pdf'; //File name Here
+        a.click(); //Downloaded file
+        a.remove();
 
       this.snackbarService.showSuccess('Report group created');
     }catch (err) {

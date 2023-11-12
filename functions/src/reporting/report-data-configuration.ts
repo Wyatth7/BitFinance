@@ -54,13 +54,13 @@ export class ReportDataConfiguration {
     };
 
     const rowGroup: RowGroup = {
-      groupTitle: 'Current Assets',
+      groupTitle: 'Current ' + header,
       groupTotal: total.toString(),
       indentTotal: 8,
       rows: []
     }
 
-    const rows: Row[] = data.map(a =>  ({
+    const rows: Row[] = data.map(a => ({
       title: a.accountName,
       value: a.balance.toString(),
       indent: 4
