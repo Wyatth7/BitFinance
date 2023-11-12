@@ -1,4 +1,4 @@
-import {ReportTemplate} from "../shared/models/report/single-total-report-template/reportTemplate";
+import {ReportTemplate} from "../shared/models/report/report-template/reportTemplate";
 import {PreConfigurationData} from "../shared/models/report/pre-configuration-data/pre-configuration-data";
 import {
   PreConfiguredDataBalanceSheet
@@ -6,10 +6,10 @@ import {
 import {ConfiguredData} from "../shared/models/report/configured-data";
 import {AccountType} from "../shared/models/enums/account-type";
 import {AccountData} from "../shared/models/report/pre-configuration-data/balance-sheet/account-data";
-import {Section} from "../shared/models/report/single-total-report-template/section";
+import {Section} from "../shared/models/report/report-template/section";
 import {DateRange} from "../shared/models/time/date-range";
-import {RowGroup} from "../shared/models/report/single-total-report-template/row-group";
-import {Row} from "../shared/models/report/single-total-report-template/row";
+import {RowGroup} from "../shared/models/report/report-template/row-group";
+import {Row} from "../shared/models/report/report-template/row";
 import {
   PreConfigurationDataTrialBalance
 } from "../shared/models/report/pre-configuration-data/trial-balance/pre-configuration-data-trial-balance";

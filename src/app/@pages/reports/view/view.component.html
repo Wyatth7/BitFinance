@@ -2,7 +2,7 @@
   <app-secondary-top-nav title="Report Groups" searchPlaceholder="Search Report Group"></app-secondary-top-nav>
 
   <div class="report-groups-table">
-    <app-table [tableData]="reportGroups" [displayedColumns]="displayColumns">
+    <app-table [tableData]="reports || []" [displayedColumns]="displayColumns">
 
       <ng-container matSort>
 
@@ -13,29 +13,29 @@
               mat-stroked-button
               color="primary"
               matTooltip="View Report Group"
-              (click)="navigateToReportGroup(row.reportGroupId)"
+              (click)="navigateToReportGroup(row.reportId)"
             >View</button>
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="reportGroupName">
+        <ng-container matColumnDef="reportName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let row"> {{row.reportGroupName | titlecase}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.reportName | titlecase}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="startDate">
+        <ng-container matColumnDef="start">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
-          <td mat-cell *matCellDef="let row"> {{row.startDate | date:'longDate'}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.dateRange.start | date:'longDate'}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="endDate">
+        <ng-container matColumnDef="end">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
-          <td mat-cell *matCellDef="let row"> {{row.endDate | date:'longDate'}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.dateRange.end | date:'longDate'}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="createdOn">
+        <ng-container matColumnDef="generatedOn">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Created On </th>
-          <td mat-cell *matCellDef="let row"> {{row.createdOn | date:'longDate'}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.generatedOn | date:'longDate'}} </td>
         </ng-container>
 
       </ng-container>

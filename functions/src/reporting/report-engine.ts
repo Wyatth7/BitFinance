@@ -4,7 +4,7 @@ import * as path from 'path';
 const readFile = util.promisify(fs.readFile);
 import {Templating} from '../shared/helpers/templating/templating';
 import {PdfGenerator} from "../shared/helpers/pdf/pdf-generator";
-import {ReportTemplate} from "../shared/models/report/single-total-report-template/reportTemplate";
+import {ReportTemplate} from "../shared/models/report/report-template/reportTemplate";
 import {ReportDataLoader} from "./report-data-loader";
 import {DateRange} from "../shared/models/time/date-range";
 import {ReportDataConfiguration} from "./report-data-configuration";

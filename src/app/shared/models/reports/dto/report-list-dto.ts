@@ -1,7 +1,10 @@
 export interface ReportListDto {
-  reportGroupId: string;
-  reportGroupName: string;
-  createdOn: string;
-  startDate: string;
-  endDate: string;
+  reportId: string;
+  reportName: string;
+  reportDescription: string;
+  generatedOn: string;
+  dateRange: {
+    start: string,
+    end: string
+  }
 }
