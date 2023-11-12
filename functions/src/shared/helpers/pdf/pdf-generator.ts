@@ -13,6 +13,8 @@ export class PdfGenerator {
 
     const pdf = await page.pdf();
 
+    await page.close();
+
     return pdf.toString('base64');
   }
 }
