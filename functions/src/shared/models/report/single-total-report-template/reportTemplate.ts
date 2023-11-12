@@ -7,8 +7,9 @@ export interface ReportTemplate {
    */
   reportHeader: string;
   /**
-   * A string of the date rage (in Angular long date format)
+   * A string[] of "N" headers
    */
+  headers: string[];
   dateRange: string;
   sections: Section[];
 }

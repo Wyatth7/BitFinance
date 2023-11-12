@@ -1,8 +1,5 @@
 import {DateRange} from "../shared/models/time/date-range";
 import {PreConfigurationData} from "../shared/models/report/pre-configuration-data/pre-configuration-data";
-// import {
-//   PreConfiguredDataBalanceSheet
-// } from "../shared/models/report/pre-configuration-data/balance-sheet/pre-configured-data-balance-sheet";
 import * as admin from 'firebase-admin';
 import {FirestoreCollections} from "../shared/enums/firestore-collections";
 import {FirebaseSubCollections} from "../shared/enums/firestore-sub-collections";
@@ -17,6 +14,12 @@ import {
   PreConfiguredDataBalanceSheet
 } from "../shared/models/report/pre-configuration-data/balance-sheet/pre-configured-data-balance-sheet";
 import {BalanceSheetTotals} from "../shared/models/report/pre-configuration-data/balance-sheet/balanceSheetTotals";
+import {
+  PreConfigurationDataTrialBalance
+} from "../shared/models/report/pre-configuration-data/trial-balance/pre-configuration-data-trial-balance";
+// import {
+//   PreConfiguredDataIncomeStatement
+// } from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
 
 export class ReportDataLoader {
 
@@ -28,10 +31,12 @@ export class ReportDataLoader {
     // list of accounts and their entries (entry in desc order)
     const loadAccountEntryData = await this.loadAccountData(dateRange);
 
-    const balanceSheetData = await this.loadBalanceSheet(loadAccountEntryData);
+    const balanceSheetData = this.loadBalanceSheet(loadAccountEntryData);
+    const trialBalanceData = this.loadTrialBalance(loadAccountEntryData);
 
     return {
-      balanceSheet: balanceSheetData
+      balanceSheet: balanceSheetData,
+      trialBalance: trialBalanceData
     }
   }
 
@@ -39,7 +44,7 @@ export class ReportDataLoader {
    * Gets pre-configured balance sheet data
    * @param rawData raw account entry data
    */
-  private static async loadBalanceSheet(rawData: PreConfigurationRawData[]): Promise<PreConfiguredDataBalanceSheet> {
+  private static loadBalanceSheet(rawData: PreConfigurationRawData[]): PreConfiguredDataBalanceSheet {
 
     // get array of all data in balance sheet.
     const filteredData = rawData.filter(r => r.statementType === StatementType.BS);
@@ -73,12 +78,72 @@ export class ReportDataLoader {
       }
     })
 
-
     return {
       accountData,
       totals
     }
   }
+
+  private static loadTrialBalance(rawData: PreConfigurationRawData[]): PreConfigurationDataTrialBalance {
+    // Add/subtract debits and credits from each account based on their normal type
+    let totalDebits = 0;
+    let totalCredits = 0;
+    const accountData: AccountData[] = rawData.map(r => {
+      let accountBalance = 0;
+
+      // get account balance for entry list
+      for (const entry of r.entries) {
+        if (r.normalType === NormalType.debit) {
+          // add debits, subtract credits
+          accountBalance += entry.debit;
+          accountBalance -= entry.credit;
+        }else {
+          accountBalance -= entry.debit;
+          accountBalance += entry.credit;
+        }
+      }
+
+      if (r.normalType === NormalType.debit) {
+        totalDebits += accountBalance;
+      }else {
+        totalCredits += accountBalance;
+      }
+
+      return {
+        accountName: r.accountName,
+        balance: r.normalType === NormalType.debit
+          ? [accountBalance, 0]
+          : [0, accountBalance],
+        normalType: r.normalType,
+        accountType: r.accountType
+      }
+    });
+
+    // order by Asset, Liability, Equity
+
+
+    return {
+      accountData,
+      totalCredits,
+      totalDebits
+    }
+  }
+
+  // private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
+  //   const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
+  //
+  //   const accountData: AccountData[] = filteredData.map(f => {
+  //
+  //     // get net income (income - expense)
+  //
+  //     return {
+  //       accountName: f.accountName,
+  //       balance
+  //     }
+  //
+  //   })
+  //
+  // }
 
   private static async loadAccountData(dateRange: DateRange) {
     // load each account and their sub-collection data

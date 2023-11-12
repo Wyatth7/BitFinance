@@ -1,6 +1,6 @@
 export interface ReportDocuments {
   balanceSheet: string;
   // incomeStatement: string;
-  // trialBalance: string;
+  trialBalance: string;
   // retainedEarnings: string;
 }

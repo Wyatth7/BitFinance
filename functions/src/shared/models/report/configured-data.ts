@@ -1,5 +1,6 @@
-import {ReportTemplate} from "./balance-sheet-template/reportTemplate";
+import {ReportTemplate} from "./single-total-report-template/reportTemplate";
 
 export interface ConfiguredData {
   balanceSheet: ReportTemplate;
+  trialBalance: ReportTemplate;
 }

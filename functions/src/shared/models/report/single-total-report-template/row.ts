@@ -8,7 +8,7 @@ export interface Row {
    * Rendered as string.
    * If undefined, render nothing
    */
-  value: string;
+  values: string[];
   /**
    * Spaces to indent the row title.
    * If 0, the report engine will interpret this row as

@@ -4,7 +4,7 @@ import * as path from 'path';
 const readFile = util.promisify(fs.readFile);
 import {Templating} from '../shared/helpers/templating/templating';
 import {PdfGenerator} from "../shared/helpers/pdf/pdf-generator";
-import {ReportTemplate} from "../shared/models/report/balance-sheet-template/reportTemplate";
+import {ReportTemplate} from "../shared/models/report/single-total-report-template/reportTemplate";
 import {ReportDataLoader} from "./report-data-loader";
 import {DateRange} from "../shared/models/time/date-range";
 import {ReportDataConfiguration} from "./report-data-configuration";
@@ -24,10 +24,14 @@ export class ReportEngine {
 
     const configuredReports = ReportDataConfiguration.configureReportData(reportDocuments, dateRange);
 
+    console.log(configuredReports.balanceSheet.headers);
+
     const balanceSheet = await this.generateBalanceSheetPdf(configuredReports.balanceSheet);
+    const trialBalance = await this.generateBalanceSheetPdf(configuredReports.trialBalance);
 
     return {
-      balanceSheet: balanceSheet,
+      balanceSheet,
+      trialBalance
     }
   }
 

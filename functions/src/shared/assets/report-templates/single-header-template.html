@@ -6,44 +6,59 @@
 </head>
 <body>
 <div class="report">
-
-    <div class="report-header">
-        <!--        {{reportHeader}}-->
-        <h2>{{ reportHeader }}</h2>
-    </div>
+        <div class="report-header">
+            <!--        {{reportHeader}}-->
+            <h2>{{ reportHeader }}</h2>
+            <h4>{{ dateRange }}</h4>
+        </div>
     <div class="report-content">
         <!--   this is going to be a table with dynamic data     -->
         <!--   eventually generate this with handlebars stuff     -->
             <div class="headers">
-                <p class="header">{{ dateRange }}</p>
+              {{#each headers}}
+                <p class="header">{{ this }}</p>
+              {{/each}}
             </div>
+
         {{#each sections}}
-            <div class="row-group-header row-item">
-                <p>{{ this.sectionHeader }}</p>
-            </div>
+            {{#if this.sectionHeader}}
+              <div class="row-group-header row-item">
+                  <p>{{ this.sectionHeader }}</p>
+              </div>
+            {{/if}}
             {{#each this.rowGroups}}
-                <div class="table-row row-item">
-                    <div class="left-content">
-                        <p class="title">{{ this.groupTitle }}:</p>
-                    </div>
-                    <div class="right-content"></div>
-                </div>
+                {{#if this.groupTitle}}
+                  <div class="table-row row-item">
+                      <div class="left-content">
+                          <p class="title">{{ this.groupTitle }}:</p>
+                      </div>
+                      <div class="right-content"></div>
+                  </div>
+                {{/if}}
                 {{#each this.rows}}
                     <div class="table-row row-item">
                         <div class="left-content">
                             <p class="title">{{{ indent this.indent }}}{{ this.title }}</p>
                         </div>
-                        <div class="right-content">
-                            <p>{{ this.value }}</p>
-                        </div>
+                      <div class="right-content-container">
+                        {{#each this.values}}
+                          <div class="right-content">
+                            <p>{{ this }}</p>
+                          </div>
+                        {{/each}}
+                      </div>
                     </div>
                 {{/each}}
                 <div class="table-row row-item">
                     <div class="left-content">
                         <p class="title">{{{ indent this.indentTotal }}}Total {{ this.groupTitle }}:</p>
                     </div>
-                    <div class="right-content">
-                        <p class="group-total">{{ this.groupTotal }}</p>
+                    <div class="right-content-container">
+                      {{#each this.groupTotal}}
+                        <div class="right-content">
+                            <p class="group-total">{{ this }}</p>
+                        </div>
+                      {{/each}}
                     </div>
                 </div>
             {{/each}}
@@ -79,6 +94,7 @@
     .headers {
         width: 100%;
         display: flex;
+        gap: 1rem;
         justify-content: flex-end;
     }
 
@@ -106,6 +122,11 @@
 
     .row-item:nth-child(odd) {
         background-color: #efefef;
+    }
+
+    .right-content-container {
+      display: flex;
+      gap: 1rem;
     }
 
     .right-content {
