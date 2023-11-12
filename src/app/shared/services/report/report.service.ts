@@ -17,13 +17,7 @@ export class ReportService {
 
     try {
 
-      const base64String = await createReportFunction(reportGroupForm);
-
-        const a = document.createElement("a"); //Create <a>
-        a.href = base64String.data.report; //Image Base64 Goes here
-        a.download = 'test-balance-sheet.pdf'; //File name Here
-        a.click(); //Downloaded file
-        a.remove();
+      await createReportFunction(reportGroupForm);
 
       this.snackbarService.showSuccess('Report group created');
     }catch (err) {

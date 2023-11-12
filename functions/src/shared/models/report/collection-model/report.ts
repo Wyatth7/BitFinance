@@ -1,8 +1,6 @@
 import {ReportDocuments} from "./reportDocuments";
+import {ReportBase} from "./report-base";
 
-export interface Report {
-  generatedOn: string;
-  reportName: string;
-  reportDescription: string;
+export interface Report extends ReportBase{
   documents: ReportDocuments;
 }
