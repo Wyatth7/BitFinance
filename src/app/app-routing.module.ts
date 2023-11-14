@@ -5,13 +5,13 @@ import { accessLoginPageGuard } from './shared/activation-guards/auth-pages-guar
 
 const routes: Routes = [
   {
-    path: 'overview', 
+    path: 'overview',
     loadChildren: () => import('./@pages/overview/overview.module')
       .then(o => o.OverviewModule),
     canActivateChild: [authGuardChild]
   },
   {
-    path: 'users', 
+    path: 'users',
     loadChildren: () => import('./@pages/members/members.module')
       .then(m => m.MembersModule),
     canActivateChild: [authGuardChild],
@@ -27,6 +27,12 @@ const routes: Routes = [
     loadChildren: () => import('./@pages/journals/journals.module')
       .then(j => j.JournalsModule),
       canActivate: [authGuardChild]
+  },
+  {
+    path: 'report',
+    loadChildren: () => import('./@pages/reports/reports.module')
+      .then(r => r.ReportsModule),
+    canActivate: [authGuardChild]
   },
   {
     path: 'help',

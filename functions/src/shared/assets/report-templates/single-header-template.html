@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ reportHeader }}</title>
+</head>
+<body>
+<div class="report">
+        <div class="report-header">
+            <!--        {{reportHeader}}-->
+            <h2>{{ reportHeader }}</h2>
+            <h4>{{ dateRange }}</h4>
+        </div>
+    <div class="report-content">
+        <!--   this is going to be a table with dynamic data     -->
+        <!--   eventually generate this with handlebars stuff     -->
+            <div class="headers">
+              {{#each headers}}
+                <p class="header">{{ this }}</p>
+              {{/each}}
+            </div>
+
+        {{#each sections}}
+            {{#if this.sectionHeader}}
+              <div class="row-group-header row-item">
+                  <p>{{ this.sectionHeader }}</p>
+              </div>
+            {{/if}}
+            {{#each this.rowGroups}}
+                {{#if this.groupTitle}}
+                  <div class="table-row row-item">
+                      <div class="left-content">
+                          <p class="title">{{ this.groupTitle }}:</p>
+                      </div>
+                      <div class="right-content"></div>
+                  </div>
+                {{/if}}
+                {{#each this.rows}}
+                    <div class="table-row row-item">
+                        <div class="left-content">
+                            <p class="title">{{{ indent this.indent }}}{{ this.title }}</p>
+                        </div>
+                      <div class="right-content-container">
+                        {{#each this.values}}
+                          <div class="right-content">
+                            <p>{{ this }}</p>
+                          </div>
+                        {{/each}}
+                      </div>
+                    </div>
+                {{/each}}
+                <div class="table-row row-item">
+                    <div class="left-content">
+                        <p class="title">{{{ indent this.indentTotal }}}Total {{ this.groupTitle }}:</p>
+                    </div>
+                    <div class="right-content-container">
+                      {{#each this.groupTotal}}
+                        <div class="right-content">
+                            <p class="group-total">{{ this }}</p>
+                        </div>
+                      {{/each}}
+                    </div>
+                </div>
+            {{/each}}
+        {{/each}}
+    </div>
+</div>
+
+<style>
+    *,*::before,*::after {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    html {
+        font-family: 'Roboto', sans-serif;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .report {
+        width: 100%;
+        padding: 2% 4%;
+    }
+
+    .report-header {
+        text-align: center;
+    }
+
+    .report-content {
+        margin-top: 3rem;
+    }
+
+    .headers {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+    }
+
+    .header {
+        border-bottom: 2px solid #000000;
+        font-weight: 500;
+        max-width: 10rem;
+        width: 10rem;
+        text-align: center;
+    }
+
+    .row-group-header {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: .3rem 0;
+    }
+
+    .table-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: .3rem .3rem;
+    }
+
+    .row-item:nth-child(odd) {
+        background-color: #efefef;
+    }
+
+    .right-content-container {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .right-content {
+        max-width: 10rem;
+        width: 10rem;
+    }
+
+    .right-content p {
+        text-align: right;
+    }
+
+    .table-row .white-bk {
+        background-color: #ffffff;
+    }
+
+    .group-total {
+        border-top: 2px solid #000000;
+    }
+
+
+
+
+</style>
+
+</body>
+</html>
