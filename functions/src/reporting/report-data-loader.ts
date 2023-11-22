@@ -20,6 +20,7 @@ import {
 import {
   PreConfiguredDataIncomeStatement
 } from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
+import {ReportCalculations} from "../shared/helpers/calculations/report-calculations";
 
 export class ReportDataLoader {
 
@@ -133,10 +134,7 @@ export class ReportDataLoader {
 
   private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
     const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
-
-    let netIncome = 0;
-    let grossIncome = 0;
-    let expense = 0
+    
     const incomeAccountData: AccountData[] = [];
     const expenseAccountData: AccountData[] = [];
     filteredData.forEach(f => {
@@ -148,24 +146,17 @@ export class ReportDataLoader {
         normalType: f.normalType
       };
 
-      // + credits, - debits
-      // (debits in this case a expenses, and credits are revenue)
-      if (f.normalType === NormalType.debit) {
-        netIncome -= f.balance;
-        expense += f.balance;
-
-        expenseAccountData.push(accountData)
-      }else {
-        netIncome += f.balance;
-        grossIncome += f.balance;
-        incomeAccountData.push(accountData)
-      }
+      f.normalType === NormalType.debit
+        ? expenseAccountData.push(accountData)
+        : incomeAccountData.push(accountData);
     });
 
+    const totals = ReportCalculations.incomeExpense([...incomeAccountData, ...expenseAccountData]);
+
     return {
-      netIncome: netIncome,
-      grossIncome: grossIncome,
-      totalExpense: expense,
+      netIncome: totals.netIncome,
+      grossIncome: totals.grossIncome,
+      totalExpense: totals.expense,
       income: incomeAccountData,
       expense: expenseAccountData
     }

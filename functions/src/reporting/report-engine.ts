@@ -24,12 +24,10 @@ export class ReportEngine {
 
     const configuredReports = ReportDataConfiguration.configureReportData(reportDocuments, dateRange);
 
-    console.log(configuredReports.balanceSheet.headers);
-
-    const balanceSheet = await this.generateBalanceSheetPdf(configuredReports.balanceSheet);
-    const trialBalance = await this.generateBalanceSheetPdf(configuredReports.trialBalance);
-    const incomeStatement = await this.generateBalanceSheetPdf(configuredReports.incomeStatement);
-    const retainedEarnings = await this.generateBalanceSheetPdf(configuredReports.retainedEarnings);
+    const balanceSheet = await this.generatePdf(configuredReports.balanceSheet);
+    const trialBalance = await this.generatePdf(configuredReports.trialBalance);
+    const incomeStatement = await this.generatePdf(configuredReports.incomeStatement);
+    const retainedEarnings = await this.generatePdf(configuredReports.retainedEarnings);
 
     return {
       balanceSheet,
@@ -43,7 +41,7 @@ export class ReportEngine {
    * Generates a balance sheet PDF in base64 string
    * @param data Balance sheet report template
    */
-  private static async generateBalanceSheetPdf(data: ReportTemplate) {
+  private static async generatePdf(data: ReportTemplate) {
     const filePath = path.resolve('src/shared/assets/report-templates/single-header-template.html');
     const file = await readFile(filePath);
 
