@@ -32,8 +32,14 @@ export class ReportCalculations {
     return incomeExpense;
   }
 
-  static retainedEarnings() {
-
+  /**
+   * Gets the ending balance of retained earnings
+   * @param beginningEarnings last reports ending earnings
+   * @param netIncome this reports net income; Can be negative
+   * @param dividends this reports dividends
+   */
+  static retainedEarnings(beginningEarnings: number, netIncome: number, dividends: number) {
+    return beginningEarnings + netIncome - dividends;
   }
 
 }

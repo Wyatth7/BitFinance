@@ -9,6 +9,7 @@ import {ReportDataLoader} from "./report-data-loader";
 import {DateRange} from "../shared/models/time/date-range";
 import {ReportDataConfiguration} from "./report-data-configuration";
 import {ReportDocuments} from "../shared/models/report/collection-model/reportDocuments";
+import {RetainedEarningsSummary} from "../shared/models/report/collection-model/retained-earnings-summary";
 
 /**
  * Creates reports as HTML or PDF
@@ -19,21 +20,32 @@ export class ReportEngine {
    * Generates a balance sheet PDF
    * @param dateRange date range for reports
    */
-  static async generateReport(dateRange: DateRange): Promise<ReportDocuments> {
-    const reportDocuments = await ReportDataLoader.loadData(dateRange);
+  static async generateReport(dateRange: DateRange): Promise<{ documents: ReportDocuments, retainedEarningsSummary: RetainedEarningsSummary }> {
+    // get data for each report type
+    const preConfigurationData = await ReportDataLoader.loadData(dateRange);
 
-    const configuredReports = ReportDataConfiguration.configureReportData(reportDocuments, dateRange);
+    // configure report data for generation
+    const configuredReports = ReportDataConfiguration.configureReportData(preConfigurationData, dateRange);
 
+    // generate PDF reports
     const balanceSheet = await this.generatePdf(configuredReports.balanceSheet);
     const trialBalance = await this.generatePdf(configuredReports.trialBalance);
     const incomeStatement = await this.generatePdf(configuredReports.incomeStatement);
     const retainedEarnings = await this.generatePdf(configuredReports.retainedEarnings);
 
+    const retainedEarningsSummary: RetainedEarningsSummary = {
+      beginningBalance: preConfigurationData.retainedEarnings.beginningBalance,
+      endingBalance: preConfigurationData.retainedEarnings.endingBalance
+    }
+
     return {
-      balanceSheet,
-      trialBalance,
-      incomeStatement,
-      retainedEarnings
+      documents: {
+        balanceSheet,
+        trialBalance,
+        incomeStatement,
+        retainedEarnings
+      },
+      retainedEarningsSummary
     }
   }
 

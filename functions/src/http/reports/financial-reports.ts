@@ -28,7 +28,8 @@ export const generateReports = onRequest(
       const report: Report = {
         reportName: dto.reportName,
         reportDescription: dto.reportDescription,
-        documents: reports,
+        documents: reports.documents,
+        retainedEarningsSummary: reports.retainedEarningsSummary,
         dateRange: dto.dateRange,
         generatedOn: new Date().toISOString(),
         reportId: Guid.createGuid()

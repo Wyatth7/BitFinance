@@ -16,6 +16,9 @@ import {
 import {
   PreConfiguredDataIncomeStatement
 } from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
+import {
+  PreConfiguredDataRetainedEarnings
+} from "../shared/models/report/pre-configuration-data/retained-earnings/pre-configured-data-retained-earnings";
 
 export class ReportDataConfiguration {
 
@@ -25,7 +28,7 @@ export class ReportDataConfiguration {
     const balanceSheet = this.configureBalanceSheet(reportDocuments.balanceSheet, dateString);
     const trialBalance = this.configureTrialBalance(reportDocuments.trialBalance, dateString)
     const incomeStatement = this.configureIncomeStatement(reportDocuments.incomeStatement, dateString);
-    const retainedEarnings = this.configureRetainedEarnings(dateString);
+    const retainedEarnings = this.configureRetainedEarnings(reportDocuments.retainedEarnings, dateString);
 
     return {
       balanceSheet,
@@ -87,43 +90,43 @@ export class ReportDataConfiguration {
   }
 
 
-  private static configureRetainedEarnings(dateRange: string) {
-    const sections: Section[] = [
+  private static configureRetainedEarnings(retainedEarningsData: PreConfiguredDataRetainedEarnings, dateRange: string) {
+    const rows: Row[] = [
       {
-        sectionHeader: undefined,
-        sectionTotal: '',
-        rowGroups: [
-          {
-            groupTitle: '',
-            groupTotal: ['250'],
-            indentTotal: 4,
-            rows: [
-              {
-                title: 'Retained Earnings Starting Balance',
-                values: ['100'],
-                indent: 0
-              },
-              {
-                title: 'Current Period Net Income',
-                values: ['150'],
-                indent: 0
-              },
-              {
-                title: 'Dividends',
-                values: ['0'],
-                indent: 0
-              }
-            ]
-          },
-        ]
-      }
+        title: 'Starting balance',
+        values: [retainedEarningsData.beginningBalance.toString()],
+        indent: 0
+      },
+      {
+        title: 'Net Income',
+        values: [retainedEarningsData.netIncome.toString()],
+        indent: 0
+      },
+      {
+        title: 'Dividends',
+        values: [retainedEarningsData.dividends.toString()],
+        indent: 0
+      },
     ]
+
+    const group: RowGroup = {
+      groupTitle: '',
+      groupTotal: [retainedEarningsData.endingBalance.toString()],
+      indentTotal: 0,
+      rows: rows
+    }
+
+    const section: Section = {
+      sectionTotal: '',
+      sectionHeader: dateRange,
+      rowGroups: [group]
+    }
 
     return {
       reportHeader: 'Retained Earnings',
       headers: [dateRange],
       dateRange,
-      sections: sections
+      sections: [section]
     }
   }
 

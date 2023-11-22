@@ -21,6 +21,10 @@ import {
   PreConfiguredDataIncomeStatement
 } from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
 import {ReportCalculations} from "../shared/helpers/calculations/report-calculations";
+import {
+  PreConfiguredDataRetainedEarnings
+} from "../shared/models/report/pre-configuration-data/retained-earnings/pre-configured-data-retained-earnings";
+import {Report} from "../shared/models/report/collection-model/report";
 
 export class ReportDataLoader {
 
@@ -35,11 +39,13 @@ export class ReportDataLoader {
     const balanceSheetData = this.loadBalanceSheet(loadAccountEntryData);
     const trialBalanceData = this.loadTrialBalance(loadAccountEntryData);
     const incomeStatementData = this.loadIncomeStatement(loadAccountEntryData);
+    const retainedEarningsData = await this.loadRetainedEarnings(incomeStatementData.netIncome);
 
     return {
       balanceSheet: balanceSheetData,
       trialBalance: trialBalanceData,
-      incomeStatement: incomeStatementData
+      incomeStatement: incomeStatementData,
+      retainedEarnings: retainedEarningsData
     }
   }
 
@@ -134,7 +140,7 @@ export class ReportDataLoader {
 
   private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
     const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
-    
+
     const incomeAccountData: AccountData[] = [];
     const expenseAccountData: AccountData[] = [];
     filteredData.forEach(f => {
@@ -160,6 +166,38 @@ export class ReportDataLoader {
       income: incomeAccountData,
       expense: expenseAccountData
     }
+  }
+
+  private static async loadRetainedEarnings(netIncome: number): Promise<PreConfiguredDataRetainedEarnings> {
+    // fetch ending earnings from most recent report
+    const preConfiguredData: PreConfiguredDataRetainedEarnings = {
+      beginningBalance: 0,
+      endingBalance: 0,
+      netIncome,
+      dividends: 0
+    };
+
+    // get most recent report
+    const mostRecentReportSnapshot = await admin.firestore()
+      .collection(FirestoreCollections.reports)
+      .orderBy('generatedOn', 'desc')
+      .limit(1)
+      .get();
+
+    // if snapshot exists, update pre config data endingBalance
+    if (!mostRecentReportSnapshot.empty) {
+      const mostRecentReport = mostRecentReportSnapshot.docs[0].data() as Report;
+      preConfiguredData.beginningBalance = mostRecentReport.retainedEarningsSummary?.endingBalance || 0;
+    }
+
+    // get ending balance
+    preConfiguredData.endingBalance = ReportCalculations.retainedEarnings(
+      preConfiguredData.beginningBalance,
+      preConfiguredData.netIncome,
+      preConfiguredData.dividends
+    );
+
+    return preConfiguredData;
   }
 
   private static async loadAccountData(dateRange: DateRange) {
