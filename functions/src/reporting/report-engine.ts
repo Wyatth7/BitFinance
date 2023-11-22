@@ -9,6 +9,7 @@ import {ReportDataLoader} from "./report-data-loader";
 import {DateRange} from "../shared/models/time/date-range";
 import {ReportDataConfiguration} from "./report-data-configuration";
 import {ReportDocuments} from "../shared/models/report/collection-model/reportDocuments";
+import {RetainedEarningsSummary} from "../shared/models/report/collection-model/retained-earnings-summary";
 
 /**
  * Creates reports as HTML or PDF
@@ -19,19 +20,32 @@ export class ReportEngine {
    * Generates a balance sheet PDF
    * @param dateRange date range for reports
    */
-  static async generateReport(dateRange: DateRange): Promise<ReportDocuments> {
-    const reportDocuments = await ReportDataLoader.loadData(dateRange);
+  static async generateReport(dateRange: DateRange): Promise<{ documents: ReportDocuments, retainedEarningsSummary: RetainedEarningsSummary }> {
+    // get data for each report type
+    const preConfigurationData = await ReportDataLoader.loadData(dateRange);
 
-    const configuredReports = ReportDataConfiguration.configureReportData(reportDocuments, dateRange);
+    // configure report data for generation
+    const configuredReports = ReportDataConfiguration.configureReportData(preConfigurationData, dateRange);
 
-    console.log(configuredReports.balanceSheet.headers);
+    // generate PDF reports
+    const balanceSheet = await this.generatePdf(configuredReports.balanceSheet);
+    const trialBalance = await this.generatePdf(configuredReports.trialBalance);
+    const incomeStatement = await this.generatePdf(configuredReports.incomeStatement);
+    const retainedEarnings = await this.generatePdf(configuredReports.retainedEarnings);
 
-    const balanceSheet = await this.generateBalanceSheetPdf(configuredReports.balanceSheet);
-    const trialBalance = await this.generateBalanceSheetPdf(configuredReports.trialBalance);
+    const retainedEarningsSummary: RetainedEarningsSummary = {
+      beginningBalance: preConfigurationData.retainedEarnings.beginningBalance,
+      endingBalance: preConfigurationData.retainedEarnings.endingBalance
+    }
 
     return {
-      balanceSheet,
-      trialBalance
+      documents: {
+        balanceSheet,
+        trialBalance,
+        incomeStatement,
+        retainedEarnings
+      },
+      retainedEarningsSummary
     }
   }
 
@@ -39,7 +53,7 @@ export class ReportEngine {
    * Generates a balance sheet PDF in base64 string
    * @param data Balance sheet report template
    */
-  private static async generateBalanceSheetPdf(data: ReportTemplate) {
+  private static async generatePdf(data: ReportTemplate) {
     const filePath = path.resolve('src/shared/assets/report-templates/single-header-template.html');
     const file = await readFile(filePath);
 

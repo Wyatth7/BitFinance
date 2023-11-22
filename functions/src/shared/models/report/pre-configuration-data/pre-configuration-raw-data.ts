@@ -8,5 +8,6 @@ export interface PreConfigurationRawData {
   accountType: AccountType;
   normalType: NormalType;
   statementType: StatementType;
+  balance: number;
   entries: AccountEntry[];
 }

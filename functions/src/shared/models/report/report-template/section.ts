@@ -4,7 +4,7 @@ export interface Section {
   /**
    * Group header that is centered in the table.
    * This is the only content in the row.
-   * If this is empty/undefined, ignore it
+   * If this is empty/undefined it gets ignored
    */
   sectionHeader?: string;
   /**

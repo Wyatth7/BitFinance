@@ -16,12 +16,16 @@
   <div class="report-viewer">
 <!--    render iframe with pdf -->
     <app-info-page-header [title]="selectedReport">
+      <div class="container">
+
       <mat-chip-listbox [value]="selectedReport" (change)="change($event)">
         <mat-chip-option [value]="getEnum.reportType.balanceSheet">Balance Sheet</mat-chip-option>
         <mat-chip-option [value]="getEnum.reportType.trialBalance">Trial Balance</mat-chip-option>
         <mat-chip-option [value]="getEnum.reportType.incomeStatement">Income Statement</mat-chip-option>
         <mat-chip-option [value]="getEnum.reportType.retainedEarnings">Retained Earnings</mat-chip-option>
       </mat-chip-listbox>
+      <button mat-stroked-button color="primary" (click)="email()">Email</button>
+      </div>
     </app-info-page-header>
     <div class="frame" *ngIf="pdf">
       <iframe width="100%" height="96%" [src]="pdf" type="application/pdf" [frameBorder]="0"></iframe>

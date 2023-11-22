@@ -17,9 +17,14 @@ import {BalanceSheetTotals} from "../shared/models/report/pre-configuration-data
 import {
   PreConfigurationDataTrialBalance
 } from "../shared/models/report/pre-configuration-data/trial-balance/pre-configuration-data-trial-balance";
-// import {
-//   PreConfiguredDataIncomeStatement
-// } from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
+import {
+  PreConfiguredDataIncomeStatement
+} from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
+import {ReportCalculations} from "../shared/helpers/calculations/report-calculations";
+import {
+  PreConfiguredDataRetainedEarnings
+} from "../shared/models/report/pre-configuration-data/retained-earnings/pre-configured-data-retained-earnings";
+import {Report} from "../shared/models/report/collection-model/report";
 
 export class ReportDataLoader {
 
@@ -33,10 +38,14 @@ export class ReportDataLoader {
 
     const balanceSheetData = this.loadBalanceSheet(loadAccountEntryData);
     const trialBalanceData = this.loadTrialBalance(loadAccountEntryData);
+    const incomeStatementData = this.loadIncomeStatement(loadAccountEntryData);
+    const retainedEarningsData = await this.loadRetainedEarnings(incomeStatementData.netIncome);
 
     return {
       balanceSheet: balanceSheetData,
-      trialBalance: trialBalanceData
+      trialBalance: trialBalanceData,
+      incomeStatement: incomeStatementData,
+      retainedEarnings: retainedEarningsData
     }
   }
 
@@ -56,7 +65,7 @@ export class ReportDataLoader {
     }
 
     const accountData: AccountData[] = filteredData.map(f => {
-      const balance = f.entries[0].balance;
+      const balance = f.entries[0]?.balance || f.balance;
 
       switch (f.accountType) {
         case AccountType.asset:
@@ -129,21 +138,67 @@ export class ReportDataLoader {
     }
   }
 
-  // private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
-  //   const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
-  //
-  //   const accountData: AccountData[] = filteredData.map(f => {
-  //
-  //     // get net income (income - expense)
-  //
-  //     return {
-  //       accountName: f.accountName,
-  //       balance
-  //     }
-  //
-  //   })
-  //
-  // }
+  private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
+    const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
+
+    const incomeAccountData: AccountData[] = [];
+    const expenseAccountData: AccountData[] = [];
+    filteredData.forEach(f => {
+
+      const accountData: AccountData = {
+        accountName: f.accountName,
+        balance: f.balance,
+        accountType: f.accountType,
+        normalType: f.normalType
+      };
+
+      f.normalType === NormalType.debit
+        ? expenseAccountData.push(accountData)
+        : incomeAccountData.push(accountData);
+    });
+
+    const totals = ReportCalculations.incomeExpense([...incomeAccountData, ...expenseAccountData]);
+
+    return {
+      netIncome: totals.netIncome,
+      grossIncome: totals.grossIncome,
+      totalExpense: totals.expense,
+      income: incomeAccountData,
+      expense: expenseAccountData
+    }
+  }
+
+  private static async loadRetainedEarnings(netIncome: number): Promise<PreConfiguredDataRetainedEarnings> {
+    // fetch ending earnings from most recent report
+    const preConfiguredData: PreConfiguredDataRetainedEarnings = {
+      beginningBalance: 0,
+      endingBalance: 0,
+      netIncome,
+      dividends: 0
+    };
+
+    // get most recent report
+    const mostRecentReportSnapshot = await admin.firestore()
+      .collection(FirestoreCollections.reports)
+      .orderBy('generatedOn', 'desc')
+      .limit(1)
+      .get();
+
+    // if snapshot exists, update pre config data endingBalance
+    if (!mostRecentReportSnapshot.empty) {
+      const mostRecentReport = mostRecentReportSnapshot.docs[0].data() as Report;
+      preConfiguredData.beginningBalance = mostRecentReport.retainedEarningsSummary?.endingBalance || 0;
+    }
+
+    // get ending balance
+    preConfiguredData.endingBalance = ReportCalculations.retainedEarnings(
+      preConfiguredData.beginningBalance,
+      preConfiguredData.netIncome,
+      preConfiguredData.dividends
+    );
+
+    return preConfiguredData;
+  }
 
   private static async loadAccountData(dateRange: DateRange) {
     // load each account and their sub-collection data
@@ -158,7 +213,7 @@ export class ReportDataLoader {
       throw new Error('Account list is empty');
     }
 
-    const accounts: { accountId: string; name: string, accountType: AccountType, normalType: NormalType, statementType: StatementType }[] = accountSnapshot.docs
+    const accounts: { accountId: string; name: string, accountType: AccountType, normalType: NormalType, statementType: StatementType, balance: number }[] = accountSnapshot.docs
       .map(a => {
         const data = a.data() as AccountModel;
 
@@ -167,6 +222,7 @@ export class ReportDataLoader {
           name: data.accountName,
           accountType: data.accountType,
           normalType: data.normalType,
+          balance: data.balance,
           statementType: data.statementType
         }
       })
@@ -181,14 +237,11 @@ export class ReportDataLoader {
         .orderBy('creationDate', 'desc')
         .get();
 
-      if (entrySnapshot.empty) {
-        continue
-      }
-
       const entries = entrySnapshot.docs.map(e => e.data() as AccountEntry);
 
       rawData.push({
         accountName: account.name,
+        balance: account.balance,
         accountType: account.accountType,
         normalType: account.normalType,
         statementType: account.statementType,
