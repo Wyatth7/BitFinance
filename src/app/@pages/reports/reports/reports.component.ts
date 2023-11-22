@@ -49,5 +49,6 @@ export class ReportsComponent implements OnInit{
    */
   async createReportGroup(reportGroupForm: CreateReportDto) {
     await this.reportService.createReportGroup(reportGroupForm);
+    await this.reportService.getReportList();
   }
 }

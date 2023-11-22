@@ -17,9 +17,9 @@ import {BalanceSheetTotals} from "../shared/models/report/pre-configuration-data
 import {
   PreConfigurationDataTrialBalance
 } from "../shared/models/report/pre-configuration-data/trial-balance/pre-configuration-data-trial-balance";
-// import {
-//   PreConfiguredDataIncomeStatement
-// } from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
+import {
+  PreConfiguredDataIncomeStatement
+} from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
 
 export class ReportDataLoader {
 
@@ -33,10 +33,12 @@ export class ReportDataLoader {
 
     const balanceSheetData = this.loadBalanceSheet(loadAccountEntryData);
     const trialBalanceData = this.loadTrialBalance(loadAccountEntryData);
+    const incomeStatementData = this.loadIncomeStatement(loadAccountEntryData);
 
     return {
       balanceSheet: balanceSheetData,
-      trialBalance: trialBalanceData
+      trialBalance: trialBalanceData,
+      incomeStatement: incomeStatementData
     }
   }
 
@@ -56,7 +58,7 @@ export class ReportDataLoader {
     }
 
     const accountData: AccountData[] = filteredData.map(f => {
-      const balance = f.entries[0].balance;
+      const balance = f.entries[0]?.balance || f.balance;
 
       switch (f.accountType) {
         case AccountType.asset:
@@ -129,21 +131,45 @@ export class ReportDataLoader {
     }
   }
 
-  // private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
-  //   const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
-  //
-  //   const accountData: AccountData[] = filteredData.map(f => {
-  //
-  //     // get net income (income - expense)
-  //
-  //     return {
-  //       accountName: f.accountName,
-  //       balance
-  //     }
-  //
-  //   })
-  //
-  // }
+  private static loadIncomeStatement(rawData: PreConfigurationRawData[]): PreConfiguredDataIncomeStatement {
+    const filteredData = rawData.filter(r => r.statementType === StatementType.IS);
+
+    let netIncome = 0;
+    let grossIncome = 0;
+    let expense = 0
+    const incomeAccountData: AccountData[] = [];
+    const expenseAccountData: AccountData[] = [];
+    filteredData.forEach(f => {
+
+      const accountData: AccountData = {
+        accountName: f.accountName,
+        balance: f.balance,
+        accountType: f.accountType,
+        normalType: f.normalType
+      };
+
+      // + credits, - debits
+      // (debits in this case a expenses, and credits are revenue)
+      if (f.normalType === NormalType.debit) {
+        netIncome -= f.balance;
+        expense += f.balance;
+
+        expenseAccountData.push(accountData)
+      }else {
+        netIncome += f.balance;
+        grossIncome += f.balance;
+        incomeAccountData.push(accountData)
+      }
+    });
+
+    return {
+      netIncome: netIncome,
+      grossIncome: grossIncome,
+      totalExpense: expense,
+      income: incomeAccountData,
+      expense: expenseAccountData
+    }
+  }
 
   private static async loadAccountData(dateRange: DateRange) {
     // load each account and their sub-collection data
@@ -158,7 +184,7 @@ export class ReportDataLoader {
       throw new Error('Account list is empty');
     }
 
-    const accounts: { accountId: string; name: string, accountType: AccountType, normalType: NormalType, statementType: StatementType }[] = accountSnapshot.docs
+    const accounts: { accountId: string; name: string, accountType: AccountType, normalType: NormalType, statementType: StatementType, balance: number }[] = accountSnapshot.docs
       .map(a => {
         const data = a.data() as AccountModel;
 
@@ -167,6 +193,7 @@ export class ReportDataLoader {
           name: data.accountName,
           accountType: data.accountType,
           normalType: data.normalType,
+          balance: data.balance,
           statementType: data.statementType
         }
       })
@@ -181,14 +208,11 @@ export class ReportDataLoader {
         .orderBy('creationDate', 'desc')
         .get();
 
-      if (entrySnapshot.empty) {
-        continue
-      }
-
       const entries = entrySnapshot.docs.map(e => e.data() as AccountEntry);
 
       rawData.push({
         accountName: account.name,
+        balance: account.balance,
         accountType: account.accountType,
         normalType: account.normalType,
         statementType: account.statementType,

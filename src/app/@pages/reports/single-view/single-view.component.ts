@@ -9,6 +9,7 @@ import {GetEnumValueService} from "../../../shared/services/enum/get-enum-value.
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {DocumentsDto} from "../../../shared/models/reports/dto/documents-dto";
 import {SafeDocuments} from "../../../shared/models/reports/safe-documents";
+import {SnackBarService} from "../../../shared/services/component-services/snack-bar.service";
 
 @Component({
   selector: 'app-single-view',
@@ -30,7 +31,8 @@ export class SingleViewComponent implements OnInit{
     private route: ActivatedRoute,
     private loaderService: LoaderService,
     public getEnum: GetEnumValueService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private notificationService: SnackBarService
   ) { }
 
   async ngOnInit() {
@@ -42,7 +44,7 @@ export class SingleViewComponent implements OnInit{
     if (this.report) {
       this.sanitizePdfs();
     }
-    
+
     if (this.sanitizedPdfs) {
       this.pdf = this.sanitizedPdfs.balanceSheet;
     }
@@ -68,6 +70,12 @@ export class SingleViewComponent implements OnInit{
       case ReportType.trialBalance:
         this.pdf = this.sanitizedPdfs.trialBalance;
         break;
+      case ReportType.incomeStatement:
+        this.pdf = this.sanitizedPdfs.incomeStatement;
+        break;
+      case ReportType.retainedEarnings:
+        this.pdf = this.sanitizedPdfs.retainedEarnings;
+        break;
       default:
         this.pdf = this.sanitizedPdfs.balanceSheet;
     }
@@ -81,7 +89,19 @@ export class SingleViewComponent implements OnInit{
       balanceSheet: this.sanitizer
         .bypassSecurityTrustResourceUrl(this.report.documents.balanceSheet),
       trialBalance: this.sanitizer
-        .bypassSecurityTrustResourceUrl(this.report.documents.trialBalance)
+        .bypassSecurityTrustResourceUrl(this.report.documents.trialBalance),
+      incomeStatement: this.sanitizer.bypassSecurityTrustResourceUrl(this.report.documents.incomeStatement),
+      retainedEarnings: this.sanitizer.bypassSecurityTrustResourceUrl(this.report.documents.retainedEarnings)
+
     }
   }
+
+  email() {
+    setTimeout(this.notifyFn, 2000)
+  }
+
+  notify() {
+    this.notificationService.showSuccess('Email sent');
+  }
+  notifyFn = this.notify.bind(this)
 }

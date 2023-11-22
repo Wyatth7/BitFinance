@@ -28,10 +28,14 @@ export class ReportEngine {
 
     const balanceSheet = await this.generateBalanceSheetPdf(configuredReports.balanceSheet);
     const trialBalance = await this.generateBalanceSheetPdf(configuredReports.trialBalance);
+    const incomeStatement = await this.generateBalanceSheetPdf(configuredReports.incomeStatement);
+    const retainedEarnings = await this.generateBalanceSheetPdf(configuredReports.retainedEarnings);
 
     return {
       balanceSheet,
-      trialBalance
+      trialBalance,
+      incomeStatement,
+      retainedEarnings
     }
   }
 

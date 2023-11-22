@@ -13,6 +13,9 @@ import {Row} from "../shared/models/report/report-template/row";
 import {
   PreConfigurationDataTrialBalance
 } from "../shared/models/report/pre-configuration-data/trial-balance/pre-configuration-data-trial-balance";
+import {
+  PreConfiguredDataIncomeStatement
+} from "../shared/models/report/pre-configuration-data/income-statement/pre-configured-data-income-statement";
 
 export class ReportDataConfiguration {
 
@@ -21,10 +24,14 @@ export class ReportDataConfiguration {
 
     const balanceSheet = this.configureBalanceSheet(reportDocuments.balanceSheet, dateString);
     const trialBalance = this.configureTrialBalance(reportDocuments.trialBalance, dateString)
+    const incomeStatement = this.configureIncomeStatement(reportDocuments.incomeStatement, dateString);
+    const retainedEarnings = this.configureRetainedEarnings(dateString);
 
     return {
       balanceSheet,
-      trialBalance
+      trialBalance,
+      incomeStatement,
+      retainedEarnings
     }
   }
 
@@ -60,6 +67,88 @@ export class ReportDataConfiguration {
       dateRange: dateRange,
       sections: [section]
     }
+  }
+
+  private static configureIncomeStatement(incomeStatementData: PreConfiguredDataIncomeStatement, dateRange: string): ReportTemplate {
+    const incomeGroup = this.configureRowGroup('gross revenue', incomeStatementData.grossIncome, 8, incomeStatementData.income);
+    const expenseGroup = this.configureRowGroup('cost of sales', incomeStatementData.totalExpense, 8, incomeStatementData.expense);
+
+    const section: Section = {
+      sectionTotal: incomeStatementData.netIncome.toString(),
+      rowGroups: [incomeGroup, expenseGroup]
+    }
+
+    return {
+      reportHeader: 'Income Statement',
+      headers: [dateRange],
+      dateRange,
+      sections: [section]
+    }
+  }
+
+
+  private static configureRetainedEarnings(dateRange: string) {
+    const sections: Section[] = [
+      {
+        sectionHeader: undefined,
+        sectionTotal: '',
+        rowGroups: [
+          {
+            groupTitle: '',
+            groupTotal: ['250'],
+            indentTotal: 4,
+            rows: [
+              {
+                title: 'Retained Earnings Starting Balance',
+                values: ['100'],
+                indent: 0
+              },
+              {
+                title: 'Current Period Net Income',
+                values: ['150'],
+                indent: 0
+              },
+              {
+                title: 'Dividends',
+                values: ['0'],
+                indent: 0
+              }
+            ]
+          },
+        ]
+      }
+    ]
+
+    return {
+      reportHeader: 'Retained Earnings',
+      headers: [dateRange],
+      dateRange,
+      sections: sections
+    }
+  }
+
+
+  private static configureRowGroup(groupTitle: string, groupTotal: number | number[], indentTotal: number, data: AccountData[]): RowGroup {
+      const rowGroup: RowGroup = {
+        groupTitle: groupTitle,
+        groupTotal: Array.isArray(groupTotal)
+          ? groupTotal.toString().split(',')
+          : [groupTotal.toString()],
+        indentTotal: indentTotal + 4,
+        rows: []
+      }
+
+    const rows: Row[] = data.map(a => ({
+      title: a.accountName,
+      values: Array.isArray(a.balance) ?
+        a.balance.toString().split(',')
+        : [a.balance.toString()],
+      indent: indentTotal
+    }));
+
+    rowGroup.rows = [...rows];
+
+    return rowGroup;
   }
 
   /**
