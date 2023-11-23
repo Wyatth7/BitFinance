@@ -1,6 +1,7 @@
 import { JournalApprovalType } from "../enums/journal-approval-type";
 import { FileData } from "../files/file-meta-data";
 import { Transaction } from "./transaction";
+import {AdjustedEntry} from "./adjusted-entry";
 
 export interface JournalEntry {
     journalId: string;
@@ -19,4 +20,5 @@ export interface JournalEntry {
     attachedFileCount: number;
     fileData?: FileData[];
     declineComment?: string;
+    adjustedEntry: AdjustedEntry;
 }

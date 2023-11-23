@@ -1,7 +1,8 @@
-import { NormalType } from "../../enums/accounts/normal-type";
-import { AccountModel } from "../../models/accounts/account-model";
-import { Amounts } from "../../models/calculations/amounts";
-import { Transaction } from "../../models/journals/transaction";
+import {NormalType} from "../../enums/accounts/normal-type";
+import {AccountModel} from "../../models/accounts/account-model";
+import {Amounts} from "../../models/calculations/amounts";
+import {Transaction} from "../../models/journals/transaction";
+import {AdjustedRange} from "../../enums/journals/adjusted-range";
 
 export class EntryCalculations {
 
@@ -56,4 +57,23 @@ export class EntryCalculations {
             return account.balance;
     }
 
+    static adjustEntry(adjustedRange: AdjustedRange, amount: number, date: Date): number {
+      // 1. find total count of adjusted range value
+      const timeDifference = date.getTime() - new Date().getTime();
+      let elapsedRange = 0;
+      switch (adjustedRange) {
+        case AdjustedRange.weekly:
+          elapsedRange = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 7));
+          break;
+        case AdjustedRange.monthly:
+          elapsedRange = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30));
+          break;
+        case AdjustedRange.yearly:
+          elapsedRange = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+          break;
+      }
+
+      // 2. multiply entry's adjusted amount by (1)
+      return elapsedRange * amount;
+    }
 }

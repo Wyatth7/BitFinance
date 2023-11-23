@@ -5,4 +5,5 @@ export interface AccountEntry {
     credit: number;
     balance: number;
     creationDate: string;
+    isAdjusted: boolean;
 }
