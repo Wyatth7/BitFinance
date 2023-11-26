@@ -14,10 +14,10 @@
         <ng-content></ng-content>
     </mat-card-content>
     <app-required-role-view [roles]="requiredButtonRoles || []" (hasRequiredRole)="hasRoleEvent($event)">
-    <mat-card-actions [align]="'end'">
+    <mat-card-actions [align]="'end'" *ngIf="!hideActionButton">
             <button (click)="navigateToRoute()"
             class="card-button"
-            mat-flat-button 
+            mat-flat-button
             color="primary"
             [matTooltip]="buttonTitle"
             >{{ buttonTitle }}</button>

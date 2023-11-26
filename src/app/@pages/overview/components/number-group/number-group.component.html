@@ -1,4 +1,8 @@
 <div class="number-group">
-    <h1 [style.color]="color" class="number-group--number">{{number | number}}</h1>
-    <p class="number-group--text">{{ text }}</p>
+    <h1 [style.color]="color" class="number-group--number" *ngIf="!isDecimal; else isDecimalTemplate">{{number | number}}</h1>
+    <p class="number-group--text">{{ text | titlecase }}</p>
 </div>
+
+<ng-template #isDecimalTemplate>
+  <h1 [style.color]="color" class="number-group--number">{{number | number:'.2'}}</h1>
+</ng-template>

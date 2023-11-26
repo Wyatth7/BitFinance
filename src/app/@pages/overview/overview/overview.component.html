@@ -1,51 +1,45 @@
-<div class="overview" >
+<div class="overview">
+
+  <div class="ratios">
+
+    <app-card
+      icon="data_usage"
+      title="Ratios"
+      subTitle="Ratios Displaying Company Liquidity"
+      [hideActionButton]="true"
+    >
+      <app-ratio *ngIf="overviewData" [ratioSummary]="overviewData.ratios"></app-ratio>
+    </app-card>
+  </div>
+
     <app-card
         route="/accounts/view"
-        icon="article" 
-        title="Chart of Accounts" 
-        subTitle="Active Accounts on BitFinance" 
+        icon="article"
+        title="Chart of Accounts"
+        subTitle="Active Accounts on BitFinance"
         buttonTitle="View Accounts"
-        [requiredButtonRoles]="[]">
-        
-    <div class="overview-card-wrapper">
-        <app-number-group
-            [color]="color.blue"
-            [number]="overviewData?.accounts || 0"
-            text="Active Accounts"
-        ></app-number-group>
-    </div>
+        [requiredButtonRoles]="[]"
+        class="account">
+
+      <div class="overview-card-wrapper ">
+          <app-number-group
+              [color]="color.blue"
+              [number]="overviewData?.accounts || 0"
+              text="Active Accounts"
+          ></app-number-group>
+      </div>
 
     </app-card>
-    <app-card 
-        route="/users/view"
-        icon="group" 
-        title="Users" 
-        subTitle="BitFinance User Information" 
-        buttonTitle="View Users"
-        [requiredButtonRoles]="[1]">
-        <div class="overview-card-wrapper">
 
-            <app-number-group
-                [color]="color.green"
-                [number]="overviewData?.users?.accepted || 0"
-                text="Active Users"
-            ></app-number-group>
-            <app-number-group
-                [color]="color.red"
-                [number]="overviewData?.users?.requested || 0"
-                text="Requested Users"
-            ></app-number-group>
-            
-        </div>
-    </app-card>
-
-    <app-card 
+    <app-card
         route="/journal/view"
-        icon="import_contacts" 
-        title="Journal" 
-        subTitle="BitFinance Journal Information" 
+        icon="import_contacts"
+        title="Journal"
+        subTitle="BitFinance Journal Information"
         buttonTitle="View Journals"
-        [requiredButtonRoles]="[1]">
+        [requiredButtonRoles]="[1]"
+        class="journal"
+    >
         <div class="overview-card-wrapper">
 
             <app-number-group
@@ -63,7 +57,33 @@
                 [number]="overviewData?.journals?.declined || 0"
                 text="Declined"
             ></app-number-group>
-            
+
         </div>
     </app-card>
+
+    <app-card
+        route="/users/view"
+        icon="group"
+        title="Users"
+        subTitle="BitFinance User Information"
+        buttonTitle="View Users"
+        [requiredButtonRoles]="[1]"
+        class="user"
+    >
+        <div class="overview-card-wrapper">
+
+            <app-number-group
+                [color]="color.green"
+                [number]="overviewData?.users?.accepted || 0"
+                text="Active Users"
+            ></app-number-group>
+            <app-number-group
+                [color]="color.red"
+                [number]="overviewData?.users?.requested || 0"
+                text="Requested Users"
+            ></app-number-group>
+
+        </div>
+    </app-card>
+
 </div>
