@@ -1,3 +1,5 @@
+import {RatioSummary} from "../ratios/ratio-summary";
+
 export interface OverviewDataModel {
     users: {
         requested: number;
@@ -9,4 +11,5 @@ export interface OverviewDataModel {
         declined: number
     },
     accounts: number;
+    ratios: RatioSummary;
 }

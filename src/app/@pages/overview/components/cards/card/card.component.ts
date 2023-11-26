@@ -14,6 +14,7 @@ export class CardComponent {
   @Input() buttonTitle: string = '';
   @Input() route: string = '';
   @Input() requiredButtonRoles?: Roles[];
+  @Input() hideActionButton = false;
 
   hasRequiredRole?: boolean;
 
