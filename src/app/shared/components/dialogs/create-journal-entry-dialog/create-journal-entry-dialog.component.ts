@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AdjustedRange } from 'functions/src/shared/enums/journals/adjusted-range';
 import { Subject } from 'rxjs';
 import { DialogData } from 'src/app/shared/models/dialog/dialog-data';
 import { JournalEntryBaseModel } from 'src/app/shared/models/journal/journal-entry-base-model';
@@ -48,15 +49,28 @@ export class CreateJournalEntryDialogComponent {
 
   async executeAction(){ 
     this.loading = true;
+    let amount = 0;
+    let frequency = 1;
 
-    const generalEntryForm =  this.form.value;
+    if(this.adjustment){
+      amount = parseInt(this.adjustingForm.value.amount ?? '0');
+      frequency = parseInt(this.adjustingForm.value.frequency ?? '1');
+    }
+
+    const generalEntryForm = this.form.value;
+
     const entryData: JournalEntryBaseModel = {
       name: generalEntryForm.entryName!,
       description: generalEntryForm.entryDescription!,
       transactions: this.transactions,
-      files: this._selectedFiles
+      files: this._selectedFiles,
+      isAdjusted: this.adjustment,
+      adjustingAmount: amount,
+      adjustedRange: frequency
     }
-    
+
+    console.log(entryData)
+
     await this.journalService.createJournalEntry(entryData);
 
     this.loading = false;

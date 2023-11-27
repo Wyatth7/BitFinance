@@ -6,4 +6,9 @@ export interface CreateJournalEntryDto {
     description?: string;
     transactions: TransactionEntryListItem[];
     files?: FileMetaDataModel[];
+    adjustedEntry: {
+        isAdjusted: boolean;
+        adjustingAmount: number;
+        adjustedRange: number;
+      }
 }

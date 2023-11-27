@@ -52,7 +52,12 @@ export class JournalService {
         name: journalEntry.name,
         description: journalEntry.description,
         transactions: journalEntry.transactions,
-        files
+        files,
+        adjustedEntry: {
+          isAdjusted: journalEntry.isAdjusted,
+          adjustingAmount: journalEntry.adjustingAmount ?? 0,
+          adjustedRange: journalEntry.adjustedRange ?? 0
+        }
       }
       
       await createJournalFunction(createDto);

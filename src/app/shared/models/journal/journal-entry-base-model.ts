@@ -5,4 +5,7 @@ export interface JournalEntryBaseModel {
     description?: string;
     transactions: TransactionEntryListItem[];
     files?: File[];
+    isAdjusted: boolean;
+    adjustingAmount?: number;
+    adjustedRange?: number;
 }

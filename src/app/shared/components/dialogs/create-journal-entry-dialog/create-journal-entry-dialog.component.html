@@ -14,14 +14,13 @@
         </div>
 
         <div class="adjustingSection">
-            <mat-checkbox class="isAdjusting" [(ngModel)]="adjustment"
-                (change)="toggleAdjusting()">Adjusting?</mat-checkbox>
+            <mat-checkbox class="isAdjusting" (change)="toggleAdjusting()">Adjusting?</mat-checkbox>
             <form class="AdjustingInputs" *ngIf="adjustment" [formGroup]="adjustingForm">
                 <div class="form-col-2">
                     <!-- Content to show when checkbox is checked -->
                     <mat-form-field class="entry-inputs--field" appearance="outline">
                         <mat-label>Amount</mat-label>
-                        <input matInput formControlName="amount" type="number" />
+                        <input matInput formControlName="amount" type="number"  />
                         <mat-error>Amount Required</mat-error>
                     </mat-form-field>
                     <mat-form-field class="entry-inputs--field" appearance="outline">
@@ -33,11 +32,11 @@
                     </mat-form-field>
                     <mat-form-field class="entry-inputs--field" appearance="outline">
                         <mat-label>Frequency</mat-label>
-                        <mat-select formControlName="frequency" [value]="1">
-                            <mat-option [value]="1">Weekly</mat-option>
-                            <mat-option [value]="2">Monthly</mat-option>
-                            <mat-option [value]="3">Quarterly</mat-option>
-                            <mat-option [value]="4">Anually</mat-option>
+                        <mat-select formControlName="frequency" [value]=1>
+                            <mat-option [value]=1>Weekly</mat-option>
+                            <mat-option [value]=2>Monthly</mat-option>
+                            <mat-option [value]=3>Quarterly</mat-option>
+                            <mat-option [value]=4>Anually</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
