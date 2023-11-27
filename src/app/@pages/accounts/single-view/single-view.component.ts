@@ -121,6 +121,7 @@ export class SingleViewComponent implements OnInit{
       },
       types: {
         accountType: this.account!.accountType,
+        accountSubType: this.account!.accountSubType,
         statementType: this.account!.statementType,
         normalType: this.account!.normalType
       }

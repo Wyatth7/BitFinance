@@ -7,6 +7,7 @@ export interface CreateAccountForm {
     };
     types: {
         accountType: any;
+        accountSubType: any;
         normalType: any;
         statementType: any;
     }
