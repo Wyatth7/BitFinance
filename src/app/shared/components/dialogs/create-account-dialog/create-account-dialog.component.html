@@ -39,7 +39,7 @@
       <!--Added account subtype-->
               <mat-form-field appearance="outline" formGroupName="types">
                 <mat-label>Account Subtype</mat-label>
-                <mat-select formControlName="accountType">
+                <mat-select [value] = "11" formControlName="accountSubType">
                         <mat-option [value]="11">Cash</mat-option>
                         <mat-option [value]="12">Accounts Receivable</mat-option>
                         <mat-option [value]="13">Inventory</mat-option>
