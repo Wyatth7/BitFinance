@@ -17,6 +17,14 @@ export class CreateJournalEntryDialogComponent {
   shouldReset$ = new Subject<boolean>();
   transactionsValid = true;
 
+  //Adding Property
+  adjustment = false;
+  amount = 0;
+  changeOption = false;
+  frequencyOption = false;
+  
+  //Adding Property
+
   private _selectedFiles?: File[];
   transactions: TransactionEntryListItem[] = [];
 
@@ -24,6 +32,12 @@ export class CreateJournalEntryDialogComponent {
       entryName: new FormControl('', [Validators.required]),
       entryDescription: new FormControl('')
   })
+
+  adjustingForm = this.formBuilder.group({
+    amount: new FormControl('', [Validators.required]),
+    increaseDecrease: new FormControl('', [Validators.required]),
+    frequency: new FormControl('', [Validators.required])
+  });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData, 
@@ -51,6 +65,7 @@ export class CreateJournalEntryDialogComponent {
 
   resetForm() {
     this.form.reset();
+    this.adjustingForm.reset();
     this.transactions = [],
     this.transactionsValid = true;
     this.shouldReset$.next(true);
@@ -67,5 +82,9 @@ export class CreateJournalEntryDialogComponent {
 
   set files(files: File[]) {
     this._selectedFiles = files;
+  }
+
+  toggleAdjusting() {
+    this.adjustment = !this.adjustment;
   }
 }
