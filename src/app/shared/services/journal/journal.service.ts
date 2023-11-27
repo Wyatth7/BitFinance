@@ -11,6 +11,7 @@ import { EntryListResponseDto } from '../../models/journal/dto/entry-list-respon
 import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
 import { JournalEntryPageModel } from '../../models/journal/journal-page-model';
+import { adjustingFrequency } from '../../enums/journals/adjustingFrequency';
 
 @Injectable({
   providedIn: 'root'
