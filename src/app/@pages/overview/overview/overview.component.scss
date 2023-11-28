@@ -36,6 +36,7 @@
   .user {
     grid-column: 2;
     grid-row: 3;
+    margin-top: .8rem;
   }
 
 }
@@ -46,6 +47,7 @@
 
     .user {
       grid-column: 5;
+      margin-top: 0;
     }
   }
 }
@@ -62,16 +64,19 @@
     .account {
       grid-column: 1;
       grid-row: 3;
+      margin-top: .8rem;
     }
 
     .journal {
       grid-column: 2;
       grid-row: 3;
+      margin-top: .8rem;
     }
 
     .user {
       grid-column: 1;
       grid-row: 4;
+      margin-top: .8rem;
     }
   }
 }

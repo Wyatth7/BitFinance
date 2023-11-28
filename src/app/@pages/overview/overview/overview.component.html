@@ -5,7 +5,7 @@
     <app-card
       icon="data_usage"
       title="Ratios"
-      subTitle="Ratios Displaying Company Liquidity"
+      subTitle="Ratios Displaying Company Finances"
       [hideActionButton]="true"
     >
       <app-ratio *ngIf="overviewData" [ratioSummary]="overviewData.ratios"></app-ratio>
@@ -37,7 +37,6 @@
         title="Journal"
         subTitle="BitFinance Journal Information"
         buttonTitle="View Journals"
-        [requiredButtonRoles]="[1]"
         class="journal"
     >
         <div class="overview-card-wrapper">
@@ -61,6 +60,9 @@
         </div>
     </app-card>
 
+    <div class="user">
+    <app-required-role-view [roles]="[1,2]">
+
     <app-card
         route="/users/view"
         icon="group"
@@ -68,7 +70,6 @@
         subTitle="BitFinance User Information"
         buttonTitle="View Users"
         [requiredButtonRoles]="[1]"
-        class="user"
     >
         <div class="overview-card-wrapper">
 
@@ -85,5 +86,8 @@
 
         </div>
     </app-card>
+    </app-required-role-view>
+    </div>
+
 
 </div>
