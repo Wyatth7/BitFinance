@@ -31,10 +31,11 @@ export const emailCustomMessage = onRequest(
 export const emailWithPdfAttachment = onRequest(
   {cors: true},
   async (req, res) => {
-    const dto: {to: string; attachment: string;} = req.body.data;
+    const dto: EmailMessage = req.body.data as EmailMessage;
+    dto.attachment! = dto.attachment!.replace('data:application/pdf;base64,', '')
 
     try {
-      await Emailer.sendEmailWithPdf(dto.to, 'New Attachment', 'You have received a PDF file from BitFinance.', dto.attachment.replace('data:application/pdf;base64,', ''), 'BitFinance Attachment.pdf')
+      await Emailer.sendEmailWithPdf(dto, 'BitFinance Attachment.pdf')
 
       return okResponse({}, 200, res);
     } catch(e) {

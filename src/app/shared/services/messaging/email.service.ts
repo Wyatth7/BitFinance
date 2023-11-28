@@ -40,15 +40,15 @@ export class EmailService {
     }
   }
 
-  async sendEmailWithAttachment(to: string, attachment: string) {
+  async sendEmailWithAttachment(to: string, subject: string, text: string, attachment: string) {
     try {
       const emailCaller = httpsCallable(this.functions, MessagingFunctions.emailWithPdfAttachment);
 
       const message: EmailMessage = {
         from: this._authService.user!.email,
         to,
-        subject: '',
-        text: '',
+        subject: subject,
+        text,
         attachment
       }
 

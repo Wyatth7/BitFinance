@@ -68,15 +68,15 @@ export class Emailer {
         await this.sendEmailToList(emails, subject, message);
     }
 
-    static async sendEmailWithPdf(to: string, subject: string, message: string, attachment: string, filename: string) {
+    static async sendEmailWithPdf(message: EmailMessage, filename: string) {
       await sgMail.send({
-        to,
-        subject,
-        from: environment.systemEmail,
-        text: message,
+        to: message.to,
+        subject: message.subject,
+        from: message.from,
+        text: message.text,
         attachments: [
           {
-            content: attachment,
+            content: message.attachment || '',
             filename,
             type: 'application/pdf',
             disposition: 'attachment'

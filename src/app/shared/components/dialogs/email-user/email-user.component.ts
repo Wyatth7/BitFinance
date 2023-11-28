@@ -92,7 +92,7 @@ export class EmailUserComponent implements OnInit, OnDestroy {
     const message = this.form.value.message!;
     const attachment: string = this.data.data.attachment;
     if (attachment) {
-      await this.emailService.sendEmailWithAttachment(mailTo, attachment);
+      await this.emailService.sendEmailWithAttachment(mailTo, subject, message, attachment);
     } else {
       await this.emailService.sendCustomEmail(mailTo, subject, message);
     }
