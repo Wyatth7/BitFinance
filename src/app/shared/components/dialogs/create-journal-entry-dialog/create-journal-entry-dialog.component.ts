@@ -18,13 +18,9 @@ export class CreateJournalEntryDialogComponent {
   shouldReset$ = new Subject<boolean>();
   transactionsValid = true;
 
-  //Adding Property
   adjustment = false;
-  amount = 0;
-  changeOption = false;
-  frequencyOption = false;
+
   
-  //Adding Property
 
   private _selectedFiles?: File[];
   transactions: TransactionEntryListItem[] = [];
@@ -36,7 +32,7 @@ export class CreateJournalEntryDialogComponent {
 
   adjustingForm = this.formBuilder.group({
     amount: new FormControl('', [Validators.required]),
-    increaseDecrease: new FormControl('', [Validators.required]),
+    // increaseDecrease: new FormControl('', [Validators.required]),
     frequency: new FormControl('', [Validators.required])
   });
 

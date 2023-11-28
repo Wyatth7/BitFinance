@@ -14,7 +14,7 @@
         </div>
 
         <div class="adjustingSection">
-            <mat-checkbox class="isAdjusting" (change)="toggleAdjusting()">Adjusting?</mat-checkbox>
+            <mat-checkbox class="isAdjusting" (change)="toggleAdjusting()">Adjusted Entry</mat-checkbox>
             <form class="AdjustingInputs" *ngIf="adjustment" [formGroup]="adjustingForm">
                 <div class="form-col-2">
                     <!-- Content to show when checkbox is checked -->
@@ -23,13 +23,13 @@
                         <input matInput formControlName="amount" type="number"  />
                         <mat-error>Amount Required</mat-error>
                     </mat-form-field>
-                    <mat-form-field class="entry-inputs--field" appearance="outline">
+                    <!-- <mat-form-field class="entry-inputs--field" appearance="outline">
                         <mat-label>Increase/Decrease</mat-label>
                         <mat-select formControlName="increaseDecrease" [value]="1">
                             <mat-option [value]="1">Increase</mat-option>
                             <mat-option [value]="2">Decrease</mat-option>
                         </mat-select>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <mat-form-field class="entry-inputs--field" appearance="outline">
                         <mat-label>Frequency</mat-label>
                         <mat-select formControlName="frequency" [value]=1>
