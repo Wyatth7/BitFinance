@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CreateAccountDialogComponent } from 'src/app/shared/components/dialogs/create-account-dialog/create-account-dialog.component';
 import { AccountType } from 'src/app/shared/enums/accounts/account-type';
+import { AccountSubType } from 'functions/src/shared/enums/accounts/account-subtype';
 import { Colors } from 'src/app/shared/enums/colors';
 import { CreateAccountForm } from 'src/app/shared/form/partials/account-create-form';
 import { AccountListResponseModel } from 'src/app/shared/models/accounts/account-list/account-list-response-model';
@@ -21,7 +22,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   filter: string | undefined = '';
   accountsData?: AccountListResponseModel;
 
-  displayedColumns = ['actions', 'accountName', 'balance','category', 'entries', 'accountNumber', 'status' ]
+  displayedColumns = ['actions', 'accountName', 'balance','category', 'subcategory', 'entries', 'accountNumber', 'status' ]
 
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -83,6 +84,10 @@ export class ViewComponent implements OnInit, OnDestroy {
     return AccountType[category];
   }
   
+  getsubCategory(subcategory: number) {
+    return AccountSubType[subcategory];
+  }
+
   get color(): typeof Colors {
     return Colors;
   }

@@ -53,6 +53,12 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
                 <td mat-cell *matCellDef="let row"> {{ getCategory(row.category) | titlecase }} </td>
             </ng-container>
+
+       <!--Added below-->     
+            <ng-container matColumnDef="subcategory">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub-Category </th>
+                <td mat-cell *matCellDef="let row"> {{ getsubCategory(row.subcategory) | titlecase }} </td>
+            </ng-container>
             
             <ng-container matColumnDef="entries">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Entries </th>
