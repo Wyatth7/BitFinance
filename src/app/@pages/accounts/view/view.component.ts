@@ -12,12 +12,14 @@ import { AccountService } from 'src/app/shared/services/accounts/account.service
 import { LoaderService } from 'src/app/shared/services/component-services/loader.service';
 import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import { CamelCaseToTitleCasePipe } from 'src/app/shared/pipes/camel-case-to-title-case.pipe';
 
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss']
 })
+
 export class ViewComponent implements OnInit, OnDestroy {
   filter: string | undefined = '';
   accountsData?: AccountListResponseModel;
