@@ -57,9 +57,9 @@
        <!--Added below-->     
             <ng-container matColumnDef="subcategory">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub-Category </th>
-                <td mat-cell *matCellDef="let row"> {{ getsubCategory(row.subcategory) | titlecase }} </td>
+                <td mat-cell *matCellDef="let row"> {{ getsubCategory(row.subcategory) | camelCaseToTitleCase }} </td>
             </ng-container>
-            
+        <!--Added above-->    
             <ng-container matColumnDef="entries">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Entries </th>
                 <td mat-cell *matCellDef="let row"> {{row.entries | number}} </td>
