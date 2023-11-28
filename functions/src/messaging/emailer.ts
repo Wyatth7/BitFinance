@@ -4,7 +4,7 @@ import { onRequest } from "firebase-functions/v2/https";
 import { badRequestResponse, okResponse } from "../shared/responses/responses";
 import * as logger from "firebase-functions/logger";
 import { environment } from "../environment/environment";
-
+import {Emailer} from "../shared/helpers/messaging/emailer";
 
 sgMail.setApiKey(environment.sendGridAPIKey);
 
@@ -16,7 +16,7 @@ export const emailCustomMessage = onRequest(
         if (!message) return badRequestResponse("The email data provided is invalid.", res);
 
         try {
-            
+
             await sgMail.send(message)
 
             return okResponse({}, 200, res);
@@ -26,4 +26,20 @@ export const emailCustomMessage = onRequest(
         }
 
     }
+)
+
+export const emailWithPdfAttachment = onRequest(
+  {cors: true},
+  async (req, res) => {
+    const dto: {to: string; attachment: string;} = req.body.data;
+
+    try {
+      await Emailer.sendEmailWithPdf(dto.to, 'New Attachment', 'You have received a PDF file from BitFinance.', dto.attachment.replace('data:application/pdf;base64,', ''), 'BitFinance Attachment.pdf')
+
+      return okResponse({}, 200, res);
+    } catch(e) {
+      console.log(e)
+      return badRequestResponse('Could not send email.', res);
+    }
+  }
 )

@@ -22,7 +22,7 @@ export class EmailUserComponent implements OnInit, OnDestroy {
   form = this.formBuilder.group({
     mailTo: new FormControl<string | UserModel>('', [Validators.required]),
     subject: new FormControl(this.data.data.subjectStarter || '', [Validators.required]),
-    message: new FormControl('', [Validators.required])
+    message: new FormControl('', [Validators.required]),
   });
 
   private _userSubscription!: Subscription;
@@ -49,10 +49,10 @@ export class EmailUserComponent implements OnInit, OnDestroy {
       this.showUserLoadingSpinner = true;
 
       await this.userService.getUserList();
-      
+
       this.showUserLoadingSpinner = false;
     }
-    
+
     this.configureFilterOptions();
   }
 
@@ -83,18 +83,20 @@ export class EmailUserComponent implements OnInit, OnDestroy {
   async executeAction() {
     this.loading = true;
 
-
-    console.log(this.form);
-
     const mailToValue = this.form.value.mailTo;
-    const mailTo = typeof mailToValue === 'string' 
+    const mailTo = typeof mailToValue === 'string'
       ? mailToValue
       : (mailToValue as UserModel).email;
 
     const subject = this.form.value.subject!;
     const message = this.form.value.message!;
-
-    await this.emailService.sendCustomEmail(mailTo, subject, message);
+    const attachment: string = this.data.data.attachment;
+    console.log(attachment)
+    if (attachment) {
+      await this.emailService.sendEmailWithAttachment(mailTo, attachment);
+    } else {
+      await this.emailService.sendCustomEmail(mailTo, subject, message);
+    }
     this.dialogRef.close();
 
     this.loading = false;

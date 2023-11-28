@@ -20,19 +20,40 @@ export class EmailService {
    * Mail sent from a user
    * @param message Email message data to send
    */
-  async sendCustomEmail(mailTo: string, subject: string, text: string) { 
+  async sendCustomEmail(mailTo: string, subject: string, text: string) {
     try {
       const emailCaller = httpsCallable(this.functions, MessagingFunctions.customEmail);
-  
+
       const message: EmailMessage = {
         from: this._authService.user!.email,
         to: mailTo,
         subject,
         text
       }
-  
+
       await emailCaller(message);
-      
+
+      this._snackBarService.showSuccess('Email sent')
+
+    } catch (error) {
+      this._snackBarService.showError('Email could not be sent');
+    }
+  }
+
+  async sendEmailWithAttachment(to: string, attachment: string) {
+    try {
+      const emailCaller = httpsCallable(this.functions, MessagingFunctions.emailWithPdfAttachment);
+
+      const message: EmailMessage = {
+        from: this._authService.user!.email,
+        to,
+        subject: '',
+        text: '',
+        attachment
+      }
+
+      await emailCaller(message);
+
       this._snackBarService.showSuccess('Email sent')
 
     } catch (error) {
