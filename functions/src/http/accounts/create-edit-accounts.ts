@@ -89,6 +89,7 @@ export const editAccount = onRequest(
                 accountNumber: dto.general.accountNumber,
                 description: dto.general.description,
                 accountType: dto.types.accountType,
+                accountSubType: dto.types.accountSubType,
                 statementType: dto.types.statementType,
                 normalType: dto.types.normalType,
                 balance: dto.general.balance
