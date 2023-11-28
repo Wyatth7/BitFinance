@@ -12,7 +12,6 @@ import {AccountModel} from "../../shared/models/accounts/account-model";
 import {FirebaseSubCollections} from "../../shared/enums/firestore-sub-collections";
 import {AccountEntry} from "../../shared/models/journals/account-journal";
 import {EventLogModel} from "../../shared/models/event-log/event-log-model";
-import {StatementType} from "../../shared/enums/accounts/statement-type";
 
 
 export const getAllAccounts = onRequest(
@@ -42,7 +41,6 @@ export const getAllAccounts = onRequest(
                 .map(accountDoc => {
                     const accountModel = accountDoc.data() as AccountModel
 
-                    if (accountModel.statementType === StatementType.BS) {
 
                       switch(accountModel.accountType) {
                           case AccountType.asset:
@@ -56,7 +54,6 @@ export const getAllAccounts = onRequest(
                               break;
                           default: break;
                       }
-                    }
 
                     const account: AccountsListItemModel = {
                         accountName: accountModel.accountName,

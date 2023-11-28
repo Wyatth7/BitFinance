@@ -12,6 +12,9 @@ import {ReportCalculations} from "../../shared/helpers/calculations/report-calcu
 import {BalanceTotalsModel} from "../../shared/models/accounts/responses/balance-totals-model";
 import {RatioSummary} from "../../shared/models/overview/ratios/ratio-summary";
 import {RatioCalculations} from "../../shared/helpers/calculations/ratio-calculations";
+import {FirebaseSubCollections} from "../../shared/enums/firestore-sub-collections";
+import {EntryCalculations} from "../../shared/helpers/calculations/entry-calculations";
+import {AccountEntry} from "../../shared/models/journals/account-journal";
 
 export const getOverview = onRequest(
     {cors: true},
@@ -95,9 +98,7 @@ const getIncomeExpenseTotals = async (): Promise<IncomeExpense> => {
   const totals = ReportCalculations.incomeExpense(accounts);
 
   // look for cost of goods sold
-  const costOfGoodsSold = accounts.find(a => a.accountName.toLowerCase().trim() === 'cost of goods sold');
-
-  totals.costOfGoodsSold = costOfGoodsSold?.balance;
+  totals.costOfGoodsSold = await costOfGoodsSold();
 
   return totals;
 }
@@ -122,4 +123,37 @@ const getBalanceSheetTotals = async (): Promise<BalanceTotalsModel> => {
     .map(a => a.data() as AccountModel);
 
   return ReportCalculations.balanceSheet(accounts);
+}
+
+const costOfGoodsSold = async (): Promise<number> => {
+  const accountRef = admin.firestore()
+    .collection(FirestoreCollections.accounts)
+
+  const accountSnapshot = await accountRef
+    .where('accountName', '==', 'inventory')
+    .get();
+
+  if (accountSnapshot.empty) return 0;
+
+  const inventory = accountSnapshot.docs[0].data() as AccountModel;
+
+  const accountEntrySnapshot = await accountRef
+    .doc(inventory.accountId)
+    .collection(FirebaseSubCollections.accountJournal)
+    .where('creationDate', '<=', new Date().toISOString())
+    .orderBy('creationDate', 'desc')
+    .get();
+
+  if (accountEntrySnapshot.empty) return 0;
+
+  let purchases = 0;
+  const accountEntries = accountEntrySnapshot.docs.map(ae => {
+    const entry = ae.data() as AccountEntry
+
+    purchases += entry.debit;
+
+    return entry;
+  })
+
+  return EntryCalculations.costOfGoodsSold(0, accountEntries[0].balance, purchases);
 }
