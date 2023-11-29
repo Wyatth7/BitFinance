@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NumberGroupComponent } from './components/number-group/number-group.component';
+import { RatioComponent } from './components/ratio/ratio.component';
+import { RatioGroupComponent } from './components/ratio/ratio-group/ratio-group.component';
 
 
 
@@ -19,7 +21,9 @@ import { NumberGroupComponent } from './components/number-group/number-group.com
     OverviewComponent,
     CardComponent,
     MultiCardComponent,
-    NumberGroupComponent
+    NumberGroupComponent,
+    RatioComponent,
+    RatioGroupComponent
   ],
   imports: [
     CommonModule,

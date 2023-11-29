@@ -10,6 +10,8 @@ import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {DocumentsDto} from "../../../shared/models/reports/dto/documents-dto";
 import {SafeDocuments} from "../../../shared/models/reports/safe-documents";
 import {SnackBarService} from "../../../shared/services/component-services/snack-bar.service";
+import {DialogService} from "../../../shared/services/dialogs/dialog.service";
+import {EmailUserComponent} from "../../../shared/components/dialogs/email-user/email-user.component";
 
 @Component({
   selector: 'app-single-view',
@@ -21,6 +23,7 @@ export class SingleViewComponent implements OnInit{
   report?: ReportDto;
 
   pdf?: SafeResourceUrl;
+  rawPdf?: string;
 
   selectedReport = ReportType.balanceSheet;
 
@@ -32,7 +35,8 @@ export class SingleViewComponent implements OnInit{
     private loaderService: LoaderService,
     public getEnum: GetEnumValueService,
     private sanitizer: DomSanitizer,
-    private notificationService: SnackBarService
+    private notificationService: SnackBarService,
+    private dialogService: DialogService
   ) { }
 
   async ngOnInit() {
@@ -47,6 +51,8 @@ export class SingleViewComponent implements OnInit{
 
     if (this.sanitizedPdfs) {
       this.pdf = this.sanitizedPdfs.balanceSheet;
+      this.rawPdf = this.report?.documents.balanceSheet;
+
     }
 
     this.loaderService.stopLoader();
@@ -66,15 +72,19 @@ export class SingleViewComponent implements OnInit{
     switch ($event.value) {
       case ReportType.balanceSheet:
         this.pdf = this.sanitizedPdfs.balanceSheet;
+        this.rawPdf = this.report.documents.balanceSheet;
         break;
       case ReportType.trialBalance:
         this.pdf = this.sanitizedPdfs.trialBalance;
+        this.rawPdf = this.report.documents.trialBalance;
         break;
       case ReportType.incomeStatement:
         this.pdf = this.sanitizedPdfs.incomeStatement;
+        this.rawPdf = this.report.documents.incomeStatement;
         break;
       case ReportType.retainedEarnings:
         this.pdf = this.sanitizedPdfs.retainedEarnings;
+        this.rawPdf = this.report.documents.retainedEarnings;
         break;
       default:
         this.pdf = this.sanitizedPdfs.balanceSheet;
@@ -97,7 +107,13 @@ export class SingleViewComponent implements OnInit{
   }
 
   email() {
-    setTimeout(this.notifyFn, 2000)
+
+    this.dialogService.open(EmailUserComponent, {
+      title: 'Email Report',
+      data: {
+        attachment: this.rawPdf
+      }
+    })
   }
 
   notify() {

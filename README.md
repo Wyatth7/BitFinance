@@ -2,12 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.7.
 
-##Developers
+## Developers
 
 Project Team: CtrlShiftSprint
 Team Members: Victoria Biyadglgne, Wyatt Hardin, Tom Porter, Nelso Villalobos
 
-##Project Description
+## Project Description
 
 BitFinance is an accounting management app, designed to allow teams to manage a variety of financial accounts for clients.
 

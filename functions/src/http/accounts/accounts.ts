@@ -1,17 +1,17 @@
-import { onRequest } from "firebase-functions/v2/https";
-import { verifyToken } from "../../shared/helpers/auth/verify-token";
-import { badRequestResponse, okResponse, unauthorizedResponse } from "../../shared/responses/responses";
+import {onRequest} from "firebase-functions/v2/https";
+import {verifyToken} from "../../shared/helpers/auth/verify-token";
+import {badRequestResponse, okResponse, unauthorizedResponse} from "../../shared/responses/responses";
 import * as admin from 'firebase-admin';
-import { FirestoreCollections } from "../../shared/enums/firestore-collections";
+import {FirestoreCollections} from "../../shared/enums/firestore-collections";
 import * as logger from 'firebase-functions/logger';
-import { AccountsListItemModel } from "../../shared/models/accounts/accounts-list-item-model";
-import { BalanceTotalsModel } from "../../shared/models/accounts/responses/balance-totals-model";
-import { AccountType } from "../../shared/models/enums/account-type";
-import { AccountListResponseModel } from "../../shared/models/accounts/responses/account-list-response-model";
-import { AccountModel } from "../../shared/models/accounts/account-model";
-import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
-import { AccountEntry } from "../../shared/models/journals/account-journal";
-import { EventLogModel } from "../../shared/models/event-log/event-log-model";
+import {AccountsListItemModel} from "../../shared/models/accounts/accounts-list-item-model";
+import {BalanceTotalsModel} from "../../shared/models/accounts/responses/balance-totals-model";
+import {AccountType} from "../../shared/models/enums/account-type";
+import {AccountListResponseModel} from "../../shared/models/accounts/responses/account-list-response-model";
+import {AccountModel} from "../../shared/models/accounts/account-model";
+import {FirebaseSubCollections} from "../../shared/enums/firestore-sub-collections";
+import {AccountEntry} from "../../shared/models/journals/account-journal";
+import {EventLogModel} from "../../shared/models/event-log/event-log-model";
 
 
 export const getAllAccounts = onRequest(
@@ -41,18 +41,19 @@ export const getAllAccounts = onRequest(
                 .map(accountDoc => {
                     const accountModel = accountDoc.data() as AccountModel
 
-                    switch(accountModel.accountType) {
-                        case AccountType.asset:
-                            balances.asset += accountModel.balance
-                            break;
-                        case AccountType.liability:
-                            balances.liability += accountModel.balance
-                            break;
-                        case AccountType.equity:
-                            balances.equity += accountModel.balance
-                            break;
-                        default: break;
-                    }
+
+                      switch(accountModel.accountType) {
+                          case AccountType.asset:
+                              balances.asset += accountModel.balance
+                              break;
+                          case AccountType.liability:
+                              balances.liability += accountModel.balance
+                              break;
+                          case AccountType.equity:
+                              balances.equity += accountModel.balance
+                              break;
+                          default: break;
+                      }
 
                     const account: AccountsListItemModel = {
                         accountName: accountModel.accountName,
