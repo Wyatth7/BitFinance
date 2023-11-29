@@ -3,10 +3,6 @@ import {AccountModel} from "../../models/accounts/account-model";
 import {Amounts} from "../../models/calculations/amounts";
 import {Transaction} from "../../models/journals/transaction";
 import {AccountType} from "../../models/enums/account-type";
-import {NormalType} from "../../enums/accounts/normal-type";
-import {AccountModel} from "../../models/accounts/account-model";
-import {Amounts} from "../../models/calculations/amounts";
-import {Transaction} from "../../models/journals/transaction";
 import {AdjustedRange} from "../../enums/journals/adjusted-range";
 
 export class EntryCalculations {
