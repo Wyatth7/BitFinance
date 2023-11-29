@@ -5,5 +5,5 @@ export enum AdjustedRange {
   weekly = 1,
   monthly = 2,
   quartley = 3,
-  yearly = 4
+  annualy = 4
 }

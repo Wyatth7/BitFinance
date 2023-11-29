@@ -27,14 +27,10 @@ export class CreateJournalEntryDialogComponent {
 
   form = this.formBuilder.group({
       entryName: new FormControl('', [Validators.required]),
-      entryDescription: new FormControl('')
+      entryDescription: new FormControl(''),
+      amount: new FormControl('', [Validators.required]),
+      frequency: new FormControl('', [Validators.required])
   })
-
-  adjustingForm = this.formBuilder.group({
-    amount: new FormControl('', [Validators.required]),
-    // increaseDecrease: new FormControl('', [Validators.required]),
-    frequency: new FormControl('', [Validators.required])
-  });
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData, 
@@ -49,8 +45,8 @@ export class CreateJournalEntryDialogComponent {
     let frequency = 1;
 
     if(this.adjustment){
-      amount = parseInt(this.adjustingForm.value.amount ?? '0');
-      frequency = parseInt(this.adjustingForm.value.frequency ?? '1');
+      amount = parseInt(this.form.value.amount ?? '0');
+      frequency = parseInt(this.form.value.frequency ?? '1');
     }
 
     const generalEntryForm = this.form.value;
@@ -75,7 +71,6 @@ export class CreateJournalEntryDialogComponent {
 
   resetForm() {
     this.form.reset();
-    this.adjustingForm.reset();
     this.transactions = [],
     this.transactionsValid = true;
     this.shouldReset$.next(true);
