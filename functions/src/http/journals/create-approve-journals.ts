@@ -29,7 +29,7 @@ export const createJournalEntry = onRequest(
         }
 
         try {
-           
+
             const accounts = dto.transactions.map(transaction => transaction.accountId);
             const transactions: Transaction[] = dto.transactions.map(transaction => (
                 {
@@ -38,19 +38,23 @@ export const createJournalEntry = onRequest(
                     accountId: transaction.accountId
                 }
             ));
-            
+
             const journal: JournalEntry = {
-                journalId: Guid.createGuid(),
-                accounts,
-                transactions,
-                entryName: dto.name,
-                entryDescription: dto.description,
-                creationDate: new Date().toISOString(),
-                approvalType: JournalApprovalType.requested,
-                attachedFileCount: dto.files?.length || 0,
-                fileData: dto.files || []
+              journalId: Guid.createGuid(),
+              accounts,
+              transactions,
+              entryName: dto.name,
+              entryDescription: dto.description,
+              creationDate: new Date().toISOString(),
+              approvalType: JournalApprovalType.requested,
+              attachedFileCount: dto.files?.length || 0,
+              fileData: dto.files || [],
+              adjustedEntry: {isAdjusted: dto.adjustedEntry.isAdjusted,
+                adjustingAmount: dto.adjustedEntry.adjustingAmount,
+                adjustedRange: dto.adjustedEntry.adjustedRange
+              }
             };
-            
+
             await admin.firestore()
                 .collection(FirestoreCollections.journals)
                 .doc(journal.journalId)
@@ -101,7 +105,7 @@ export const approveRejectDeny = onRequest(
             const journal = (await journalRef.get()).data() as JournalEntry;
 
             await updateAccounts(journal);
-            
+
             return okResponse({}, 200, res);
         } catch (error) {
             logger.error(error);
@@ -111,8 +115,8 @@ export const approveRejectDeny = onRequest(
 );
 
 /**
- * Adds journal entry data to each account 
- * @param journalEntry Journal entry data 
+ * Adds journal entry data to each account
+ * @param journalEntry Journal entry data
  */
 const updateAccounts = async (journalEntry: JournalEntry) => {
     const accountSnapshot = await admin.firestore()
@@ -130,10 +134,10 @@ const updateAccounts = async (journalEntry: JournalEntry) => {
         // get transactions related to account
         const transactionsForAccount = journalEntry.transactions
             .filter(transaction => transaction.accountId === account.accountId)
-    
+
         // sum all debits and credits
         const amounts = EntryCalculations.calculateEntryTotals(transactionsForAccount);
-        
+
         // update balances for account
         const newBalance = EntryCalculations.calculateAccountBalance(account, amounts);
         const entryCount = account.entries + 1;
@@ -147,12 +151,13 @@ const updateAccounts = async (journalEntry: JournalEntry) => {
 
         // create account level journal data
         const accountJournal: AccountEntry = {
-            journalId: journalEntry.journalId,
-            entryName: journalEntry.entryName,
-            debit: amounts.debit,
-            credit: amounts.credit,
-            creationDate: journalEntry.creationDate,
-            balance: newBalance
+          journalId: journalEntry.journalId,
+          entryName: journalEntry.entryName,
+          debit: amounts.debit,
+          credit: amounts.credit,
+          creationDate: journalEntry.creationDate,
+          balance: newBalance,
+          isAdjusted: journalEntry.adjustedEntry.isAdjusted
         }
 
         // add entry to account

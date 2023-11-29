@@ -7,7 +7,7 @@ export const unsuspendSchedule = onSchedule("every day 04:00", async () => {
     const usersSnapshot = await admin.firestore().collection(FirestoreCollections.users.toString())
     .where('suspended', '!=', null)
     .get();
-    
+
     const today = new Date();
     usersSnapshot.forEach(async (userData) => {
         const processedData = userData.data() as UserWithIdModel;
@@ -23,7 +23,7 @@ export const suspendSchedule = onSchedule("every day 04:00", async () => {
     const usersSnapshot = await admin.firestore().collection(FirestoreCollections.users.toString())
     .where('suspended', '!=', null)
     .get();
-    
+
     const today = new Date();
     usersSnapshot.forEach(async (userData) => {
         const processedData = userData.data() as UserWithIdModel;

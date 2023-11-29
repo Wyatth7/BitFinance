@@ -1,0 +1,4 @@
+export enum adjustingType {
+    increase = 1,
+    decrease = 2
+}
