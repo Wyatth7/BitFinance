@@ -41,6 +41,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { SectionLoadingSpinnerComponent } from './components/spinners-loader/section-loading-spinner/section-loading-spinner.component';
 import { AccountLogDialogComponent } from './components/dialogs/account-log-dialog/account-log-dialog.component';
 import { EventLogComponent } from './components/dialogs/account-log-dialog/event-log/event-log.component';
+import { CreateReportGroupComponent } from './components/dialogs/create-report-group/create-report-group.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { EventLogComponent } from './components/dialogs/account-log-dialog/event
     SectionLoadingSpinnerComponent,
     AccountLogDialogComponent,
     EventLogComponent,
+    CreateReportGroupComponent,
   ],
   imports: [
     CommonModule,
@@ -108,6 +110,7 @@ import { EventLogComponent } from './components/dialogs/account-log-dialog/event
     InfoPageHeaderComponent,
     EmptyTableInfoComponent,
     EmailUserComponent,
+    CreateReportGroupComponent
   ],
   providers: [
     TitleCasePipe

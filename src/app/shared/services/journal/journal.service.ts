@@ -11,6 +11,7 @@ import { EntryListResponseDto } from '../../models/journal/dto/entry-list-respon
 import { LoaderService } from '../component-services/loader.service';
 import { DialogService } from '../dialogs/dialog.service';
 import { JournalEntryPageModel } from '../../models/journal/journal-page-model';
+import { adjustingFrequency } from '../../enums/journals/adjustingFrequency';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,12 @@ export class JournalService {
         name: journalEntry.name,
         description: journalEntry.description,
         transactions: journalEntry.transactions,
-        files
+        files,
+        adjustedEntry: {
+          isAdjusted: journalEntry.isAdjusted,
+          adjustingAmount: journalEntry.adjustingAmount ?? 0,
+          adjustedRange: journalEntry.adjustedRange ?? 0
+        }
       }
       
       await createJournalFunction(createDto);

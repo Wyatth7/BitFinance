@@ -1,0 +1,11 @@
+<div class="ratio-group">
+  <h2 class="ratio-group--title">{{title | titlecase}}</h2>
+  <div class="ratio-group--items">
+    <app-number-group
+      *ngFor="let group of ratioGroup"
+      [text]="group.name"
+      [number]="group.value"
+      [isDecimal]="true"
+    ></app-number-group>
+  </div>
+</div>

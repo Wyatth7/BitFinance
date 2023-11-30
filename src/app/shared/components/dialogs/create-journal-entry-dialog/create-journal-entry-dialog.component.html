@@ -1,7 +1,7 @@
 <h2 mat-dialog-title class="title">{{ data.title | titlecase}}</h2>
 <mat-dialog-content>
     <form class="entry-create-form" [formGroup]="form">
-        <div class="form-col-2" >
+        <div class="form-col-2">
             <mat-form-field appearance="outline">
                 <mat-label>Entry Name</mat-label>
                 <input matInput formControlName="entryName" type="text" />
@@ -13,9 +13,35 @@
             </mat-form-field>
         </div>
 
+        <div class="adjustingSection">
+            <div class="form-col-2">
+                <div class="adjustingCheckContainer">
+                  <mat-checkbox class="adjustingCheck" color="primary" (change)="toggleAdjusting()">Adjusted Entry</mat-checkbox>
+                </div>
+              </div>
+            <div class="form-col-2 adjustingContent" *ngIf="adjustment">
+                <mat-form-field class="entry-inputs--field" appearance="outline">
+                    <mat-label>Amount</mat-label>
+                    <input matInput formControlName="amount" type="number" />
+                    <mat-error>Amount Required</mat-error>
+                </mat-form-field>
+                <mat-form-field class="entry-inputs--field" appearance="outline">
+                    <mat-label>Frequency</mat-label>
+                    <mat-select formControlName="frequency" [value]=1>
+                        <mat-option [value]=1>Weekly</mat-option>
+                        <mat-option [value]=2>Monthly</mat-option>
+                        <mat-option [value]=3>Quarterly</mat-option>
+                        <mat-option [value]=4>Annualy</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
         <h2>Double Entry</h2>
-        <mat-error class="journal-error" *ngIf="!transactionsValid">Journal entry is not balanced. A journal entry must be balanced before it can be submitted for approval.</mat-error>
-        <app-debit-credit-account-form [shouldReset$]="shouldReset$" (transactionChange)="settransactions($event)"></app-debit-credit-account-form>
+        <mat-error class="journal-error" *ngIf="!transactionsValid">Journal entry is not balanced. A journal entry must
+            be balanced before it can be submitted for approval.</mat-error>
+        <app-debit-credit-account-form [shouldReset$]="shouldReset$"
+            (transactionChange)="settransactions($event)"></app-debit-credit-account-form>
     </form>
 
     <div class="upload-button">
@@ -26,10 +52,6 @@
 <mat-dialog-actions align="end">
     <button mat-button color="warn" (click)="resetForm()">Reset</button>
     <button mat-button mat-dialog-close color="warn">Cancel</button>
-    <app-spinner-button 
-      [spin]="loading" 
-      text="Submit" 
-      (click)="executeAction()" 
-      [disabled]="form.invalid || !transactionsValid || transactions.length === 0"
-    ></app-spinner-button>
+    <app-spinner-button [spin]="loading" text="Submit" (click)="executeAction()"
+        [disabled]="form.invalid || !transactionsValid || transactions.length === 0"></app-spinner-button>
 </mat-dialog-actions>

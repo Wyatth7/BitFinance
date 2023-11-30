@@ -10,4 +10,5 @@ export class NumberGroupComponent {
   @Input() color!: string;
   @Input() number!: number;
   @Input() text!: string;
+  @Input() isDecimal = false;
 }

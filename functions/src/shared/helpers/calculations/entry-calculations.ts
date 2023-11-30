@@ -1,7 +1,9 @@
-import { NormalType } from "../../enums/accounts/normal-type";
-import { AccountModel } from "../../models/accounts/account-model";
-import { Amounts } from "../../models/calculations/amounts";
-import { Transaction } from "../../models/journals/transaction";
+import {NormalType} from "../../enums/accounts/normal-type";
+import {AccountModel} from "../../models/accounts/account-model";
+import {Amounts} from "../../models/calculations/amounts";
+import {Transaction} from "../../models/journals/transaction";
+import {AccountType} from "../../models/enums/account-type";
+import {AdjustedRange} from "../../enums/journals/adjusted-range";
 
 export class EntryCalculations {
 
@@ -42,6 +44,18 @@ export class EntryCalculations {
         account: AccountModel,
         amounts: Amounts
         ): number {
+
+            if (account.accountType === AccountType.equity) {
+              if (account.normalType === NormalType.debit) {
+                account.balance += amounts.credit;
+                account.balance -= amounts.debit;
+              } else {
+                account.balance += amounts.credit;
+                account.balance -= amounts.debit;
+              }
+              return account.balance;
+            }
+
             // if account normal side is debit, add debits, subtract credits from balance
             // else, subtract debits, add credits from balance
             if (account.normalType === NormalType.debit) {
@@ -56,4 +70,32 @@ export class EntryCalculations {
             return account.balance;
     }
 
+  /**
+   * Calculates cost of goods sold
+   * @param openingInventory value of inventory at start of period
+   * @param closingInventory value of inventory as end of period
+   * @param purchases value of purchases during period
+   */
+    static costOfGoodsSold(openingInventory: number, closingInventory: number, purchases: number): number {
+      return openingInventory + purchases - closingInventory;
+    }
+    static adjustEntry(adjustedRange: AdjustedRange, amount: number, date: Date): number {
+      // 1. find total count of adjusted range value
+      const timeDifference = date.getTime() - new Date().getTime();
+      let elapsedRange = 0;
+      switch (adjustedRange) {
+        case AdjustedRange.weekly:
+          elapsedRange = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 7));
+          break;
+        case AdjustedRange.monthly:
+          elapsedRange = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 30));
+          break;
+        case AdjustedRange.yearly:
+          elapsedRange = Math.floor(timeDifference / (1000 * 60 * 60 * 24 * 365));
+          break;
+      }
+
+      // 2. multiply entry's adjusted amount by (1)
+      return elapsedRange * amount;
+    }
 }

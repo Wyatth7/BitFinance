@@ -17,7 +17,7 @@
             </div>
             <mat-form-field appearance="outline">
                 <mat-label>Description</mat-label>
-                <textarea 
+                <textarea
                 formControlName="description"
                 matInput
                 cdkTextareaAutosize
@@ -38,7 +38,7 @@
                 <mat-select [value]="1" formControlName="accountType">
                   <mat-option [value]="1">Asset</mat-option>
                   <mat-option [value]="2">Liability</mat-option>
-                  <mat-option [value]="3">Equity</mat-option>
+                  <mat-option [value]="4">Equity</mat-option>
                 </mat-select>
               </mat-form-field>
         </div>
@@ -63,10 +63,10 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close color="warn">Cancel</button>
-    <app-spinner-button 
-      [spin]="loading" 
-      text="Submit" 
-      (click)="executeAction()" 
+    <app-spinner-button
+      [spin]="loading"
+      text="Submit"
+      (click)="executeAction()"
       [disabled]="form.invalid"
     ></app-spinner-button>
 </mat-dialog-actions>
