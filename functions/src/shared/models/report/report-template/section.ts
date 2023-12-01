@@ -11,6 +11,6 @@ export interface Section {
    * This is the sum of all values in the group.
    * Rendered as string
    */
-  sectionTotal: string;
+  sectionTotal?: string;
   rowGroups: RowGroup[];
 }

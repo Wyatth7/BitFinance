@@ -27,7 +27,7 @@ export class ReportCalculations {
 
           // + credits, - debits
           if (accountData.normalType === NormalType.debit) {
-            incomeExpense.netIncome -= balance;
+            incomeExpense.netIncome += balance;
             incomeExpense.expense += balance;
           }else {
             incomeExpense.netIncome += balance;
