@@ -6,6 +6,7 @@
       [text]="group.name"
       [number]="group.value"
       [isDecimal]="true"
+      [color]="isIdealRange(group.value) ? Colors.green : Colors.red"
     ></app-number-group>
   </div>
 </div>
