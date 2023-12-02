@@ -3,7 +3,7 @@ import { EmailMessage } from "../shared/models/messaging/email-message";
 import { onRequest } from "firebase-functions/v2/https";
 import { badRequestResponse, okResponse } from "../shared/responses/responses";
 import * as logger from "firebase-functions/logger";
-import { environment } from "../environment/environment";
+import { environment } from "../environment";
 import {Emailer} from "../shared/helpers/messaging/emailer";
 
 sgMail.setApiKey(environment.sendGridAPIKey);

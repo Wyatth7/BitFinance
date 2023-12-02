@@ -47,4 +47,4 @@ Thumbs.db
 .runtimeconfig.json
 functions/lib
 functions/node_modules
-functions/src/environment/environment.ts
+functions/src/environment.ts
