@@ -20,33 +20,34 @@ export class CreateJournalEntryDialogComponent {
 
   adjustment = false;
 
-  
-
   private _selectedFiles?: File[];
   transactions: TransactionEntryListItem[] = [];
 
   form = this.formBuilder.group({
       entryName: new FormControl('', [Validators.required]),
       entryDescription: new FormControl(''),
-      amount: new FormControl('', [Validators.required]),
-      frequency: new FormControl('', [Validators.required])
+  });
+
+  adjustedForm = this.formBuilder.group({
+    amount: new FormControl('', [Validators.required]),
+    frequency: new FormControl('', [Validators.required])
   })
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, 
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private dialogRef: MatDialogRef<CreateJournalEntryDialogComponent>,
     private formBuilder: FormBuilder,
     private journalService: JournalService
   ) {}
 
-  async executeAction(){ 
+  async executeAction(){
     this.loading = true;
     let amount = 0;
     let frequency = 1;
 
     if(this.adjustment){
-      amount = parseInt(this.form.value.amount ?? '0');
-      frequency = parseInt(this.form.value.frequency ?? '1');
+      amount = parseInt(this.adjustedForm.value.amount ?? '0');
+      frequency = parseInt(this.adjustedForm.value.frequency ?? '1');
     }
 
     const generalEntryForm = this.form.value;
@@ -71,7 +72,9 @@ export class CreateJournalEntryDialogComponent {
 
   resetForm() {
     this.form.reset();
-    this.transactions = [],
+    this.adjustedForm.reset();
+    this.adjustment = false;
+    this.transactions = [];
     this.transactionsValid = true;
     this.shouldReset$.next(true);
   }

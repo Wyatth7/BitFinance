@@ -62,6 +62,9 @@ export class ReportDataConfiguration {
     const section = this.configureSection(
       trialBalanceData.accountData,
       [trialBalanceData.totalDebits, trialBalanceData.totalCredits],
+      undefined,
+      0,
+      false
     );
 
     return {
@@ -117,7 +120,6 @@ export class ReportDataConfiguration {
     }
 
     const section: Section = {
-      sectionTotal: '',
       sectionHeader: dateRange,
       rowGroups: [group]
     }
@@ -160,11 +162,12 @@ export class ReportDataConfiguration {
    * @param header header of the section
    * @param total total balance of the section
    * @param rowIndent title indentations per row
+   * @param includeSectionTotal weather to show the sections total in report or not
    */
-  private static configureSection(data: AccountData[], total: number[] | number, header?: string, rowIndent = 0): Section {
+  private static configureSection(data: AccountData[], total: number[] | number, header?: string, rowIndent = 0, includeSectionTotal = true): Section {
     const section: Section = {
       sectionHeader: header || undefined,
-      sectionTotal:  total.toString(),
+      sectionTotal:  includeSectionTotal ? total.toString() : undefined,
       rowGroups: []
     };
 

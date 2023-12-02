@@ -12,7 +12,7 @@
 
 import {initializeApp} from "firebase-admin/app";
 import * as sgMail from "@sendgrid/mail";
-import { environment } from "./environment/environment";
+import { environment } from "./environment";
 
 
 initializeApp();
