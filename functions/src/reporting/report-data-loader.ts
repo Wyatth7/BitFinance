@@ -56,7 +56,7 @@ export class ReportDataLoader {
   private static loadBalanceSheet(rawData: PreConfigurationRawData[]): PreConfiguredDataBalanceSheet {
 
     // get array of all data in balance sheet.
-    const filteredData = rawData.filter(r => r.statementType === StatementType.BS);
+    // const filteredData = rawData.filter(r => r.statementType === StatementType.BS);
 
     const totals: BalanceSheetTotals = {
       asset: 0,
@@ -64,7 +64,7 @@ export class ReportDataLoader {
       equity: 0
     }
 
-    const accountData: AccountData[] = filteredData.map(f => {
+    const accountData: AccountData[] = rawData.map(f => {
       const balance = f.entries[0]?.balance || f.balance;
 
       switch (f.accountType) {
