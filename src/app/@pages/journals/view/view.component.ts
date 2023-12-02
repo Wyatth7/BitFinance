@@ -14,6 +14,7 @@ import { DialogService } from 'src/app/shared/services/dialogs/dialog.service';
 import { GetEnumValueService } from 'src/app/shared/services/enum/get-enum-value.service';
 import { JournalService } from 'src/app/shared/services/journal/journal.service';
 import { TopNavService } from 'src/app/shared/services/top-nav.service';
+import {Roles} from "../../../shared/enums/authentication/roles";
 
 @Component({
   selector: 'app-view',
@@ -23,7 +24,7 @@ import { TopNavService } from 'src/app/shared/services/top-nav.service';
 export class ViewComponent implements OnInit, OnDestroy {
   journalStatus: JournalApprovalType = JournalApprovalType.approved;
   title = 'Approved';
-  
+
   dateRangeFilter: {start: Date, end: Date} = {start: new Date(10/23/2023), end: new Date(10/24/2023)};
   filter: string | undefined = '';
   journalReponse?: EntryListResponseDto;
@@ -113,18 +114,18 @@ export class ViewComponent implements OnInit, OnDestroy {
    */
   getSingleCreditDebitAmount(entry: JournalEntryModel, isDebit = true) {
     let amount = 0;
-    
+
     if (isDebit) {
       entry.transactions.forEach(
-        transaction => transaction.normalType === NormalType.debit 
-          ? amount += transaction.amount 
+        transaction => transaction.normalType === NormalType.debit
+          ? amount += transaction.amount
           : null);
       return amount;
     }
 
     entry.transactions.forEach(
-      transaction => transaction.normalType === NormalType.credit 
-        ? amount += transaction.amount 
+      transaction => transaction.normalType === NormalType.credit
+        ? amount += transaction.amount
         : null);
 
     return amount;
@@ -134,14 +135,14 @@ export class ViewComponent implements OnInit, OnDestroy {
     let amount = 0;
 
     transactions.forEach(
-      transaction => transaction.normalType === NormalType.credit 
-        ? amount += transaction.amount 
+      transaction => transaction.normalType === NormalType.credit
+        ? amount += transaction.amount
         : null);
 
     return amount;
   }
 
-  private setEntryTableData(approvalType: JournalApprovalType){ 
+  private setEntryTableData(approvalType: JournalApprovalType){
     switch (approvalType) {
       case JournalApprovalType.approved:
         this.journalStatus = JournalApprovalType.approved;
@@ -161,4 +162,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       default: break;
     }
   }
+
+  protected readonly Roles = Roles;
+  protected readonly JournalApprovalType = JournalApprovalType;
 }
