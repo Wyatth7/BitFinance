@@ -42,6 +42,7 @@ import { SectionLoadingSpinnerComponent } from './components/spinners-loader/sec
 import { AccountLogDialogComponent } from './components/dialogs/account-log-dialog/account-log-dialog.component';
 import { EventLogComponent } from './components/dialogs/account-log-dialog/event-log/event-log.component';
 import { CreateReportGroupComponent } from './components/dialogs/create-report-group/create-report-group.component';
+import { CamelCaseToTitleCasePipe } from './pipes/camel-case-to-title-case.pipe';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { CreateReportGroupComponent } from './components/dialogs/create-report-g
     AccountLogDialogComponent,
     EventLogComponent,
     CreateReportGroupComponent,
+    CamelCaseToTitleCasePipe,
   ],
   imports: [
     CommonModule,
