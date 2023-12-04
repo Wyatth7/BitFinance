@@ -8,7 +8,7 @@ export class CamelCaseToTitleCasePipe implements PipeTransform {
     if (!value) {
       return value;
     }
-    const words = value.replace(/([A-Z])/g, ' $1').trim();
-    return words.charAt(0).toUpperCase() + words.slice(1).toLowerCase();
+    const words = value.replace(/([A-Z])/g, ' $1').trim().split(' ');
+    return words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
   }
 }
