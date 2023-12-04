@@ -7,6 +7,7 @@ import * as logger from 'firebase-functions/logger';
 import {AccountsListItemModel} from "../../shared/models/accounts/accounts-list-item-model";
 import {BalanceTotalsModel} from "../../shared/models/accounts/responses/balance-totals-model";
 import {AccountType} from "../../shared/models/enums/account-type";
+//import { AccountSubType } from "../../shared/enums/accounts/account-subtype";
 import {AccountListResponseModel} from "../../shared/models/accounts/responses/account-list-response-model";
 import {AccountModel} from "../../shared/models/accounts/account-model";
 import {FirebaseSubCollections} from "../../shared/enums/firestore-sub-collections";
@@ -60,6 +61,7 @@ export const getAllAccounts = onRequest(
                         accountNumber: accountModel.accountNumber,
                         balance: accountModel.balance,
                         category: accountModel.accountType,
+                        subcategory: accountModel.accountSubType,
                         accountId: accountModel.accountId,
                         isActive: accountModel.isActive,
                         // will be replaced with journal collection count.
