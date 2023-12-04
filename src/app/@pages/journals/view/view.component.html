@@ -10,19 +10,20 @@
         </div>
     </app-secondary-top-nav>
     <ng-container *ngIf="journalList">
-        <app-table 
+        <app-table
         *ngIf="journalList.length > 0; else noJournals"
         [dateFilter]="dateRangeFilter"
-        [tableData]="journalList" 
-        [displayedColumns]="displayedColumns" 
+        [tableData]="journalList"
+        [displayedColumns]="displayedColumns"
         [filters]="filter"
         class="journals-view--list">
             <ng-container matSort>
-            
+
                 <ng-container matColumnDef="actions" >
                     <th mat-header-cell *matHeaderCellDef> Actions </th>
-                    <td mat-cell *matCellDef="let row"> 
+                    <td mat-cell *matCellDef="let row">
                         <div class="buttons">
+                          <app-required-role-view *ngIf="journalStatus === JournalApprovalType.requested" [roles]="[Roles.manager, Roles.administrator]">
 
                             <button
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
@@ -31,6 +32,9 @@
                             color="primary"
                             (click)="approveEntry(row.journalId, true)"
                             >Approve</button>
+                          </app-required-role-view>
+                          <app-required-role-view *ngIf="journalStatus === JournalApprovalType.requested" [roles]="[Roles.manager, Roles.administrator]">
+
                             <button
                             *ngIf="journalStatus === enumValues.journalApprovalType.requested"
                             matTooltip="Decline Entry"
@@ -38,6 +42,7 @@
                             color="primary"
                             (click)="openDeclineDialog(row.journalId)"
                             >Decline</button>
+                          </app-required-role-view>
                             <button
                             matTooltip="View Entry"
                             mat-stroked-button
@@ -52,22 +57,22 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                     <td mat-cell *matCellDef="let row"> {{row.entryName | titlecase}} </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="entryDescription">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
                     <td mat-cell *matCellDef="let row"> {{row.entryDescription || 'Empty'}} </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="totalDebit">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Debit </th>
                     <td mat-cell *matCellDef="let row"> {{row.totalDebit | currency}} </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="totalCredit" >
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Credit </th>
                     <td mat-cell *matCellDef="let row"> {{row.totalCredit | currency}} </td>
                 </ng-container>
-                
+
                 <ng-container matColumnDef="balance" >
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance </th>
                     <td mat-cell *matCellDef="let row"> {{row.balance | currency}} </td>

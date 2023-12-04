@@ -14,6 +14,7 @@ import { AccountEntry } from "../../shared/models/journals/account-journal";
 import { FirebaseSubCollections } from "../../shared/enums/firestore-sub-collections";
 import { AccountModel } from "../../shared/models/accounts/account-model";
 import { EntryCalculations } from "../../shared/helpers/calculations/entry-calculations";
+import {Emailer} from "../../shared/helpers/messaging/emailer";
 
 export const createJournalEntry = onRequest(
     {cors: true},
@@ -61,10 +62,10 @@ export const createJournalEntry = onRequest(
                 .set(journal);
 
                 // Removed for testing reasons
-            // await Emailer.sendEmailToAdminManager(
-            //     "Journal Entry Request Submitted",
-            //     "A journal entry has been created and is awaiting approval."
-            // );
+            await Emailer.sendEmailToAdminManager(
+                "Journal Entry Request Submitted",
+                "A journal entry has been created and is awaiting approval."
+            );
 
             return okResponse({}, 200, res);
 
