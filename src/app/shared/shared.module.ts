@@ -112,7 +112,8 @@ import { CamelCaseToTitleCasePipe } from './pipes/camel-case-to-title-case.pipe'
     InfoPageHeaderComponent,
     EmptyTableInfoComponent,
     EmailUserComponent,
-    CreateReportGroupComponent
+    CreateReportGroupComponent,
+    CamelCaseToTitleCasePipe
   ],
   providers: [
     TitleCasePipe
