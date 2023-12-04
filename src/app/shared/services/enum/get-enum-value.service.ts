@@ -22,6 +22,7 @@ export class GetEnumValueService {
     return AccountType;
   }
 
+
   accountTypeString(accountType: AccountType): string {
     return AccountType[accountType];
   }
