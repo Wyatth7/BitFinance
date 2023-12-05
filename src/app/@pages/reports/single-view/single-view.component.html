@@ -9,8 +9,8 @@
       </div>
     </div>
   </app-info-page-header>
-  <div class="single-view--description" *ngIf="report.reportDescription">
-    <h3>{{ report.reportDescription }}</h3>
+  <div class="single-view--description" >
+    <h3 *ngIf="report.reportDescription">{{ report.reportDescription }}</h3>
   </div>
   <mat-divider ></mat-divider>
   <div class="report-viewer">

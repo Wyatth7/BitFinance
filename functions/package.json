@@ -4,14 +4,14 @@
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "serve": "npm run build && firebase emulators:start --import=./firebase-export-1701202685628EDdNAh --only \"functions,firestore\"",
+    "serve": "npm run build && firebase emulators:start --import=./firebase-export-1701738672962CSov0s --only \"functions,firestore\"",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "18"
+    "node": "16"
   },
   "main": "lib/index.js",
   "dependencies": {
@@ -21,7 +21,7 @@
     "firebase-admin": "^11.8.0",
     "firebase-functions": "^4.3.1",
     "handlebars": "^4.7.8",
-    "puppeteer": "^21.5.1"
+    "puppeteer": "^18.2.1"
   },
   "devDependencies": {
     "firebase-functions-test": "^3.1.0",

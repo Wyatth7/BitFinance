@@ -16,10 +16,10 @@
         <div class="adjustingSection">
             <div class="form-col-2">
                 <div class="adjustingCheckContainer">
-                  <mat-checkbox class="adjustingCheck" color="primary" (change)="toggleAdjusting()">Adjusted Entry</mat-checkbox>
+                  <mat-checkbox [checked]="adjustment" class="adjustingCheck" color="primary" (change)="toggleAdjusting()">Adjusted Entry</mat-checkbox>
                 </div>
               </div>
-            <div class="form-col-2 adjustingContent" *ngIf="adjustment">
+            <div class="form-col-2 adjustingContent" *ngIf="adjustment" [formGroup]="adjustedForm">
                 <mat-form-field class="entry-inputs--field" appearance="outline">
                     <mat-label>Amount</mat-label>
                     <input matInput formControlName="amount" type="number" />
@@ -31,7 +31,7 @@
                         <mat-option [value]=1>Weekly</mat-option>
                         <mat-option [value]=2>Monthly</mat-option>
                         <mat-option [value]=3>Quarterly</mat-option>
-                        <mat-option [value]=4>Annualy</mat-option>
+                        <mat-option [value]=4>Yearly</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -53,5 +53,5 @@
     <button mat-button color="warn" (click)="resetForm()">Reset</button>
     <button mat-button mat-dialog-close color="warn">Cancel</button>
     <app-spinner-button [spin]="loading" text="Submit" (click)="executeAction()"
-        [disabled]="form.invalid || !transactionsValid || transactions.length === 0"></app-spinner-button>
+        [disabled]="form.invalid || !transactionsValid || transactions.length === 0 || (adjustedForm.invalid && adjustment)"></app-spinner-button>
 </mat-dialog-actions>

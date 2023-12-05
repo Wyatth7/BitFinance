@@ -2,13 +2,17 @@
   <app-ratio-group
     title="Liquidity Ratios"
     [value]="ratioSummary.liquidity"
+    [idealValue]="2"
   ></app-ratio-group>
   <app-ratio-group
     title="Profitability Ratios"
     [value]="ratioSummary.profitability"
+    [idealValue]=".8"
   ></app-ratio-group>
   <app-ratio-group
     title="Solvency Ratios"
     [value]="ratioSummary.solvency"
+    [idealValue]=".3"
+    [roundIdealUp]="false"
   ></app-ratio-group>
 </div>
