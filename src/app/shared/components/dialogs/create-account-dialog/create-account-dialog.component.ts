@@ -37,6 +37,8 @@ export class CreateAccountDialogComponent implements OnInit {
       types: this.formBuilder.group({
         accountType: [formData?.types?.accountType || 1,
          Validators.required],
+        accountSubType: [formData?.types?.accountSubType || 1,
+         Validators.required],
         normalType: [formData?.types?.normalType || 1,
          Validators.required],
         statementType: [formData?.types?.statementType || 1,
